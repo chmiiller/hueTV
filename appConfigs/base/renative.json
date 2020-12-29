@@ -1,0 +1,325 @@
+{
+    "id": "base",
+    "hidden": true,
+    "common": {
+        "author": {
+            "name": "Pavel Jacko",
+            "email": "Pavel Jacko <i@pavjacko.com>",
+            "url": "https://github.com/pavjacko"
+        },
+        "license": "MIT",
+        "includedPlugins": ["*"],
+        "includedFonts": ["*"],
+        "buildSchemes": {
+            "debug": {
+                "description": "Use for local development"
+            },
+            "test": {
+                "description": "Use to run automation"
+            },
+            "release": {
+                "description": "Use for production deployments"
+            }
+        },
+        "backgroundColor": "#111111",
+        "runtime": {
+            "welcomeMessage": "Hello ReNative!"
+        }
+    },
+    "platforms": {
+        "ios": {
+            "entryFile": "index.ios",
+            "scheme": "RNVApp",
+            "teamID": "",
+            "provisioningStyle": "Automatic",
+            "systemCapabilities": {
+                "com.apple.AccessWiFi": false,
+                "com.apple.ApplePay": false,
+                "com.apple.ApplicationGroups.iOS": false,
+                "com.apple.AutoFillCredentialProvider": false,
+                "com.apple.BackgroundModes": false,
+                "com.apple.ClassKit": false,
+                "com.apple.DataProtection": false,
+                "com.apple.GameCenter.iOS": false,
+                "com.apple.HealthKit": false,
+                "com.apple.HomeKit": false,
+                "com.apple.HotspotConfiguration": false,
+                "com.apple.InAppPurchase": false,
+                "com.apple.InterAppAudio": false,
+                "com.apple.Keychain": false,
+                "com.apple.Maps.iOS": false,
+                "com.apple.Multipath": false,
+                "com.apple.NearFieldCommunicationTagReading": false,
+                "com.apple.NetworkExtensions.iOS": false,
+                "com.apple.Push": false,
+                "com.apple.SafariKeychain": false,
+                "com.apple.Siri": false,
+                "com.apple.VPNLite": false,
+                "com.apple.WAC": false,
+                "com.apple.Wallet": false,
+                "com.apple.iCloud": false
+            },
+            "entitlements": {},
+            "permissions": ["*"],
+            "buildSchemes": {
+                "debug": {
+                    "runScheme": "Debug",
+                    "bundleAssets": false
+                },
+                "test": {
+                    "runScheme": "Debug",
+                    "bundleAssets": true,
+                    "sdk": "iphonesimulator"
+                },
+                "release": {
+                    "runScheme": "Release",
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "tvos": {
+            "entryFile": "index.tvos",
+            "teamID": "",
+            "provisioningStyle": "Automatic",
+            "entitlements": {},
+            "permissions": ["*"],
+            "scheme": "RNVAppTVOS",
+            "buildSchemes": {
+                "debug": {
+                    "runScheme": "Debug",
+                    "bundleAssets": false
+                },
+                "test": {
+                    "runScheme": "Debug",
+                    "bundleAssets": true,
+                    "sdk": "appletvsimulator"
+                },
+                "release": {
+                    "scheme": "RNVAppTVOSRelease",
+                    "runScheme": "Release",
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "android": {
+            "entryFile": "index.android",
+            "enableHermes": true,
+            "universalApk": true,
+            "multipleAPKs": false,
+            "minSdkVersion": 21,
+            "permissions": ["*"],
+            "buildSchemes": {
+                "debug": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": false
+                },
+                "test": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": true
+                },
+                "release": {
+                    "signingConfig": "Release",
+                    "multipleAPKs": true,
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "androidtv": {
+            "entryFile": "index.androidtv",
+            "enableHermes": true,
+            "universalApk": true,
+            "multipleAPKs": false,
+            "minSdkVersion": 21,
+            "permissions": ["*"],
+            "buildSchemes": {
+                "debug": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": false
+                },
+                "test": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": true
+                },
+                "release": {
+                    "signingConfig": "Release",
+                    "multipleAPKs": true,
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "androidwear": {
+            "entryFile": "index.androidwear",
+            "enableHermes": true,
+            "universalApk": true,
+            "multipleAPKs": false,
+            "minSdkVersion": 23,
+            "permissions": ["*"],
+            "buildSchemes": {
+                "debug": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": false
+                },
+                "test": {
+                    "signingConfig": "Debug",
+                    "bundleAssets": true
+                },
+                "release": {
+                    "signingConfig": "Release",
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "macos": {
+            "entryFile": "index.macos",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false,
+                    "environment": "development"
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false,
+                    "environment": "production"
+                }
+            }
+        },
+        "tizen": {
+            "appName": "RNVanillaTV",
+            "entryFile": "index.tizen",
+            "certificateProfile": "RNVanillaCert",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "tizenwatch": {
+            "appName": "RNVanillaWatch",
+            "entryFile": "index.tizenwatch",
+            "certificateProfile": "RNVanillaCert",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "tizenmobile": {
+            "appName": "RNVanillaMobile",
+            "entryFile": "index.tizenmobile",
+            "certificateProfile": "RNVanillaCert",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "web": {
+            "entryFile": "index.web",
+            "pagesDir": "src/pages",
+            "webpackConfig": {
+                "devServerHost": "0.0.0.0",
+                "baseUrl": ""
+            },
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false,
+                    "environment": "development"
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false,
+                    "environment": "production"
+                }
+            },
+            "deploy": {
+               "type": "none"
+            }
+        },
+        "webos": {
+            "entryFile": "index.webos",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "windows": {
+            "entryFile": "index.windows",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "kaios": {
+            "entryFile": "index.kaios",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "firefoxos": {
+            "entryFile": "index.firefoxos",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "firefoxtv": {
+            "entryFile": "index.firefoxtv",
+            "buildSchemes": {
+                "debug": {
+                    "bundleAssets": false
+                },
+                "release": {
+                    "bundleAssets": true,
+                    "bundleIsDev": false
+                }
+            }
+        },
+        "chromecast": {
+            "entryFile": "index.chromecast",
+            "webpackConfig": {
+                "customScripts": [
+                    "www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js",
+                    "www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"
+                ]
+            }
+        }
+    }
+}
