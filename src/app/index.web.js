@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Router, navigate } from '@reach/router';
 
 import ScreenHome from '../components/screenHome';
-import ScreenMyPage from '../components/screenMyPage';
+import ScreenSettings from '../components/screenSettings';
 import ScreenModal from '../components/screenModal';
 import Menu from '../components/menu';
 import { themeStyles } from '../config';
@@ -20,7 +20,7 @@ const App = () => {
             <View style={themeStyles.appContainer}>
                 <Router>
                     <ScreenHome path="/" />
-                    <ScreenMyPage path="my-page" />
+                    <ScreenSettings path="settings" />
                     <ScreenModal path="modal" />
                 </Router>
             </View>
