@@ -7,12 +7,8 @@ import LightItem from '../../components/Light';
 import Theme, { themeStyles, hasWebFocusableUI } from '../../config';
 
 const styles = StyleSheet.create({
-    flatList: {
-        marginTop: 0,
-    },
+    lightsContainer: { margin: 20, flexDirection: 'row', flexWrap: 'wrap' },
 });
-
-const FocusableView = withFocusable()(View);
 
 const List = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -27,16 +23,14 @@ const List = () => {
         setLights(_lights);
     };
 
-    const renderItems = () => {
-        const items = lights.map(luz => {
-            return (
-                <LightItem
-                    key={luz.id}
-                    light={luz}
-                    switchCallback={fetchLights} 
-                />
-            );
-        });
+    const renderItems = (allLights) => {
+        const items = allLights.map((luz) => 
+            (<LightItem
+                key={luz.id}
+                light={luz}
+                switchCallback={fetchLights} 
+            />)
+        );
         return items;
     };
 
@@ -45,9 +39,9 @@ const List = () => {
     } else {
         return (
             <ScrollView contentContainerStyle={themeStyles.container}>
-                <FocusableView style={{ margin: 20, flexDirection: 'row' }}>
-                    {renderItems()}
-                </FocusableView>
+                <View style={styles.lightsContainer}>
+                    {renderItems(lights)}
+                </View>
             </ScrollView>
         );
     }

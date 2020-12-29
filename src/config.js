@@ -2,6 +2,8 @@ import { getScaledValue, isEngineWeb, isFactorMobile, isFactorDesktop,
     isFactorTv, isEngineNative, isFactorBrowser, registerServiceWorker, StyleSheet } from 'renative';
 import '../platformAssets/runtime/fontManager'; // eslint-disable-line import/extensions, import/no-unresolved
 
+import { white } from './constants/colors';
+
 export CONFIG from '../platformAssets/renative.runtime.json'; // eslint-disable-line import/no-unresolved
 export ICON_LOGO from '../platformAssets/runtime/logo.png'; // eslint-disable-line import/no-unresolved
 
@@ -17,8 +19,8 @@ export const hasWebFocusableUI = isEngineWeb && isFactorTv;
 // Disable yellow warnings UI
 console.disableYellowBox = true; // eslint-disable-line no-console
 
-export const apiUrl = "";
-export const username = "";
+export const apiUrl = '';
+export const username = '';
 
 const theme = {
     color0: '#111111',
@@ -73,7 +75,7 @@ export const themeStyles = StyleSheet.create({
         fontFamily: theme.primaryFontFamily,
         fontSize: getScaledValue(20),
         marginHorizontal: getScaledValue(20),
-        color: theme.color4,
+        color: white,
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center'

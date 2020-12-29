@@ -2,9 +2,12 @@
 
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { Icon, Button, getScaledValue, useNavigate, useOpenDrawer, StyleSheet } from 'renative';
+import { getScaledValue, useNavigate, StyleSheet } from 'renative';
 import { initNavigation, withFocusable } from '@noriginmedia/react-spatial-navigation';
-import Theme, { themeStyles, hasHorizontalMenu, hasWebFocusableUI, ROUTES } from '../config';
+import Theme, { hasWebFocusableUI, ROUTES } from '../config';
+import { black, white, yellow } from '../constants/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 if (hasWebFocusableUI) {
     initNavigation({
@@ -14,50 +17,50 @@ if (hasWebFocusableUI) {
     });
 }
 
-export const DrawerButton = (props) => {
-    const openDrawer = useOpenDrawer(props);
-    return (
-        <Icon
-            iconFont="ionicons"
-            iconName="md-menu"
-            iconColor={Theme.color3}
-            size={Theme.iconSize}
-            style={themeStyles.icon}
-            onPress={() => {
-                openDrawer('Drawer');
-            }}
-        />
-    );
-};
-
 const styles = StyleSheet.create({
     container: {
-        paddingTop: getScaledValue(hasHorizontalMenu ? 20 : 40),
-        paddingLeft: getScaledValue(hasHorizontalMenu ? 40 : 40),
+        paddingTop: getScaledValue(40),
+        paddingLeft: getScaledValue(40),
         width: Theme.menuWidth,
         height: Theme.menuHeight,
-        backgroundColor: Theme.color0,
+        backgroundColor: black,
         alignItems: 'flex-start',
-        // borderRightWidth: getScaledValue(hasHorizontalMenu ? 0 : 1),
-        borderBottomWidth: getScaledValue(hasHorizontalMenu ? 1 : 0),
-        // borderColor: Theme.color5,
-        flexDirection: hasHorizontalMenu ? 'row' : 'column'
+        borderBottomWidth: 0,
+        flexDirection: 'column'
     },
     button: {
-        alignSelf: 'flex-start',
+        flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginHorizontal: hasHorizontalMenu ? getScaledValue(20) : 0,
-        marginTop: hasHorizontalMenu ? 0 : getScaledValue(20),
+        alignItems: 'center',
+        marginHorizontal: 0,
+        marginTop: getScaledValue(20),
         maxWidth: getScaledValue(400),
         minWidth: getScaledValue(50),
         borderWidth: 0,
         opacity: 0.5,
     },
+    buttonFocus: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginHorizontal: 0,
+        marginTop: getScaledValue(20),
+        maxWidth: getScaledValue(400),
+        minWidth: getScaledValue(50),
+        borderWidth: 0,
+    },
     buttonText: {
-        color: Theme.white,
+        color: white,
         fontFamily: Theme.primaryFontFamily,
-        fontSize: getScaledValue(15)
-    }
+        fontSize: getScaledValue(15),
+        marginLeft: 20,
+    },
+    buttonTextFocus: {
+        color: yellow,
+        fontFamily: Theme.primaryFontFamily,
+        fontSize: getScaledValue(15),
+        marginLeft: 20,
+    },
 });
 
 const Menu = (props) => {
@@ -69,61 +72,45 @@ const Menu = (props) => {
         }, []);
     }
 
-    const MenuButton = ({  }) => {
-
+    const MenuButton = ({ focused, icon, iconFocused, label, material}) => {
+        const IconComponent = material ? (
+            <MaterialIcon name={focused ? iconFocused : icon} size={30} color={focused ? yellow : white} />
+        )
+        : (
+            <Icon name={focused ? iconFocused : icon} size={30} color={focused ? yellow : white} />
+        );
+        return (
+            <View style={focused ? styles.buttonFocus : styles.button} >
+                {IconComponent}
+                <Text style={focused ? styles.buttonTextFocus : styles.buttonText}>{label}</Text>
+            </View>
+        );
     };
 
+    const FocusableComponent = withFocusable()(MenuButton);
     return (
         <View style={styles.container}>
-            <Button
-                // to={ROUTES.HOME}
-                title=" Lights"
-                iconFont="fontAwesome"
-                className="focusable"
-                iconName="lightbulb-o"
-                iconColor={Theme.yellow}
-                iconSize={Theme.iconSizeSmall}
-                style={styles.button}
-                activeOpacity={1}
-                textStyle={styles.buttonText}
-                onPress={() => {
-                    navigate(ROUTES.HOME, '/[slug]');
-                }}
+            <FocusableComponent
+                icon={'lightbulb'}
+                iconFocused={'lightbulb-on'}
+                label={'Lights'}
                 onEnterPress={() => {
                     navigate(ROUTES.HOME, '/[slug]');
                 }}
             />
-            <Button
-                title="Settings"
-                iconFont="fontAwesome"
-                iconName="gear"
-                className="focusable"
-                iconColor={Theme.yellow}
-                iconSize={Theme.iconSizeSmall}
-                style={styles.button}
-                activeOpacity={1}
-                textStyle={styles.buttonText}
-                onPress={() => {
-                    navigate(ROUTES.SETTINGS, '/[slug]');
-                }}
+            <FocusableComponent
+                icon={'settings'}
+                iconFocused={'settings'}
+                label={'Settings'}
+                material
                 onEnterPress={() => {
                     navigate(ROUTES.SETTINGS, '/[slug]');
                 }}
             />
-            <Button
-                // to={ROUTES.MODAL}
-                title="My Modal"
-                iconFont="ionicons"
-                className="focusable"
-                iconName="ios-albums"
-                iconColor={Theme.yellow}
-                iconSize={Theme.iconSizeSmall}
-                style={styles.button}
-                activeOpacity={1}
-                textStyle={styles.buttonText}
-                onPress={() => {
-                    navigate(ROUTES.MODAL, '/[slug]');
-                }}
+            <FocusableComponent
+                icon={'open-in-new'}
+                iconFocused={'open-in-new'}
+                label={'Modal'}
                 onEnterPress={() => {
                     navigate(ROUTES.MODAL, '/[slug]');
                 }}

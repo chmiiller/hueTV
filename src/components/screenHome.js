@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { Api, Button, useNavigate, useOpenURL } from 'renative';
+import React, { useEffect } from 'react';
+import { Text, View } from 'react-native';
+import { Api } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import { testInternetConnection, getLights } from '../hueapi';
 import Theme, { themeStyles, hasWebFocusableUI } from '../config';
 import List from '../scenes/list';
 
-const FocusableView = withFocusable()(View);
-
+const screenTitle = 'All your lights';
 const ScreenHome = () => {
-    const [message, setMessage] = useState('Lights 💡');
     useEffect(() => {
         console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Api: ${JSON.stringify(Api,null,'    ')} `);
     }, []);
@@ -19,7 +17,6 @@ const ScreenHome = () => {
         const response = await testInternetConnection();
         if (response && response.results && response.results[0]) {
             const item = response.results[0];
-            setMessage(item.bundleId);
         }
     };
 
@@ -31,8 +28,8 @@ const ScreenHome = () => {
     return (
         <View style={themeStyles.screen}>
             <View style={themeStyles.container}>
-                <Text style={themeStyles.textH2}>{message}</Text>
-                    <List />
+                <Text style={themeStyles.textH2}>{screenTitle}</Text>
+                <List />
             </View>
         </View>
     );
