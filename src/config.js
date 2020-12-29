@@ -8,7 +8,8 @@ export ICON_LOGO from '../platformAssets/runtime/logo.png'; // eslint-disable-li
 if (isFactorBrowser) registerServiceWorker();
 
 export const hasMobileWebUI = isFactorMobile && isEngineWeb;
-export const hasHorizontalMenu = !isFactorMobile && !isFactorDesktop && !hasMobileWebUI;
+// export const hasHorizontalMenu = !isFactorMobile && !isFactorDesktop && !hasMobileWebUI;
+export const hasHorizontalMenu = false;
 export const hasFullScreenMenu = hasMobileWebUI;
 export const hasVerticalMenu = !hasHorizontalMenu && !hasFullScreenMenu;
 export const hasWebFocusableUI = isEngineWeb && isFactorTv;
@@ -16,15 +17,23 @@ export const hasWebFocusableUI = isEngineWeb && isFactorTv;
 // Disable yellow warnings UI
 console.disableYellowBox = true; // eslint-disable-line no-console
 
+export const apiUrl = "";
+export const username = "";
+
 const theme = {
+    color0: '#111111',
     color1: '#222222',
     color2: '#62DBFB',
     color3: '#FB8D62',
     color4: '#FFFFFF',
     color5: '#AAAAAA',
-    primaryFontFamily: 'TimeBurner',
+    yellow: '#EFE514',
+    white: '#FFFFFF',
+    primaryFontFamily: 'RobotoCondensed-Regular',
     iconSize: getScaledValue(40),
-    menuWidth: hasHorizontalMenu || hasFullScreenMenu ? '100%' : getScaledValue(280),
+    iconSizeMedium: getScaledValue(30),
+    iconSizeSmall: getScaledValue(20),
+    menuWidth: hasHorizontalMenu || hasFullScreenMenu ? '100%' : getScaledValue(180),
     menuHeight: hasHorizontalMenu ? getScaledValue(80) : '100%',
     statusBar: 'light-content'
 };
@@ -35,7 +44,7 @@ export const themeStyles = StyleSheet.create({
     },
     appContainer: {
         position: 'absolute',
-        left: hasVerticalMenu ? getScaledValue(280) : 0,
+        left: hasVerticalMenu ? getScaledValue(180) : 0,
         right: 0,
         top: hasHorizontalMenu ? getScaledValue(80) : 0,
         bottom: 0
@@ -87,8 +96,8 @@ export const themeStyles = StyleSheet.create({
         textAlign: 'left',
     },
     icon: {
-        width: getScaledValue(40),
-        height: getScaledValue(40),
+        width: getScaledValue(1),
+        height: getScaledValue(1),
         margin: getScaledValue(10),
     },
     button: {
@@ -98,7 +107,7 @@ export const themeStyles = StyleSheet.create({
         borderColor: theme.color2,
         height: getScaledValue(50),
         minWidth: getScaledValue(150),
-        maxWidth: getScaledValue(200),
+        maxWidth: getScaledValue(180),
         marginTop: getScaledValue(20)
 
     },
@@ -148,7 +157,7 @@ export const themeStyles = StyleSheet.create({
 
 export const ROUTES = {
     HOME: '/',
-    MY_PAGE: 'my-page',
+    SETTINGS: 'settings',
     MODAL: 'modal'
 };
 

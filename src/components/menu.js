@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
         paddingLeft: getScaledValue(hasHorizontalMenu ? 40 : 40),
         width: Theme.menuWidth,
         height: Theme.menuHeight,
-        backgroundColor: Theme.color1,
+        backgroundColor: Theme.color0,
         alignItems: 'flex-start',
-        borderRightWidth: getScaledValue(hasHorizontalMenu ? 0 : 1),
+        // borderRightWidth: getScaledValue(hasHorizontalMenu ? 0 : 1),
         borderBottomWidth: getScaledValue(hasHorizontalMenu ? 1 : 0),
-        borderColor: Theme.color5,
+        // borderColor: Theme.color5,
         flexDirection: hasHorizontalMenu ? 'row' : 'column'
     },
     button: {
@@ -50,12 +50,13 @@ const styles = StyleSheet.create({
         marginTop: hasHorizontalMenu ? 0 : getScaledValue(20),
         maxWidth: getScaledValue(400),
         minWidth: getScaledValue(50),
-        borderWidth: 0
+        borderWidth: 0,
+        opacity: 0.5,
     },
     buttonText: {
-        fontFamily: 'TimeBurner',
-        color: '#62DBFB',
-        fontSize: getScaledValue(20)
+        color: Theme.white,
+        fontFamily: Theme.primaryFontFamily,
+        fontSize: getScaledValue(15)
     }
 });
 
@@ -68,42 +69,45 @@ const Menu = (props) => {
         }, []);
     }
 
+    const MenuButton = ({  }) => {
+
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={themeStyles.text}>
-Menu
-            </Text>
             <Button
                 // to={ROUTES.HOME}
-                title="Home"
-                iconFont="ionicons"
+                title=" Lights"
+                iconFont="fontAwesome"
                 className="focusable"
-                iconName="md-home"
-                iconColor={Theme.color3}
-                iconSize={Theme.iconSize}
+                iconName="lightbulb-o"
+                iconColor={Theme.yellow}
+                iconSize={Theme.iconSizeSmall}
                 style={styles.button}
+                activeOpacity={1}
                 textStyle={styles.buttonText}
                 onPress={() => {
-                    navigate(ROUTES.HOME, '/');
+                    navigate(ROUTES.HOME, '/[slug]');
                 }}
                 onEnterPress={() => {
-                    navigate(ROUTES.HOME, '/');
+                    navigate(ROUTES.HOME, '/[slug]');
                 }}
             />
             <Button
-                title="My Page"
-                iconFont="ionicons"
-                iconName="md-book"
+                title="Settings"
+                iconFont="fontAwesome"
+                iconName="gear"
                 className="focusable"
-                iconColor={Theme.color3}
-                iconSize={Theme.iconSize}
+                iconColor={Theme.yellow}
+                iconSize={Theme.iconSizeSmall}
                 style={styles.button}
+                activeOpacity={1}
                 textStyle={styles.buttonText}
                 onPress={() => {
-                    navigate(ROUTES.MY_PAGE, '/[slug]');
+                    navigate(ROUTES.SETTINGS, '/[slug]');
                 }}
                 onEnterPress={() => {
-                    navigate(ROUTES.MY_PAGE, '/[slug]');
+                    navigate(ROUTES.SETTINGS, '/[slug]');
                 }}
             />
             <Button
@@ -112,9 +116,10 @@ Menu
                 iconFont="ionicons"
                 className="focusable"
                 iconName="ios-albums"
-                iconColor={Theme.color3}
-                iconSize={Theme.iconSize}
+                iconColor={Theme.yellow}
+                iconSize={Theme.iconSizeSmall}
                 style={styles.button}
+                activeOpacity={1}
                 textStyle={styles.buttonText}
                 onPress={() => {
                     navigate(ROUTES.MODAL, '/[slug]');
