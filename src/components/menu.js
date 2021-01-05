@@ -91,6 +91,7 @@ const Menu = (props) => {
     return (
         <View style={styles.container}>
             <FocusableComponent
+                focusKey={'menu_lights'}
                 icon={'lightbulb'}
                 iconFocused={'lightbulb-on'}
                 label={'Lights'}
@@ -99,6 +100,7 @@ const Menu = (props) => {
                 }}
             />
             <FocusableComponent
+                focusKey={'menu_settings'}
                 icon={'settings'}
                 iconFocused={'settings'}
                 label={'Settings'}
@@ -108,6 +110,7 @@ const Menu = (props) => {
                 }}
             />
             <FocusableComponent
+                focusKey={'menu_modal'}
                 icon={'open-in-new'}
                 iconFocused={'open-in-new'}
                 label={'Modal'}

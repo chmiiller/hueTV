@@ -81,6 +81,29 @@ export const turnLightOn = async(id) => {
     
 }
 
+export const setLightBrightness = async({ id, percentage }) => {
+    if (!id) {
+        console.log('ID is missing');
+        return;
+    }
+    const brightness = Math.round((254 * percentage) / 100);
+
+    const url = `${baseUrl}/lights/${id}/state`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        body: `{"bri":${brightness}}`,
+    })
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
+
+    const switchResult = await response.json();
+    return switchResult && switchResult[0];
+    
+}
+
 export const getHueLightsOnly = async() => {
     return 123;
 }
