@@ -1,20 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useNavigate } from '@reach/router';
 import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { turnLightOff, turnLightOn } from '../../hueapi';
 import { black, white, yellow } from '../../constants/colors';
+import { ROUTES } from '../../config';
 
-const LightItem = ({ light, switchCallback }) => {
+const LightItem = (props) => {
+    const { light } = props;
+    const navigate = useNavigate(props);
     const { id, isOn, name } = light;
-
-    const switchLight = async(isOn, lightId) => {
-        // console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> isOn, lightId: ${isOn}, ${lightId} `);
-        const result = await (isOn) ? turnLightOff(lightId) : turnLightOn(lightId);
-        switchCallback(result);
-    };
 
     const SwitchButton = ({ focused, isOn }) => {
         const containerStyle = focused ? styles.containerBgFocus : styles.containerBg;
@@ -30,9 +27,10 @@ const LightItem = ({ light, switchCallback }) => {
     const FocusableComponent = withFocusable()(SwitchButton);
     return(
         <FocusableComponent
+            focusKey={`light_${id}`}
             isOn={isOn}
             onEnterPress={() => {
-                switchLight(isOn, id);
+                navigate(ROUTES.DETAILS, { state: { light } });
             }}
         />
     );

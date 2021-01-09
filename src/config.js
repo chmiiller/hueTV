@@ -160,7 +160,9 @@ export const themeStyles = StyleSheet.create({
 export const ROUTES = {
     HOME: '/',
     SETTINGS: 'settings',
-    MODAL: 'modal'
+    DETAILS: 'details',
+    MODAL: 'modal',
+    EXIT: 'exit',
 };
 
 export default theme;

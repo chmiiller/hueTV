@@ -10,8 +10,10 @@ import List from '../scenes/list';
 const screenTitle = 'All your lights';
 const ScreenHome = (props) => {
     const navigate = useNavigate(props);
+    
     useEffect(() => {
         console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Api: ${JSON.stringify(Api,null,'    ')} `);
+    
     }, []);
 
     const testInternet = async() => {
@@ -30,7 +32,7 @@ const ScreenHome = (props) => {
         <View style={themeStyles.screen}>
             <View style={themeStyles.container}>
                 <Text style={themeStyles.textH2}>{screenTitle}</Text>
-                <List navigate={navigate} />
+                <List />
             </View>
         </View>
     );

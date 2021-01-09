@@ -110,13 +110,15 @@ export const getHueLightsOnly = async() => {
 
 const makeArrayFromObject = (obj) => {
     const arr = Object.keys(obj).map(id => {
-        let item = obj[id];
+        const item = obj[id];
+        const brightPercentage = Math.round((item.state.bri * 100) / 254);
         
         return {
             id,
             isOn: item.state.on,
             reachable: item.state.reachable,
             bright: item.state.bri,
+            brightPercentage,
             hue: item.state.hue,
             sat: item.state.sat,
             name: item.name,

@@ -102,5 +102,6 @@
         }
     },
     "currentTemplate": "renative-template-hello-world",
-    "isMonorepo": false
+    "isMonorepo": false,
+    "enableAnalytics": false
 }

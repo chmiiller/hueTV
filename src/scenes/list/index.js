@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'renative';
-import { TouchableOpacity, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import { getLights } from '../../hueapi';
@@ -17,17 +16,30 @@ const styles = StyleSheet.create({
 });
 
 const List = (props) => {
-    const navigate = useNavigate(props);
     const [isLoaded, setIsLoaded] = useState(false);
     const [lights, setLights] = useState([]);
+    const { setFocus } = props;
     useEffect(() => {
+        setTimeout(() => {
+            window.addEventListener('keydown', onKeyDownList);
+        }, 100);
         fetchLights();
     }, []);
+
+    const onKeyDownList = (event) => {
+        switch (event.keyCode) {
+            case 8: //backspace
+            case 10009:
+                setFocus('menu_lights');
+                break;
+        }
+    }
 
     const fetchLights = async() => {
         const _lights = await getLights();
         setIsLoaded(true);
         setLights(_lights);
+        setFocus();
     };
 
     const renderItems = (allLights) => {
@@ -46,14 +58,6 @@ const List = (props) => {
     } else {
         return (
             <ScrollView contentContainerStyle={themeStyles.container}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigate('details', '/[slug]');
-                    }}
-                >
-                    <Text>Press Here List</Text>
-                </TouchableOpacity>
                 <View style={styles.lightsContainer}>
                     {renderItems(lights)}
                 </View>
@@ -62,4 +66,5 @@ const List = (props) => {
     }
 };
 
-export default List;
+// export default List;
+export default (hasWebFocusableUI ? withFocusable()(List) : List);
