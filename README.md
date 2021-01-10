@@ -32,17 +32,31 @@
   - Group scrolling
   - Group switch on/off
   - Title positioning
+  - Real color light
   - Loading
+  - Refresh interval
+- Light Details:
+  - Real color light
+  - Refresh interval
 - Settings:
   - Test internet
   - Get bridge IP Address
   - Get bridge token
+  - Store IP Address
+  - Store token
   - Versioning
 - About:
   - Motivation
   - QR Code to "buy me a coffee"
   - QR Code to GitHub repo
   - Stack & Libs
+- General:
+  - Name
+  - Icon
+  - Description
+  - Shortcuts
+  - Build for store
+  - Publish on store
 - Docs:
   - Build with Docusaurus
   - Add info on what's needed
