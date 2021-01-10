@@ -5,79 +5,13 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { themeStyles, hasWebFocusableUI } from '../../config';
-import { offwhite, yellow } from '../../constants/colors';
+import { dark_gray, offwhite, yellow } from '../../constants/colors';
 import { setLightBrightness, turnLightOn, turnLightOff } from '../../hueapi'
 
 const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
 const brightness_message = 'Brightness';
 const switchHeight = 310;
-
-const styles = StyleSheet.create({
-    switchContainer: {
-        backgroundColor: '#2e2e30',
-        flex: 1,
-        flexDirection: 'column-reverse',
-        width: '30%',
-        minHeight: getScaledValue(switchHeight),
-        maxWidth: getScaledValue(130),
-        borderRadius: 40,
-        borderWidth: 1,
-        marginTop: 30,
-        opacity: 0.5,
-    },
-    switchContainerFocused: {
-        backgroundColor: '#2e2e30',
-        flex: 1,
-        flexDirection: 'column-reverse',
-        width: '30%',
-        minHeight: getScaledValue(switchHeight),
-        maxWidth: getScaledValue(130),
-        borderRadius: 40,
-        borderWidth: 1,
-        marginTop: 24,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 12 },
-        shadowOpacity: 0.58,
-        shadowRadius: 16,
-        opacity: 1,
-    },
-    switchBg: {
-        backgroundColor: yellow,
-        borderRadius: 40,
-        height: 30,
-    },
-    iconContainer: {
-        bottom: 12,
-        left: 0,
-        height: getScaledValue(45),
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-        position: "absolute",
-    },
-    subtitle: {
-        fontFamily: 'RobotoCondensed-Regular',
-        fontSize: getScaledValue(10),
-        marginTop: getScaledValue(4),
-        marginBottom: getScaledValue(4),
-        color: offwhite,
-        fontWeight: 'bold',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center'
-    },
-    tutorial: {
-        fontFamily: 'RobotoCondensed-Regular',
-        fontSize: getScaledValue(8),
-        marginTop: getScaledValue(24),
-        color: offwhite,
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        lineHeight: 24,
-    },
-});
+const brightness_amount = 10;
 
 const ScreenLightDetails = (props) => {
     const pop = usePop(props);
@@ -106,9 +40,14 @@ const ScreenLightDetails = (props) => {
     const Switch = ({ focused }) => {
         const containerStyle = focused ? styles.switchContainerFocused : styles.switchContainer;
         const brightnessHeight = getScaledValue((switchHeight * brightness) * 0.01);
+        const borderTop = brightness >= 95 ? 40 : 0;
         return (
             <View style={containerStyle}>
-                <View style={[styles.switchBg, {height: brightnessHeight}]} />
+                <View style={[styles.switchBg, {
+                    height: brightnessHeight,
+                    borderTopLeftRadius: borderTop,
+                    borderTopRightRadius: borderTop,
+                }]} />
                 <View style={styles.iconContainer} >
                     <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={'white'} />
                 </View>
@@ -122,9 +61,9 @@ const ScreenLightDetails = (props) => {
             setLightOn();
             return;
         }
-        const newBrightness = brightness + 10;
+        const newBrightness = brightness + brightness_amount;
         if (newBrightness < 100) {
-            await setLightBrightness({ id: light.id, percentage: brightness+10});
+            await setLightBrightness({ id: light.id, percentage: newBrightness});
             setBrightness(newBrightness);
         } else {
             await setLightBrightness({ id: light.id, percentage: 100});
@@ -134,7 +73,7 @@ const ScreenLightDetails = (props) => {
     }
     
     const makeDarker =  async () => {
-        const newBrightness = brightness - 10;
+        const newBrightness = brightness - brightness_amount;
         if (newBrightness > 0) {
             await setLightBrightness({ id: light.id, percentage: newBrightness});
             setBrightness(newBrightness);
@@ -203,5 +142,73 @@ const ScreenLightDetails = (props) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    switchContainer: {
+        backgroundColor: dark_gray,
+        flex: 1,
+        flexDirection: 'column-reverse',
+        width: '30%',
+        minHeight: getScaledValue(switchHeight),
+        maxWidth: getScaledValue(130),
+        borderRadius: 40,
+        borderWidth: 1,
+        marginTop: 30,
+        opacity: 0.5,
+    },
+    switchContainerFocused: {
+        backgroundColor: dark_gray,
+        flex: 1,
+        flexDirection: 'column-reverse',
+        width: '30%',
+        minHeight: getScaledValue(switchHeight),
+        maxWidth: getScaledValue(130),
+        borderRadius: 40,
+        borderWidth: 1,
+        marginTop: 24,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 12 },
+        shadowOpacity: 0.58,
+        shadowRadius: 16,
+        opacity: 1,
+    },
+    switchBg: {
+        backgroundColor: yellow,
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
+        height: 30,
+    },
+    iconContainer: {
+        bottom: 12,
+        left: 0,
+        height: getScaledValue(45),
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        position: "absolute",
+    },
+    subtitle: {
+        fontFamily: 'RobotoCondensed-Regular',
+        fontSize: getScaledValue(10),
+        marginTop: getScaledValue(4),
+        marginBottom: getScaledValue(4),
+        color: offwhite,
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
+    tutorial: {
+        fontFamily: 'RobotoCondensed-Regular',
+        fontSize: getScaledValue(8),
+        marginTop: getScaledValue(24),
+        color: offwhite,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        lineHeight: 24,
+    },
+});
 
 export default (hasWebFocusableUI ? withFocusable()(ScreenLightDetails) : ScreenLightDetails);

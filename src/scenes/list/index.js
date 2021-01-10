@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import { getLights } from '../../hueapi';
+import { getLights, getGroups } from '../../hueapi';
 import LightItem from '../../components/Light';
-import Theme, { themeStyles, hasWebFocusableUI } from '../../config';
+import { themeStyles, hasWebFocusableUI } from '../../config';
 
 const styles = StyleSheet.create({
     lightsContainer: { margin: 20, flexDirection: 'row', flexWrap: 'wrap' },
@@ -37,6 +37,7 @@ const List = (props) => {
 
     const fetchLights = async() => {
         const _lights = await getLights();
+        const _groups = await getGroups();
         setIsLoaded(true);
         setLights(_lights);
         setFocus();

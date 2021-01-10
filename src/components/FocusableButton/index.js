@@ -4,11 +4,11 @@ import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Theme from '../../config';
-import { white, yellow } from '../../constants/colors';
+import { dark_gray, white, yellow } from '../../constants/colors';
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#2e2e30',
+        backgroundColor: dark_gray,
         
         minHeight: getScaledValue(30),
         minWidth: getScaledValue(60),
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         opacity: 0.5,
     },
     buttonFocus: {
-        backgroundColor: '#2e2e30',
+        backgroundColor: dark_gray,
         minHeight: getScaledValue(30),
         minWidth: getScaledValue(60),
         borderRadius: 15,

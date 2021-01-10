@@ -22,6 +22,7 @@ export const getGroups = async() => {
     }
 
     const groups = await response.json();
+    console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> groups: ${JSON.stringify(groups,null,'    ')} `);
     return groups;
 };
 
@@ -34,8 +35,8 @@ export const getLights = async() => {
         throw new Error(message);
     }
 
-    const groups = await response.json();
-    return makeArrayFromObject(groups);
+    const lights = await response.json();
+    return makeArrayFromObject(lights);
 };
 
 export const turnLightOff = async(id) => {
