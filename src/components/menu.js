@@ -8,6 +8,12 @@ import { initNavigation, withFocusable } from '@noriginmedia/react-spatial-navig
 import Theme, { hasWebFocusableUI, ROUTES } from '../config';
 import { black } from '../constants/colors';
 import FocusableButtonWithIcon from '../components/FocusableButtonWithIcon'; 
+import FocusableButtonLabel from '../components/FocusableButtonLabel'; 
+
+const btLightsLabel = 'Lights';
+const btSettingsLabel = 'Settings';
+const btAboutLabel = 'About';
+const btExitLabel = 'Exit Application';
 
 if (hasWebFocusableUI) {
     initNavigation({
@@ -19,14 +25,28 @@ if (hasWebFocusableUI) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: getScaledValue(40),
-        paddingLeft: getScaledValue(40),
         width: Theme.menuWidth,
         height: Theme.menuHeight,
         backgroundColor: black,
         alignItems: 'flex-start',
         borderBottomWidth: 0,
         flexDirection: 'column'
+    },
+    containerTop: {
+        flex: 1,
+        marginTop: getScaledValue(48),
+        marginLeft: getScaledValue(36),
+        width: Theme.menuWidth,
+    },
+    containerBottom: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: getScaledValue(24),
+        paddingRight: getScaledValue(12),
+        width: Theme.menuWidth,
+    },
+    aboutContainer: {
+        bottom: 8,
     },
 });
 
@@ -41,43 +61,47 @@ const Menu = (props) => {
 
     return (
         <View style={styles.container}>
-            <FocusableButtonWithIcon
-                focusKey={'menu_lights'}
-                icon={'lightbulb'}
-                iconFocused={'lightbulb-on'}
-                title={'Lights'}
-                onEnter={() => {
-                    navigate(ROUTES.HOME, '/[slug]');
-                }}
-            />
-            <FocusableButtonWithIcon
-                focusKey={'menu_settings'}
-                icon={'settings'}
-                iconFocused={'settings'}
-                title={'Settings'}
-                material
-                onEnter={() => {
-                    navigate(ROUTES.SETTINGS, '/[slug]');
-                }}
-            />
-            <FocusableButtonWithIcon
-                focusKey={'menu_modal'}
-                icon={'open-in-new'}
-                iconFocused={'open-in-new'}
-                title={'Modal'}
-                onEnter={() => {
-                    navigate(ROUTES.MODAL, '/[slug]');
-                }}
-            />
-            <FocusableButtonWithIcon
-                focusKey={'menu_exit'}
-                icon={'open-in-new'}
-                iconFocused={'open-in-new'}
-                title={'Exit Application'}
-                onEnter={() => {
-                    navigate(ROUTES.EXIT, '/[slug]');
-                }}
-            />
+            <View style={styles.containerTop}>
+                <FocusableButtonWithIcon
+                    focusKey={'menu_lights'}
+                    icon={'lightbulb'}
+                    iconFocused={'lightbulb-on'}
+                    title={btLightsLabel}
+                    onEnter={() => {
+                        navigate(ROUTES.HOME, '/[slug]');
+                    }}
+                />
+                <FocusableButtonWithIcon
+                    focusKey={'menu_settings'}
+                    icon={'settings'}
+                    iconFocused={'settings'}
+                    title={btSettingsLabel}
+                    material
+                    onEnter={() => {
+                        navigate(ROUTES.SETTINGS, '/[slug]');
+                    }}
+                />
+            </View>
+            <View style={styles.containerBottom}>
+                <View style={styles.aboutContainer}>
+                    <FocusableButtonLabel
+                        focusKey={'menu_modal'}
+                        title={btAboutLabel}
+                        onEnter={() => {
+                            navigate(ROUTES.MODAL, '/[slug]');
+                        }}
+                    />
+                </View>
+                <View>
+                    <FocusableButtonLabel
+                        focusKey={'menu_exit'}
+                        title={btExitLabel}
+                        onEnter={() => {
+                            navigate(ROUTES.EXIT, '/[slug]');
+                        }}
+                    />
+                </View>
+            </View>
         </View>
     );
 };

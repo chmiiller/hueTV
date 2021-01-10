@@ -8,7 +8,10 @@ import { themeStyles, hasWebFocusableUI } from '../../config';
 import { offwhite, yellow } from '../../constants/colors';
 import { setLightBrightness, turnLightOn, turnLightOff } from '../../hueapi'
 
+const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
+const brightness_message = 'Brightness';
 const switchHeight = 310;
+
 const styles = StyleSheet.create({
     switchContainer: {
         backgroundColor: '#2e2e30',
@@ -56,7 +59,6 @@ const styles = StyleSheet.create({
     subtitle: {
         fontFamily: 'RobotoCondensed-Regular',
         fontSize: getScaledValue(10),
-        marginHorizontal: getScaledValue(20),
         marginTop: getScaledValue(4),
         marginBottom: getScaledValue(4),
         color: offwhite,
@@ -65,13 +67,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center'
     },
+    tutorial: {
+        fontFamily: 'RobotoCondensed-Regular',
+        fontSize: getScaledValue(8),
+        marginTop: getScaledValue(24),
+        color: offwhite,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        lineHeight: 24,
+    },
 });
 
 const ScreenLightDetails = (props) => {
     const pop = usePop(props);
     const { setFocus } = props;
     const { light } = props.location.state;
-    const [brightness, setBrightness] = useState(light.brightPercentage);
+    const [brightness, setBrightness] = useState(light.isOn ? light.brightPercentage : 0);
     const [savedBrightness, setSavedBrightness] = useState(light.brightPercentage);
     const [lampOn, setLampOn] = useState(light.isOn);
 
@@ -184,8 +196,9 @@ const ScreenLightDetails = (props) => {
         <View style={themeStyles.screen}>
             <View style={themeStyles.container}>
                 <Text style={themeStyles.textH2}>{light.name}</Text>
-                <Text style={styles.subtitle}>{`${brightness}% Brightness`}</Text>
+                <Text style={styles.subtitle}>{`${brightness}% ${brightness_message}`}</Text>
                 <LightSwitch focusKey={`switch_${light.id}`} onEnterPress={onEnter} onArrowPress={onArrow}/>
+                <Text style={styles.tutorial}>{tutorial_message}</Text>
             </View>
         </View>
     );

@@ -1,6 +1,8 @@
 # huetv
 
 The unofficial Philips Hue app for Samsung TVs
+
+
 Running development app on TV:
 `rnv run -p tizen -d -t TV_IP_ADDRESS`
 
@@ -12,3 +14,5 @@ Running development app on browser:
 
 Running release app on TV
 `rnv run -p tizen -s release -d -t TV_IP_ADDRESS`
+
+To Do:
