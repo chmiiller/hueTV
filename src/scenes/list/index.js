@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import { getLights, getGroups } from '../../hueapi';
-import LightItem from '../../components/Light';
+import { getGroupsWithLights } from '../../hueapi';
+import LightGroup from '../../components/LightGroup';
 import { themeStyles, hasWebFocusableUI } from '../../config';
 
 const styles = StyleSheet.create({
-    lightsContainer: { margin: 20, flexDirection: 'row', flexWrap: 'wrap' },
+    lightsContainer: { margin: 20 },
     button: {
         alignItems: "center",
         backgroundColor: "#DDDDDD",
         padding: 10
-      }
+    }
 });
 
 const List = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [lights, setLights] = useState([]);
+    const [groups, setGroups] = useState([]);
     const { setFocus } = props;
     useEffect(() => {
         setTimeout(() => {
@@ -36,22 +36,10 @@ const List = (props) => {
     }
 
     const fetchLights = async() => {
-        const _lights = await getLights();
-        const _groups = await getGroups();
+        const _groups = await getGroupsWithLights();
         setIsLoaded(true);
-        setLights(_lights);
+        setGroups(_groups);
         setFocus();
-    };
-
-    const renderItems = (allLights) => {
-        const items = allLights.map((luz) => 
-            (<LightItem
-                key={luz.id}
-                light={luz}
-                switchCallback={fetchLights} 
-            />)
-        );
-        return items;
     };
 
     if (!isLoaded) {
@@ -60,12 +48,11 @@ const List = (props) => {
         return (
             <ScrollView contentContainerStyle={themeStyles.container}>
                 <View style={styles.lightsContainer}>
-                    {renderItems(lights)}
+                    {groups.map(g => <LightGroup key={g.id} group={g}/>)}
                 </View>
             </ScrollView>
         );
     }
 };
 
-// export default List;
 export default (hasWebFocusableUI ? withFocusable()(List) : List);

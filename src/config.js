@@ -16,9 +16,6 @@ export const hasFullScreenMenu = hasMobileWebUI;
 export const hasVerticalMenu = !hasHorizontalMenu && !hasFullScreenMenu;
 export const hasWebFocusableUI = isEngineWeb && isFactorTv;
 
-// Disable yellow warnings UI
-console.disableYellowBox = true; // eslint-disable-line no-console
-
 export const apiUrl = '';
 export const username = '';
 
