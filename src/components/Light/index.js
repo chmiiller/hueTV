@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: getScaledValue(24),
-        marginLeft: getScaledValue(24),
+        marginTop: getScaledValue(12),
+        marginLeft: getScaledValue(12),
     },
     containerLight: {
         backgroundColor: dark_gray,
@@ -135,6 +135,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center'
     },
-  });
+});
 
 export default LightItem;

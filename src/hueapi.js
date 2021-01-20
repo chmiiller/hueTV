@@ -22,8 +22,7 @@ export const getGroups = async() => {
     }
 
     const groups = await response.json();
-    console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> groups: ${JSON.stringify(groups,null,'    ')} `);
-    return groups;
+    return getGroupsAsArray(groups);
 };
 
 export const getLights = async() => {
@@ -36,7 +35,17 @@ export const getLights = async() => {
     }
 
     const lights = await response.json();
-    return makeArrayFromObject(lights);
+    return getLightsAsArray(lights);
+};
+
+export const getGroupsWithLights = async() => {
+    const lights = await getLights();
+    const groups = await getGroups();
+    return groups.reduce((acc, g) => {
+        // Enriches group by adding light objects to group.lights array
+        g.lights = g.lights.map(id => lights.find(l => l.id === id));
+        return [...acc, g];
+      },[]);
 };
 
 export const turnLightOff = async(id) => {
@@ -109,22 +118,36 @@ export const getHueLightsOnly = async() => {
     return 123;
 }
 
-const makeArrayFromObject = (obj) => {
+const getLightsAsArray = (obj) => {
     const arr = Object.keys(obj).map(id => {
-        const item = obj[id];
-        const brightPercentage = Math.round((item.state.bri * 100) / 254);
+        const light = obj[id];
+        const brightPercentage = Math.round((light.state.bri * 100) / 254);
         
         return {
             id,
-            isOn: item.state.on,
-            reachable: item.state.reachable,
-            bright: item.state.bri,
+            isOn: light.state.on,
+            reachable: light.state.reachable,
+            bright: light.state.bri,
             brightPercentage,
-            hue: item.state.hue,
-            sat: item.state.sat,
-            name: item.name,
-            type: item.type,
-            colorful: item.type === 'Extended color light',
+            hue: light.state.hue,
+            sat: light.state.sat,
+            name: light.name,
+            type: light.type,
+            colorful: light.type === 'Extended color light',
+        };
+    });
+    return arr;
+}
+
+const getGroupsAsArray = (obj) => {
+    const arr = Object.keys(obj).map(id => {
+        const group = obj[id];
+        return {
+            id,
+            name: group.name,
+            lights: group.lights ? group.lights.sort() : [],
+            allOn: group.state.all_on,
+            anyOn: group.state.any_on,
         };
     });
     return arr;

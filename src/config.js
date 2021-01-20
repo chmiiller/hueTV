@@ -16,9 +16,6 @@ export const hasFullScreenMenu = hasMobileWebUI;
 export const hasVerticalMenu = !hasHorizontalMenu && !hasFullScreenMenu;
 export const hasWebFocusableUI = isEngineWeb && isFactorTv;
 
-// Disable yellow warnings UI
-console.disableYellowBox = true; // eslint-disable-line no-console
-
 export const apiUrl = '';
 export const username = '';
 
@@ -75,6 +72,7 @@ export const themeStyles = StyleSheet.create({
         fontFamily: theme.primaryFontFamily,
         fontSize: getScaledValue(20),
         marginHorizontal: getScaledValue(20),
+        marginVertical: getScaledValue(12),
         color: white,
         justifyContent: 'center',
         alignItems: 'center',

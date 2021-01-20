@@ -1,29 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import { getLights, getGroups } from '../../hueapi';
-import LightItem from '../../components/Light';
+import { getGroupsWithLights } from '../../hueapi';
+import LightGroup from '../../components/LightGroup';
 import { themeStyles, hasWebFocusableUI } from '../../config';
 
 const styles = StyleSheet.create({
-    lightsContainer: { margin: 20, flexDirection: 'row', flexWrap: 'wrap' },
-    button: {
-        alignItems: "center",
-        backgroundColor: "#DDDDDD",
-        padding: 10
-      }
+    scroll: {
+        minHeight: getScaledValue(300),
+        alignSelf: 'stretch',
+        width: '100%',
+        marginTop: getScaledValue(12),
+    },
 });
 
 const List = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [lights, setLights] = useState([]);
+    const [groups, setGroups] = useState([]);
     const { setFocus } = props;
+    let scrollRef;
+    let handleFocus;
+    let handleArrow;
+    
+    scrollRef = useRef(null);
+    handleFocus = ({ y }) => {
+        scrollRef.current.scrollTo({ y });
+    };
+    
     useEffect(() => {
         setTimeout(() => {
             window.addEventListener('keydown', onKeyDownList);
         }, 100);
         fetchLights();
+
+        return () => {
+            setFocus('menu_lights');
+        }
     }, []);
 
     const onKeyDownList = (event) => {
@@ -36,36 +50,30 @@ const List = (props) => {
     }
 
     const fetchLights = async() => {
-        const _lights = await getLights();
-        const _groups = await getGroups();
+        const _groups = await getGroupsWithLights();
         setIsLoaded(true);
-        setLights(_lights);
+        setGroups(_groups);
         setFocus();
-    };
-
-    const renderItems = (allLights) => {
-        const items = allLights.map((luz) => 
-            (<LightItem
-                key={luz.id}
-                light={luz}
-                switchCallback={fetchLights} 
-            />)
-        );
-        return items;
     };
 
     if (!isLoaded) {
         return <Text>Loading...</Text>;
     } else {
         return (
-            <ScrollView contentContainerStyle={themeStyles.container}>
-                <View style={styles.lightsContainer}>
-                    {renderItems(lights)}
-                </View>
+            <ScrollView
+                contentContainerStyle={styles.scroll}
+                ref={scrollRef}
+            >
+            {groups.map(g => (
+                <LightGroup
+                    key={g.id}
+                    group={g}
+                    onFocus={handleFocus}
+                />
+            ))}   
             </ScrollView>
         );
     }
 };
 
-// export default List;
 export default (hasWebFocusableUI ? withFocusable()(List) : List);

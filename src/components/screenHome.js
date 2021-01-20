@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
-import { Api, useNavigate } from 'renative';
+import { StyleSheet, Text, View } from 'react-native';
+import { Api, getScaledValue, useNavigate } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import { testInternetConnection, getLights } from '../hueapi';
@@ -30,12 +30,20 @@ const ScreenHome = (props) => {
 
     return (
         <View style={themeStyles.screen}>
-            <View style={themeStyles.container}>
+            <View style={styles.titleContainer}>
                 <Text style={themeStyles.textH2}>{screenTitle}</Text>
-                <List />
             </View>
+            <List />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    titleContainer: {
+        marginVertical: getScaledValue(4),
+        borderBottomWidth: 1,
+        borderBottomColor: '#1c1c1c',
+    },
+});
 
 export default (hasWebFocusableUI ? withFocusable()(ScreenHome) : ScreenHome);
