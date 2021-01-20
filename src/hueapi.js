@@ -41,7 +41,7 @@ export const getLights = async() => {
 export const getGroupsWithLights = async() => {
     const lights = await getLights();
     const groups = await getGroups();
-    return groups.reduce((acc, g) => {  
+    return groups.reduce((acc, g) => {
         // Enriches group by adding light objects to group.lights array
         g.lights = g.lights.map(id => lights.find(l => l.id === id));
         return [...acc, g];

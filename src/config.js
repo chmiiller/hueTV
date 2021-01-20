@@ -72,6 +72,7 @@ export const themeStyles = StyleSheet.create({
         fontFamily: theme.primaryFontFamily,
         fontSize: getScaledValue(20),
         marginHorizontal: getScaledValue(20),
+        marginVertical: getScaledValue(12),
         color: white,
         justifyContent: 'center',
         alignItems: 'center',
