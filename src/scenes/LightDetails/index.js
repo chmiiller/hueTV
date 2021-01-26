@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { getScaledValue, usePop } from 'renative';
+import { getScaledValue, useNavigate, usePop } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { themeStyles, hasWebFocusableUI } from '../../config';
 import { dark_gray, offwhite, yellow } from '../../constants/colors';
-import { setLightBrightness, turnLightOn, turnLightOff } from '../../hueapi'
+import { setGroupBrightness, setLightBrightness, turnLightOn, turnLightOff } from '../../hueapi'
 
 const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
 const brightness_message = 'Brightness';
@@ -15,11 +15,13 @@ const brightness_amount = 10;
 
 const ScreenLightDetails = (props) => {
     const pop = usePop(props);
+    const navigate = useNavigate(props);
     const { setFocus } = props;
-    const { light } = props.location.state;
-    const [brightness, setBrightness] = useState(light.isOn ? light.brightPercentage : 0);
+    const { light, isGroup } = props.location.state;
+    const isOn = !isGroup ? light.isOn : light.allOn || light.anyOn;
+    const [brightness, setBrightness] = useState(isOn ? light.brightPercentage : 0);
     const [savedBrightness, setSavedBrightness] = useState(light.brightPercentage);
-    const [lampOn, setLampOn] = useState(light.isOn);
+    const [lampOn, setLampOn] = useState(isOn);
 
     useEffect(() => {
         setFocus(`switch_${light.id}`);
@@ -32,7 +34,8 @@ const ScreenLightDetails = (props) => {
         switch (event.keyCode) {
             case 8: //backspace
             case 10009:
-                pop();
+                const path = isGroup ? '/groups' : '/';
+                navigate(path);
                 break;
         }
     }
@@ -56,6 +59,13 @@ const ScreenLightDetails = (props) => {
     };
     const LightSwitch = withFocusable()(Switch);
 
+    const setLightOrGroupBrightness = async ({ id, percentage }) => {
+        if (isGroup) {
+            return await setGroupBrightness({ id, percentage });
+        }
+        return await setLightBrightness({ id, percentage });
+    };
+
     const makeBrighter = async () => {
         if (!lampOn) {
             setLightOn();
@@ -63,10 +73,12 @@ const ScreenLightDetails = (props) => {
         }
         const newBrightness = brightness + brightness_amount;
         if (newBrightness < 100) {
-            await setLightBrightness({ id: light.id, percentage: newBrightness});
+            // await setLightBrightness({ id: light.id, percentage: newBrightness});
+            await setLightOrGroupBrightness({ id: light.id, percentage: newBrightness});
             setBrightness(newBrightness);
         } else {
-            await setLightBrightness({ id: light.id, percentage: 100});
+            // await setLightBrightness({ id: light.id, percentage: 100});
+            await setLightOrGroupBrightness({ id: light.id, percentage: 100});
             setBrightness(100);
         }
         setFocus(`switch_${light.id}`);
@@ -75,7 +87,8 @@ const ScreenLightDetails = (props) => {
     const makeDarker =  async () => {
         const newBrightness = brightness - brightness_amount;
         if (newBrightness > 0) {
-            await setLightBrightness({ id: light.id, percentage: newBrightness});
+            // await setLightBrightness({ id: light.id, percentage: newBrightness});
+            await setLightOrGroupBrightness({ id: light.id, percentage: newBrightness});
             setBrightness(newBrightness);
         } else {
             setLightOff();

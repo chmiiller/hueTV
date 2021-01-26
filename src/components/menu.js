@@ -10,6 +10,7 @@ import { black } from '../constants/colors';
 import FocusableButtonWithIcon from '../components/FocusableButtonWithIcon'; 
 import FocusableButtonLabel from '../components/FocusableButtonLabel'; 
 
+const btGroupsLabel = 'Groups';
 const btLightsLabel = 'Lights';
 const btSettingsLabel = 'Settings';
 const btAboutLabel = 'About';
@@ -62,6 +63,15 @@ const Menu = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
+                <FocusableButtonWithIcon
+                    focusKey={'menu_groups'}
+                    icon={'home-outline'}
+                    iconFocused={'home'}
+                    title={btGroupsLabel}
+                    onEnter={() => {
+                        navigate(ROUTES.GROUPS, '/[slug]');
+                    }}
+                />
                 <FocusableButtonWithIcon
                     focusKey={'menu_lights'}
                     icon={'lightbulb'}

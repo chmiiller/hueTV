@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import ScreenHome from '../components/screenHome';
+import ScreenLights from '../scenes/Lights';
 
 const Page = () => (
-    <ScreenHome router={useRouter()} />
+    <ScreenLights router={useRouter()} />
 );
 export default Page;

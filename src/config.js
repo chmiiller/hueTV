@@ -157,6 +157,7 @@ export const themeStyles = StyleSheet.create({
 
 export const ROUTES = {
     HOME: '/',
+    GROUPS: 'groups',
     SETTINGS: 'settings',
     DETAILS: 'details',
     MODAL: 'modal',

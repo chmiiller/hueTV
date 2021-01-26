@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Router, navigate } from '@reach/router';
 
-import ScreenHome from '../components/screenHome';
+import ScreenGroups from '../scenes/Groups';
+import ScreenLights from '../scenes/Lights';
 import ScreenSettings from '../components/screenSettings';
 import ScreenModal from '../components/screenModal';
 import ScreenLightDetails from '../scenes/LightDetails';
@@ -22,7 +23,8 @@ const App = () => {
             <Menu focusKey="menu" navigate={navigate} />
             <View style={themeStyles.appContainer}>
                 <Router>
-                    <ScreenHome path={ROUTES.HOME} />
+                    <ScreenGroups path={ROUTES.GROUPS} />
+                    <ScreenLights path={ROUTES.HOME} />
                     <ScreenSettings path={ROUTES.SETTINGS} />
                     <ScreenModal path={ROUTES.MODAL} />
                     <ScreenLightDetails path={ROUTES.DETAILS} />

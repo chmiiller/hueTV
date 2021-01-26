@@ -32,15 +32,18 @@
   - ~~Group scrolling~~
   - ~~Group switch on/off~~
   - Title positioning
+  - Group lights
   - Real color light
   - Loading
   - Refresh interval
 - Rooms/Groups
-  - Add new screen
-  - Add new side menu item
+  - ~~Add new screen~~
+  - ~~Add new side menu item~~
+  - ~~List all groups~~
+  - ~~Find a way to edit group brightness~~
   - Remove group with only sensors
-  - List all groups
-  - Find a way to edit group brightness...
+  - Proper edit group brightness
+  - Turn group lights on/off
 - Light Details:
   - Real color light
   - Refresh interval
@@ -53,6 +56,10 @@
   - Store token
   - Option to group lights or not
   - Versioning
+- Menu:
+  - Use new icons
+  - Keep menu item selected
+  - Back button should call exit dialog
 - About:
   - Motivation
   - QR Code to "buy me a coffee"

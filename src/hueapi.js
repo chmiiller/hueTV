@@ -111,7 +111,28 @@ export const setLightBrightness = async({ id, percentage }) => {
 
     const switchResult = await response.json();
     return switchResult && switchResult[0];
-    
+}
+
+export const setGroupBrightness = async({ id, percentage }) => {
+    if (!id) {
+        console.log('ID is missing');
+        return;
+    }
+    const brightness = Math.round((254 * percentage) / 100);
+
+    const url = `${baseUrl}/groups/${id}/action`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        body: `{"bri":${brightness}}`,
+    })
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
+
+    const switchResult = await response.json();
+    return switchResult && switchResult[0];
 }
 
 export const getHueLightsOnly = async() => {
@@ -142,13 +163,23 @@ const getLightsAsArray = (obj) => {
 const getGroupsAsArray = (obj) => {
     const arr = Object.keys(obj).map(id => {
         const group = obj[id];
+        const { all_on, any_on } = group.state;
+        const { on, bri, hue, sat } = group.action;
+        const brightPercentage = Math.round((bri * 100) / 254);
+        
         return {
             id,
             name: group.name,
+            type: group.type,
             lights: group.lights ? group.lights.sort() : [],
-            allOn: group.state.all_on,
-            anyOn: group.state.any_on,
+            allOn: all_on,
+            anyOn: any_on,
+            on,
+            hue,
+            saturation: sat,
+            bright: bri,
+            brightPercentage,
         };
-    });
+    }).filter(group => group.type === 'Room');
     return arr;
 }

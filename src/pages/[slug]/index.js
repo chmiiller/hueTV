@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { View } from 'react-native';
-import ScreenHome from '../../components/screenHome';
+import ScreenLights from '../../scenes/Lights';
+import ScreenGroups from '../../scenes/Groups';
 import ScreenSettings from '../../components/screenSettings';
 import ScreenModal from '../../components/screenModal';
 import { ROUTES } from '../../config';
 
 const pages = {};
-pages[ROUTES.HOME] = ScreenHome;
+pages[ROUTES.GROUPS] = ScreenGroups;
+pages[ROUTES.HOME] = ScreenLights;
 pages[ROUTES.SETTINGS] = ScreenSettings;
 pages[ROUTES.MODAL] = ScreenModal;
 
