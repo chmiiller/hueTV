@@ -10,7 +10,7 @@ import { black } from '../constants/colors';
 import FocusableButtonWithIcon from '../components/FocusableButtonWithIcon'; 
 import FocusableButtonLabel from '../components/FocusableButtonLabel'; 
 
-const btGroupsLabel = 'Groups';
+const btGroupsLabel = 'Rooms';
 const btLightsLabel = 'Lights';
 const btSettingsLabel = 'Settings';
 const btAboutLabel = 'About';
@@ -56,8 +56,20 @@ const Menu = (props) => {
     const navigate = useNavigate(props);
     if (hasWebFocusableUI) {
         useEffect(() => {
+            setTimeout(() => {
+                window.addEventListener('keydown', onKeyDownMenu);
+            }, 100);
             setFocus();
         }, []);
+    }
+
+    const onKeyDownMenu = (event) => {
+        switch (event.keyCode) {
+            case 8: //backspace
+            case 10009:
+                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> FECHANDO MENU:`);
+                break;
+        }
     }
 
     return (

@@ -36,18 +36,22 @@
   - Real color light
   - Loading
   - Refresh interval
+  - Move container right
+  - Test 40 lights
 - Rooms/Groups
   - ~~Add new screen~~
   - ~~Add new side menu item~~
   - ~~List all groups~~
   - ~~Find a way to edit group brightness~~
+  - ~~Proper edit group brightness~~
+  - ~~Turn group lights on/off~~
   - Remove group with only sensors
-  - Proper edit group brightness
-  - Turn group lights on/off
+  - Move container right
+  - Test 40 groups
 - Light Details:
   - Real color light
   - Refresh interval
-  - Support group editing
+  - ~~Support group editing~~
 - Settings:
   - Test internet
   - Get bridge IP Address
@@ -59,6 +63,7 @@
 - Menu:
   - Use new icons
   - Keep menu item selected
+  - Navigate "on focus" instead of "on enter"
   - Back button should call exit dialog
 - About:
   - Motivation
@@ -66,6 +71,7 @@
   - QR Code to GitHub repo
   - Stack & Libs
 - General:
+  - On App start, "Rooms" should be loaded
   - Name
   - Icon
   - Description

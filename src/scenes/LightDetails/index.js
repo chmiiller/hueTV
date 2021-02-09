@@ -6,7 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { themeStyles, hasWebFocusableUI } from '../../config';
 import { dark_gray, offwhite, yellow } from '../../constants/colors';
-import { setGroupBrightness, setLightBrightness, turnLightOn, turnLightOff } from '../../hueapi'
+import { 
+    setGroupBrightness,
+    setLightBrightness,
+    turnLightOn,
+    turnLightOff,
+    turnGroupOn,
+    turnGroupOff,
+} from '../../hueapi'
 
 const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
 const brightness_message = 'Brightness';
@@ -97,7 +104,11 @@ const ScreenLightDetails = (props) => {
     }
 
     const setLightOn = () => {
-        turnLightOn(light.id);
+        if (isGroup) {
+            turnGroupOn(light.id);
+        } else {
+            turnLightOn(light.id);
+        }
         setBrightness(savedBrightness);
         setLampOn(true);
         setFocus(`switch_${light.id}`);
@@ -105,7 +116,11 @@ const ScreenLightDetails = (props) => {
     };
     
     const setLightOff = () => {
-        turnLightOff(light.id);
+        if (isGroup) {
+            turnGroupOff(light.id);
+        } else {
+            turnLightOff(light.id);
+        }
         setSavedBrightness(brightness);
         setBrightness(0);
         setLampOn(false);
@@ -124,11 +139,19 @@ const ScreenLightDetails = (props) => {
             break;
             
             case 'left':
-                setFocus('menu_lights');
+                if (isGroup) {
+                    setFocus('menu_groups');
+                } else {
+                    setFocus('menu_lights');
+                }
             break;
         
             default:
-                setFocus('menu_lights');
+                if (isGroup) {
+                    setFocus('menu_groups');
+                } else {
+                    setFocus('menu_lights');
+                }
                 break;
         }
     };

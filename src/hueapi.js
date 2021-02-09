@@ -88,7 +88,48 @@ export const turnLightOn = async(id) => {
 
     const switchResult = await response.json();
     return switchResult && switchResult[0].success;
+}
+
+export const turnGroupOff = async(id) => {
+    if (!id) {
+        console.log('ID is missing');
+        return;
+    }
+    const url = `${baseUrl}/groups/${id}/action`;
     
+    const response = await fetch(url, {
+        method: 'PUT',
+        body: `{"on":false}`,
+    })
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
+
+    const switchResult = await response.json();
+    return switchResult && switchResult[0].success;
+}
+
+export const turnGroupOn = async(id) => {
+    if (!id) {
+        console.log('ID is missing');
+        return;
+    }
+    const url = `${baseUrl}/groups/${id}/action`;
+    
+    const response = await fetch(url, {
+        method: 'PUT',
+        body: `{"on":true}`,
+    })
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
+
+    const switchResult = await response.json();
+    return switchResult && switchResult[0].success;
 }
 
 export const setLightBrightness = async({ id, percentage }) => {

@@ -6,9 +6,10 @@ import { getScaledValue, StyleSheet } from 'renative';
 import { themeStyles } from '../../config';
 import { getGroups } from '../../hueapi';
 
-import List from '../list';
+import List from '../List';
 
-const screenTitle = 'All your groups';
+const screenTitle = 'All rooms';
+const loadingTitle = 'Loading rooms...';
 
 const Groups = (props) => {
     const { setFocus } = props;
@@ -19,11 +20,8 @@ const Groups = (props) => {
         setTimeout(() => {
             window.addEventListener('keydown', onKeyDownList);
         }, 100);
+        setFocus();
         fetchGroups();
-
-        return () => {
-            setFocus('menu_groups');
-        }
     }, []);
 
     const onKeyDownList = (event) => {
@@ -42,25 +40,34 @@ const Groups = (props) => {
         setFocus();
     };
 
-    if (!isLoaded) {
-        return <Text>Loading Groups...</Text>;
-    } else {
-        return (
-            <View style={themeStyles.screen}>
-                <View style={styles.titleContainer}>
-                    <Text style={themeStyles.textH2}>{screenTitle}</Text>
+    return (
+        <View style={themeStyles.screen}>
+            { !isLoaded ? (
+                <View style={styles.loadingContainer}>
+                    {/* <Text style={themeStyles.textH2}>{loadingTitle}</Text> */}
                 </View>
-                <List items={groups} type={'groups'} />
-            </View>
-        );
-    }
+            ) : (
+                <View>
+                    <View style={styles.titleContainer}>
+                        <Text style={themeStyles.textH2}>{screenTitle}</Text>
+                    </View>
+                    <List items={groups} type={'groups'} />
+                </View>
+                
+            )}
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
     titleContainer: {
-        marginVertical: getScaledValue(4),
-        borderBottomWidth: 1,
-        borderBottomColor: '#1c1c1c',
+        marginTop: getScaledValue(16),
+        marginBottom: getScaledValue(4)
+    },
+    loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
