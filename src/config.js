@@ -165,5 +165,6 @@ export const ROUTES = {
 };
 
 export const allGroups = false;
+export const groupLights = false;
 
 export default theme;

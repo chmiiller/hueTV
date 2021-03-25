@@ -13,38 +13,50 @@ const switchHeight = 75;
 const switchHeightFocused = 80;
 
 const LightItem = (props) => {
-    const { light, isRoom } = props;
+    const { light, isRoom, invertTitle } = props;
     const navigate = useNavigate(props);
     const { brightPercentage, id, name } = light;
     const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
     const [brightness, setBrightness] = useState(isOn ? brightPercentage : 0);
 
-    const SwitchButton = ({ focused, isOn }) => {
+    const LampView = ({ focused }) => {
         const containerLight = focused ? styles.containerLightFocused : styles.containerLight;
         const containerBg = focused ? styles.containerBgFocused : styles.containerBg;
         const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
         const brightnessHeight = getScaledValue((switchBaseHeight * brightness) * 0.01);
         const borderTop = brightness >= 93 ? 15 : 0;
+
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.subtitle}>{isOn ? `${brightness}% ${brightness_message}` : ' '}</Text>
-                <View style={containerLight}>
-                    <View style={[containerBg, {
-                        height: brightnessHeight,
-                        borderTopLeftRadius: borderTop,
-                        borderTopRightRadius: borderTop,
-                    }]} />
-                    <View style={styles.iconContainer}>
-                        <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={'white'} />
-                    </View>
+            <View style={containerLight}>
+                <View style={[containerBg, {
+                    height: brightnessHeight,
+                    borderTopLeftRadius: borderTop,
+                    borderTopRightRadius: borderTop,
+                }]} />
+                <View style={styles.iconContainer}>
+                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={'white'} />
                 </View>
             </View>
-            
         );
     };
+
+    const TitleContainer = () => (
+        <View style={invertTitle ? {marginTop: getScaledValue(12)} : {}}>
+            <Text style={styles.title}>{name}</Text>
+            <Text style={styles.subtitle}>{isOn ? `${brightness}% ${brightness_message}` : ' '}</Text>
+        </View>
+    );
+    
+    const SwitchButton = ({ focused }) => (
+        <View style={styles.container}>
+            {!invertTitle && <TitleContainer />}
+            <LampView focused={focused} />
+            {invertTitle && <TitleContainer />}
+        </View>
+    );
     const FocusableComponent = withFocusable()(SwitchButton);
-    return(
+
+    return (
         <FocusableComponent
             focusKey={`light_${id}`}
             isOn={isOn}

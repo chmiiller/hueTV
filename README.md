@@ -31,8 +31,9 @@
   - ~~Group focus~~
   - ~~Group scrolling~~
   - ~~Group switch on/off~~
+  - ~~Group lights~~
+  - ~~Make Group option configurable~~
   - Title positioning
-  - Group lights
   - Real color light
   - Loading
   - Refresh interval
@@ -59,6 +60,7 @@
   - Store IP Address
   - Store token
   - Option to group lights or not
+  - Option to remove group with only sensors
   - Versioning
 - Menu:
   - Use new icons

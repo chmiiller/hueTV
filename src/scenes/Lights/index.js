@@ -3,10 +3,11 @@ import { Text, View } from 'react-native';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { getScaledValue, StyleSheet } from 'renative';
 
-import { themeStyles } from '../../config';
+import { themeStyles, groupLights } from '../../config';
 import { getLights, getGroupsWithLights } from '../../hueapi';
 
 import List from '../List';
+import Grouped from '../List/Grouped';
 
 const screenTitle = 'All lights';
 const loadingTitle = 'Loading lights...';
@@ -15,6 +16,7 @@ const Lights = (props) => {
     const { setFocus } = props;
     const [isLoaded, setIsLoaded] = useState(false);
     const [lights, setLights] = useState([]);
+    const [groupedLights, setGroupedLights] = useState([]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -35,8 +37,10 @@ const Lights = (props) => {
 
     const fetchLights = async() => {
         const _lights = await getLights();
+        const _allGrouped = await getGroupsWithLights();
         setIsLoaded(true);
         setLights(_lights);
+        setGroupedLights(_allGrouped);
         setFocus();
     };
 
@@ -47,11 +51,12 @@ const Lights = (props) => {
                     {/* <Text style={themeStyles.textH2}>{loadingTitle}</Text> */}
                 </View>
             ) : (
-                <View>
+                <View style={themeStyles.screen}>
                     <View style={styles.titleContainer}>
                         <Text style={themeStyles.textH2}>{screenTitle}</Text>
                     </View>
-                    <List items={lights} type={'lights'} />
+                    {groupLights && <Grouped items={groupedLights} />}
+                    {!groupLights && <List items={lights} type={'lights'} />}
                 </View>
                 
             )}

@@ -11,9 +11,7 @@ const LightGroup = (props) => {
     const { id, name, lights } = group;
 
     const GroupTitle = ({ focused }) => (
-        <View>
-            <Text style={focused ? styles.groupTitleFocused : styles.groupTitle}>{name}</Text>
-        </View>
+        <Text style={focused ? styles.groupTitleFocused : styles.groupTitle}>{name}</Text>
     );
     const FocusableGroupTitle = withFocusable()(GroupTitle);
 
@@ -23,7 +21,7 @@ const LightGroup = (props) => {
                 <FocusableGroupTitle trackChildren hasFocusedChild focusKey={`group_title_${id}`} />
                 <View style={styles.lightsContainer}>
                     {groupLights.map(light => {
-                        return (<LightItem key={`light_${light.id}`} light={light}/>);
+                        return (<LightItem key={`light_${light.id}`} light={light} invertTitle/>);
                     })}
                 </View>
             </View>
@@ -31,7 +29,7 @@ const LightGroup = (props) => {
     };
     const FocusableLightGroup = withFocusable()(Group);
 
-    return(
+    return (
         <FocusableLightGroup
             trackChildren
             hasFocusedChild
@@ -52,20 +50,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: '100%',
+        marginTop: getScaledValue(-5),
     },
     groupTitle: {
         fontFamily: 'RobotoCondensed-Regular',
         fontSize: getScaledValue(15),
-        marginHorizontal: getScaledValue(12),
-        marginTop: getScaledValue(5),
+        marginTop: getScaledValue(16),
+        marginLeft: getScaledValue(20),
         color: white,
         textAlign: 'left',
     },
     groupTitleFocused: {
         fontFamily: 'RobotoCondensed-Regular',
         fontSize: getScaledValue(15),
-        marginHorizontal: getScaledValue(12),
-        marginTop: getScaledValue(5),
+        marginTop: getScaledValue(16),
+        marginLeft: getScaledValue(20),
         color: yellow,
         textAlign: 'left',
     },
