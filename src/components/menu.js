@@ -10,7 +10,7 @@ import { black } from '../constants/colors';
 import FocusableButtonWithIcon from '../components/FocusableButtonWithIcon'; 
 import FocusableButtonLabel from '../components/FocusableButtonLabel'; 
 
-const btGroupsLabel = 'Rooms';
+const btRoomsLabel = 'Rooms';
 const btLightsLabel = 'Lights';
 const btSettingsLabel = 'Settings';
 const btAboutLabel = 'About';
@@ -67,7 +67,6 @@ const Menu = (props) => {
         switch (event.keyCode) {
             case 8: //backspace
             case 10009:
-                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> FECHANDO MENU:`);
                 break;
         }
     }
@@ -76,12 +75,12 @@ const Menu = (props) => {
         <View style={styles.container}>
             <View style={styles.containerTop}>
                 <FocusableButtonWithIcon
-                    focusKey={'menu_groups'}
+                    focusKey={'menu_rooms'}
                     icon={'home-outline'}
                     iconFocused={'home'}
-                    title={btGroupsLabel}
+                    title={btRoomsLabel}
                     onEnter={() => {
-                        navigate(ROUTES.GROUPS, '/[slug]');
+                        navigate(ROUTES.ROOMS, '/[slug]');
                     }}
                 />
                 <FocusableButtonWithIcon

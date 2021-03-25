@@ -1,7 +1,10 @@
-import { apiUrl, username } from './config';
+import {
+    apiUrl,
+    username,
+    allGroups,
+} from './config';
 
 const baseUrl = `${apiUrl}/api/${username}`;
-// url for taking bridge IP address: https://discovery.meethue.com
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -11,6 +14,7 @@ export const testInternetConnection = async() => {
     return await response.json();
 };
 
+// Groups and rooms are the same thing
 export const getGroups = async() => {
     const url = `${baseUrl}/groups`
     console.log(url);
@@ -181,10 +185,10 @@ export const getHueLightsOnly = async() => {
 }
 
 const getLightsAsArray = (obj) => {
-    const arr = Object.keys(obj).map(id => {
+    const lightsArray = Object.keys(obj).map(id => {
         const light = obj[id];
         const brightPercentage = Math.round((light.state.bri * 100) / 254);
-        
+        const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut) ? true : false;
         return {
             id,
             isOn: light.state.on,
@@ -195,14 +199,14 @@ const getLightsAsArray = (obj) => {
             sat: light.state.sat,
             name: light.name,
             type: light.type,
-            colorful: light.type === 'Extended color light',
+            colorful,
         };
     });
-    return arr;
+    return lightsArray;
 }
 
 const getGroupsAsArray = (obj) => {
-    const arr = Object.keys(obj).map(id => {
+    let groupsArray = Object.keys(obj).map(id => {
         const group = obj[id];
         const { all_on, any_on } = group.state;
         const { on, bri, hue, sat } = group.action;
@@ -221,6 +225,11 @@ const getGroupsAsArray = (obj) => {
             bright: bri,
             brightPercentage,
         };
-    }).filter(group => group.type === 'Room');
-    return arr;
+    });
+
+    if (!allGroups) {
+        groupsArray = groupsArray.filter(group => group.type === 'Room');
+    }
+
+    return groupsArray;
 }

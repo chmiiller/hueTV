@@ -13,10 +13,10 @@ const switchHeight = 75;
 const switchHeightFocused = 80;
 
 const LightItem = (props) => {
-    const { light, isGroup } = props;
+    const { light, isRoom } = props;
     const navigate = useNavigate(props);
     const { brightPercentage, id, name } = light;
-    const isOn = !isGroup ? light.isOn : light.allOn || light.anyOn;
+    const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
     const [brightness, setBrightness] = useState(isOn ? brightPercentage : 0);
 
     const SwitchButton = ({ focused, isOn }) => {
@@ -49,7 +49,7 @@ const LightItem = (props) => {
             focusKey={`light_${id}`}
             isOn={isOn}
             onEnterPress={() => {
-                navigate(ROUTES.DETAILS, { state: { light, isGroup } });
+                navigate(ROUTES.DETAILS, { state: { light, isRoom } });
             }}
         />
     );

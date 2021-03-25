@@ -24,8 +24,8 @@ const ScreenLightDetails = (props) => {
     const pop = usePop(props);
     const navigate = useNavigate(props);
     const { setFocus } = props;
-    const { light, isGroup } = props.location.state;
-    const isOn = !isGroup ? light.isOn : light.allOn || light.anyOn;
+    const { light, isRoom } = props.location.state;
+    const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
     const [brightness, setBrightness] = useState(isOn ? light.brightPercentage : 0);
     const [savedBrightness, setSavedBrightness] = useState(light.brightPercentage);
     const [lampOn, setLampOn] = useState(isOn);
@@ -41,7 +41,7 @@ const ScreenLightDetails = (props) => {
         switch (event.keyCode) {
             case 8: //backspace
             case 10009:
-                const path = isGroup ? '/groups' : '/';
+                const path = isRoom ? '/rooms' : '/';
                 navigate(path);
                 break;
         }
@@ -67,7 +67,7 @@ const ScreenLightDetails = (props) => {
     const LightSwitch = withFocusable()(Switch);
 
     const setLightOrGroupBrightness = async ({ id, percentage }) => {
-        if (isGroup) {
+        if (isRoom) {
             return await setGroupBrightness({ id, percentage });
         }
         return await setLightBrightness({ id, percentage });
@@ -104,7 +104,7 @@ const ScreenLightDetails = (props) => {
     }
 
     const setLightOn = () => {
-        if (isGroup) {
+        if (isRoom) {
             turnGroupOn(light.id);
         } else {
             turnLightOn(light.id);
@@ -116,7 +116,7 @@ const ScreenLightDetails = (props) => {
     };
     
     const setLightOff = () => {
-        if (isGroup) {
+        if (isRoom) {
             turnGroupOff(light.id);
         } else {
             turnLightOff(light.id);
@@ -139,16 +139,16 @@ const ScreenLightDetails = (props) => {
             break;
             
             case 'left':
-                if (isGroup) {
-                    setFocus('menu_groups');
+                if (isRoom) {
+                    setFocus('menu_rooms');
                 } else {
                     setFocus('menu_lights');
                 }
             break;
         
             default:
-                if (isGroup) {
-                    setFocus('menu_groups');
+                if (isRoom) {
+                    setFocus('menu_rooms');
                 } else {
                     setFocus('menu_lights');
                 }

@@ -4,7 +4,7 @@ import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Light from '../../components/Light';
-import Room from '../../components/Room';
+import Group from '../../components/Group';
 import { hasWebFocusableUI } from '../../config';
 
 const styles = StyleSheet.create({
@@ -32,7 +32,7 @@ const List = (props) => {
         if (type === 'lights') {
             return (<Light key={item.id} light={item} />);
         }
-        return (<Room key={item.id} room={item} />);
+        return (<Group key={item.id} group={item} />);
     };
     
     

@@ -4,7 +4,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { getScaledValue, StyleSheet } from 'renative';
 
 import { themeStyles } from '../../config';
-import { getLights } from '../../hueapi';
+import { getLights, getGroupsWithLights } from '../../hueapi';
 
 import List from '../List';
 

@@ -157,11 +157,13 @@ export const themeStyles = StyleSheet.create({
 
 export const ROUTES = {
     HOME: '/',
-    GROUPS: 'groups',
+    ROOMS: 'rooms',
     SETTINGS: 'settings',
     DETAILS: 'details',
     MODAL: 'modal',
     EXIT: 'exit',
 };
+
+export const allGroups = false;
 
 export default theme;

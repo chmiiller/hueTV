@@ -4,39 +4,39 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { getScaledValue, StyleSheet } from 'renative';
 
 import { themeStyles } from '../../config';
-import { getGroups } from '../../hueapi';
+import { getGroups } from '../../hueapi'; // groups are rooms on Hue API terminology
 
 import List from '../List';
 
 const screenTitle = 'All rooms';
 const loadingTitle = 'Loading rooms...';
 
-const Groups = (props) => {
+const Rooms = (props) => {
     const { setFocus } = props;
     const [isLoaded, setIsLoaded] = useState(false);
-    const [groups, setGroups] = useState([]);
+    const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
         setTimeout(() => {
             window.addEventListener('keydown', onKeyDownList);
         }, 100);
         setFocus();
-        fetchGroups();
+        fetchRooms();
     }, []);
 
     const onKeyDownList = (event) => {
         switch (event.keyCode) {
             case 8: //backspace
             case 10009:
-                setFocus('menu_groups');
+                setFocus('menu_rooms');
                 break;
         }
     }
 
-    const fetchGroups = async() => {
-        const _groups = await getGroups();
+    const fetchRooms = async() => {
+        const _rooms = await getGroups();
         setIsLoaded(true);
-        setGroups(_groups);
+        setRooms(_rooms);
         setFocus();
     };
 
@@ -51,7 +51,7 @@ const Groups = (props) => {
                     <View style={styles.titleContainer}>
                         <Text style={themeStyles.textH2}>{screenTitle}</Text>
                     </View>
-                    <List items={groups} type={'groups'} />
+                    <List items={rooms} type={'rooms'} />
                 </View>
                 
             )}
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withFocusable()(Groups);
+export default withFocusable()(Rooms);

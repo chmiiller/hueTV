@@ -45,7 +45,7 @@
   - ~~Find a way to edit group brightness~~
   - ~~Proper edit group brightness~~
   - ~~Turn group lights on/off~~
-  - Remove group with only sensors
+  - ~~Remove group with only sensors~~
   - Move container right
   - Test 40 groups
 - Light Details:
@@ -83,3 +83,6 @@
   - Add info on what's needed
   - Add info on how to run
   - Put it live on GitHub
+
+
+Getting Bridge IP Address: https://discovery.meethue.com
