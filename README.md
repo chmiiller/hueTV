@@ -38,7 +38,7 @@
   - Loading
   - Refresh interval
   - Move container right
-  - Test 40 lights
+  - ~~Test 40 lights~~
 - Rooms/Groups
   - ~~Add new screen~~
   - ~~Add new side menu item~~
@@ -48,7 +48,7 @@
   - ~~Turn group lights on/off~~
   - ~~Remove group with only sensors~~
   - Move container right
-  - Test 40 groups
+  - ~~Test 40 groups~~
 - Light Details:
   - Real color light
   - Refresh interval

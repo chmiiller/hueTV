@@ -13,7 +13,7 @@ const switchHeight = 75;
 const switchHeightFocused = 80;
 
 const LightItem = (props) => {
-    const { light, isRoom, invertTitle } = props;
+    const { light, isRoom, invertTitle, onFocus } = props;
     const navigate = useNavigate(props);
     const { brightPercentage, id, name } = light;
     const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
@@ -60,6 +60,7 @@ const LightItem = (props) => {
         <FocusableComponent
             focusKey={`light_${id}`}
             isOn={isOn}
+            onBecameFocused={onFocus}
             onEnterPress={() => {
                 navigate(ROUTES.DETAILS, { state: { light, isRoom } });
             }}

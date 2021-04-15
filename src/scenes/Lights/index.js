@@ -12,8 +12,7 @@ import Grouped from '../List/Grouped';
 const screenTitle = 'All lights';
 const loadingTitle = 'Loading lights...';
 
-const Lights = (props) => {
-    const { setFocus } = props;
+const Lights = ({ setFocus }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [lights, setLights] = useState([]);
     const [groupedLights, setGroupedLights] = useState([]);

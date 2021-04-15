@@ -21,12 +21,15 @@ export const getGroups = async() => {
     const response = await fetch(url)
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
     const groups = await response.json();
     return getGroupsAsArray(groups);
+
+    // Uncomment next line for stress testing
+    // return generateMockGroups();
 };
 
 export const getLights = async() => {
@@ -34,15 +37,21 @@ export const getLights = async() => {
     const response = await fetch(url)
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
     const lights = await response.json();
     return getLightsAsArray(lights);
+
+    // Uncomment next line for stress testing
+    // return generateMockLights();
 };
 
 export const getGroupsWithLights = async() => {
+    // Uncomment next line for stress testing
+    // return generateMockGroups();
+
     const lights = await getLights();
     const groups = await getGroups();
     return groups.reduce((acc, g) => {
@@ -65,7 +74,7 @@ export const turnLightOff = async(id) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -86,7 +95,7 @@ export const turnLightOn = async(id) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -107,7 +116,7 @@ export const turnGroupOff = async(id) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -128,7 +137,7 @@ export const turnGroupOn = async(id) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -150,7 +159,7 @@ export const setLightBrightness = async({ id, percentage }) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -172,7 +181,7 @@ export const setGroupBrightness = async({ id, percentage }) => {
     })
 
     if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has ocurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -180,11 +189,7 @@ export const setGroupBrightness = async({ id, percentage }) => {
     return switchResult && switchResult[0];
 }
 
-export const getHueLightsOnly = async() => {
-    return 123;
-}
-
-const getLightsAsArray = (obj) => {
+const getLightsAsArray = obj => {
     const lightsArray = Object.keys(obj).map(id => {
         const light = obj[id];
         const brightPercentage = Math.round((light.state.bri * 100) / 254);
@@ -205,7 +210,7 @@ const getLightsAsArray = (obj) => {
     return lightsArray;
 }
 
-const getGroupsAsArray = (obj) => {
+const getGroupsAsArray = obj => {
     let groupsArray = Object.keys(obj).map(id => {
         const group = obj[id];
         const { all_on, any_on } = group.state;
@@ -233,3 +238,63 @@ const getGroupsAsArray = (obj) => {
 
     return groupsArray;
 }
+
+// Random generator functions
+export const generateMockLights = (amount = 40) => {
+    const mockLights = [];
+    const lightTemplate = {
+        "isOn": true,
+        "reachable": true,
+        "bright": 203,
+        "brightPercentage": 80,
+        "name": "Office lamp 1",
+        "type": "Color temperature light",
+        "colorful": false
+    };
+    for (let i = 0; i < amount; i++) {
+        const randomId = Math.floor(Math.random() * 10) + Math.random() * 1000;
+        const randomState = Math.random() < 0.5;
+        const randomBright = Math.floor(Math.random() * 100);
+        mockLights.push({
+            ...lightTemplate,
+            name: `Random light ${Math.floor(randomId)}`,
+            id: randomId,
+            isOn: randomState,
+            brightPercentage: randomBright,
+        });
+    };
+    return mockLights;
+};
+
+export const generateMockGroups = (amount = 40) => {
+    const mockGroups = [];
+    const groupTemplate = {
+        "id": "1",
+        "name": "Living room",
+        "type": "Room",
+        "lights": [ "1", "2" ],
+        "allOn": true,
+        "anyOn": true,
+        "on": true,
+        "hue": 8402,
+        "saturation": 140,
+        "bright": 254,
+        "brightPercentage": 100
+    };
+
+    for (let i = 0; i < amount; i++) {
+        const randomId = Math.floor(Math.random() * 10) + Math.random() * 1000;
+        const randomState = Math.random() < 0.5;
+        const randomBright = Math.floor(Math.random() * 100);
+        const nLights = Math.floor(Math.random() * 8) + 1;
+        mockGroups.push({
+            ...groupTemplate,
+            lights: generateMockLights(nLights),
+            name: `Random room ${Math.floor(randomId)}`,
+            id: randomId,
+            on: randomState,
+            brightPercentage: randomBright,
+        });
+    };
+    return mockGroups;
+};

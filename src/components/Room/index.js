@@ -3,15 +3,11 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import LightItem from '../Light';
 
-const Room = (props) => {
-    const { room, onFocus } = props;
+const Room = ({ room, onFocus }) => {
     const { id } = room;
 
     const Room = ({ room }) => (
-        <LightItem
-            isRoom
-            light={room}
-        />
+        <LightItem isRoom light={room} />
     );
     const FocusableLightRoom = withFocusable()(Room);
 

@@ -6,8 +6,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { black, dark_gray, offwhite, white, yellow } from '../../constants/colors';
 import LightItem from '../Light';
 
-const LightGroup = (props) => {
-    const { group, onFocus } = props;
+const LightGroup = ({ group, onFocus }) => {
     const { id, name, lights } = group;
 
     const GroupTitle = ({ focused }) => (

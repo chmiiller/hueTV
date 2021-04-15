@@ -11,8 +11,7 @@ import List from '../List';
 const screenTitle = 'All rooms';
 const loadingTitle = 'Loading rooms...';
 
-const Rooms = (props) => {
-    const { setFocus } = props;
+const Rooms = ({ setFocus }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [rooms, setRooms] = useState([]);
 
@@ -47,13 +46,12 @@ const Rooms = (props) => {
                     {/* <Text style={themeStyles.textH2}>{loadingTitle}</Text> */}
                 </View>
             ) : (
-                <View>
+                <View style={themeStyles.screen}>
                     <View style={styles.titleContainer}>
                         <Text style={themeStyles.textH2}>{screenTitle}</Text>
                     </View>
                     <List items={rooms} type={'rooms'} />
                 </View>
-                
             )}
         </View>
     );
