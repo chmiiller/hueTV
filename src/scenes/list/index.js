@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         width: '100%',
         marginTop: getScaledValue(12),
-        paddingLeft: getScaledValue(12),
+        paddingHorizontal: getScaledValue(36),
         paddingBottom: getScaledValue(12),
     },
 });

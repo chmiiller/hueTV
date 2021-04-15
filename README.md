@@ -37,7 +37,7 @@
   - Real color light
   - Loading
   - Refresh interval
-  - Move container right
+  - ~~Move container right~~
   - ~~Test 40 lights~~
 - Rooms/Groups
   - ~~Add new screen~~
@@ -47,7 +47,7 @@
   - ~~Proper edit group brightness~~
   - ~~Turn group lights on/off~~
   - ~~Remove group with only sensors~~
-  - Move container right
+  - ~~Move container right~~
   - ~~Test 40 groups~~
 - Light Details:
   - Real color light
