@@ -35,6 +35,9 @@
   - ~~Make Group option configurable~~
   - Title positioning
   - Real color light
+    - Pick a better name to color prop on light component
+    - Fix CIE1931ToHex function not returning correct green
+    - Improve colorTemperature2rgb returning too saturated colors
   - Loading
   - Refresh interval
   - ~~Move container right~~

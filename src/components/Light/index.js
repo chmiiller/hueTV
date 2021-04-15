@@ -15,7 +15,7 @@ const switchHeightFocused = 80;
 const LightItem = (props) => {
     const { light, isRoom, invertTitle, onFocus } = props;
     const navigate = useNavigate(props);
-    const { brightPercentage, id, name } = light;
+    const { brightPercentage, id, name, color } = light;
     const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
     const [brightness, setBrightness] = useState(isOn ? brightPercentage : 0);
 
@@ -32,6 +32,7 @@ const LightItem = (props) => {
                     height: brightnessHeight,
                     borderTopLeftRadius: borderTop,
                     borderTopRightRadius: borderTop,
+                    backgroundColor: color,
                 }]} />
                 <View style={styles.iconContainer}>
                     <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={'white'} />
