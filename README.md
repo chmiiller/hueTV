@@ -34,10 +34,8 @@
   - ~~Group lights~~
   - ~~Make Group option configurable~~
   - Title positioning
-  - Real color light
-    - Pick a better name to color prop on light component
-    - Fix CIE1931ToHex function not returning correct green
-    - Improve colorTemperature2rgb returning too saturated colors
+  - ~~Real color light~~
+  - ~~Contrast icon against bright/dark colors~~
   - Loading
   - Refresh interval
   - ~~Move container right~~
@@ -53,7 +51,8 @@
   - ~~Move container right~~
   - ~~Test 40 groups~~
 - Light Details:
-  - Real color light
+  - ~~Real color light~~
+  - ~~Contrast icon against bright/dark colors~~
   - Refresh interval
   - ~~Support group editing~~
 - Settings:
@@ -68,7 +67,6 @@
 - Menu:
   - Use new icons
   - Keep menu item selected
-  - Navigate "on focus" instead of "on enter"
   - Back button should call exit dialog
 - About:
   - Motivation
