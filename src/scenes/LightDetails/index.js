@@ -5,7 +5,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { themeStyles, hasWebFocusableUI } from '../../config';
-import { dark_gray, offwhite, yellow } from '../../constants/colors';
+import { dark_gray, offwhite, white, yellow } from '../../constants/colors';
 import { 
     setGroupBrightness,
     setLightBrightness,
@@ -60,7 +60,7 @@ const ScreenLightDetails = (props) => {
                     background: light.lightColor,
                 }]} />
                 <View style={styles.iconContainer} >
-                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={'white'} />
+                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={light.colorIsDark ? white : dark_gray} />
                 </View>
             </View>
         );

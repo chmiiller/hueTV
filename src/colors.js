@@ -51,3 +51,7 @@ export const ctToHex = ct => {
     const kelvin = Math.floor(1000000 / ct);
     return chroma.temperature(kelvin).brighten(1);
 };
+
+export const isDark = (hex, threshold = 80) => {
+    return chroma(hex).get('lab.l') < threshold ? true : false;
+};

@@ -3,7 +3,11 @@ import {
     username,
     allGroups,
 } from './config';
-import { ctToHex, xyToHex } from './colors';
+import {
+    ctToHex,
+    isDark,
+    xyToHex,
+} from './colors';
 
 const baseUrl = `${apiUrl}/api/${username}`;
 
@@ -197,21 +201,23 @@ const getLightsAsArray = obj => {
         const brightPercentage = Math.round((bright * 100) / 254);
         const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut);
         const color = colorful ? xyToHex(light.state.xy) : ctToHex(light.state.ct);
+        const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
         return {
             id,
             isOn: light.state.on,
             reachable: light.state.reachable,
             bright,
             brightPercentage,
-            color,
             colorful,
+            color,
+            colorIsDark,
             hue: light.state.hue,
             sat: light.state.sat,
             name: light.name,
             type: light.type,
         };
     });
-    
+
     return lightsArray;
 }
 
@@ -223,6 +229,7 @@ const getGroupsAsArray = obj => {
         const colorful = (group.action && group.action.colormode && group.action.colormode === 'xy');
         const color = colorful ? xyToHex(group.action.xy) : ctToHex(group.action.ct);
         const brightPercentage = Math.round((bri * 100) / 254);
+        const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
         
         return {
             id,
@@ -233,6 +240,7 @@ const getGroupsAsArray = obj => {
             anyOn: any_on,
             colorful,
             color,
+            colorIsDark,
             on,
             hue,
             saturation: sat,
