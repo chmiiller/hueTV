@@ -15,7 +15,8 @@ const switchHeightFocused = 80;
 const LightItem = (props) => {
     const { light, isRoom, invertTitle, onFocus } = props;
     const navigate = useNavigate(props);
-    const { brightPercentage, id, name, color } = light;
+    const { brightPercentage, id, name } = light;
+    const lightColor = light.color.toString();
     const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
     const [brightness, setBrightness] = useState(isOn ? brightPercentage : 0);
 
@@ -25,14 +26,13 @@ const LightItem = (props) => {
         const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
         const brightnessHeight = getScaledValue((switchBaseHeight * brightness) * 0.01);
         const borderTop = brightness >= 93 ? 15 : 0;
-
         return (
             <View style={containerLight}>
                 <View style={[containerBg, {
                     height: brightnessHeight,
                     borderTopLeftRadius: borderTop,
                     borderTopRightRadius: borderTop,
-                    backgroundColor: color,
+                    backgroundColor: lightColor,
                 }]} />
                 <View style={styles.iconContainer}>
                     <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={'white'} />
@@ -63,7 +63,7 @@ const LightItem = (props) => {
             isOn={isOn}
             onBecameFocused={onFocus}
             onEnterPress={() => {
-                navigate(ROUTES.DETAILS, { state: { light, isRoom } });
+                navigate(ROUTES.DETAILS, { state: { light: { ...light, lightColor }, isRoom } });
             }}
         />
     );

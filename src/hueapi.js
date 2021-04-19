@@ -220,6 +220,8 @@ const getGroupsAsArray = obj => {
         const group = obj[id];
         const { all_on, any_on } = group.state;
         const { on, bri, hue, sat } = group.action;
+        const colorful = (group.action && group.action.colormode && group.action.colormode === 'xy');
+        const color = colorful ? xyToHex(group.action.xy) : ctToHex(group.action.ct);
         const brightPercentage = Math.round((bri * 100) / 254);
         
         return {
@@ -229,6 +231,8 @@ const getGroupsAsArray = obj => {
             lights: group.lights ? group.lights.sort() : [],
             allOn: all_on,
             anyOn: any_on,
+            colorful,
+            color,
             on,
             hue,
             saturation: sat,

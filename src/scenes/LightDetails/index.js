@@ -57,6 +57,7 @@ const ScreenLightDetails = (props) => {
                     height: brightnessHeight,
                     borderTopLeftRadius: borderTop,
                     borderTopRightRadius: borderTop,
+                    background: light.lightColor,
                 }]} />
                 <View style={styles.iconContainer} >
                     <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={'white'} />
