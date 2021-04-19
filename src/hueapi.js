@@ -3,12 +3,9 @@ import {
     username,
     allGroups,
 } from './config';
-
-const colors = require('./colors');
-const chroma = require('./chroma');
+import { ctToHex, xyToHex } from './colors';
 
 const baseUrl = `${apiUrl}/api/${username}`;
-const MILLION = 1000000;
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -196,17 +193,10 @@ export const setGroupBrightness = async({ id, percentage }) => {
 const getLightsAsArray = obj => {
     const lightsArray = Object.keys(obj).map(id => {
         const light = obj[id];
-        const kelvin = Math.floor(MILLION / light.state.ct);
         const bright = light.state.bri;
         const brightPercentage = Math.round((bright * 100) / 254);
-        const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut) ? true : false;
-        let color = chroma.temperature(kelvin).brighten(1);
-        
-        if (colorful) {
-            const [lightX, lightY] = light.state.xy;
-            color = `#${colors.CIE1931ToHex(lightX, lightY, bright)}`;
-        }
-
+        const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut);
+        const color = colorful ? xyToHex(light.state.xy) : ctToHex(light.state.ct);
         return {
             id,
             isOn: light.state.on,
