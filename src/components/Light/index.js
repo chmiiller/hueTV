@@ -35,7 +35,7 @@ const LightItem = (props) => {
                     backgroundColor: lightColor,
                 }]} />
                 <View style={styles.iconContainer}>
-                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={colorIsDark ? white : dark_gray} />
+                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={60} color={(colorIsDark || !isOn) ? white : dark_gray} />
                 </View>
             </View>
         );

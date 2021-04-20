@@ -60,7 +60,7 @@ const ScreenLightDetails = (props) => {
                     background: light.lightColor,
                 }]} />
                 <View style={styles.iconContainer} >
-                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={light.colorIsDark ? white : dark_gray} />
+                    <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={(light.colorIsDark || !lampOn) ? white : dark_gray} />
                 </View>
             </View>
         );
