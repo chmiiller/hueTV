@@ -29,7 +29,8 @@
         },
         "@noriginmedia/react-spatial-navigation": "source:rnv",
         "renative": "source:rnv",
-        "detox": "source:rnv"
+        "detox": "source:rnv",
+        "@react-native-community/async-storage": "source:rnv"
     },
     "platforms": {
         "android": {

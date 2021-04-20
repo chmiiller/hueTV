@@ -88,6 +88,16 @@ export const themeStyles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center'
     },
+    textH4: {
+        fontFamily: theme.primaryFontFamily,
+        fontSize: getScaledValue(10),
+        marginHorizontal: getScaledValue(20),
+        marginTop: getScaledValue(5),
+        color: white,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+    },
     text: {
         fontFamily: theme.primaryFontFamily,
         color: theme.color4,

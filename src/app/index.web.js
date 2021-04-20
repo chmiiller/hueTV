@@ -4,7 +4,7 @@ import { Router, navigate } from '@reach/router';
 
 import ScreenRooms from '../scenes/Rooms';
 import ScreenLights from '../scenes/Lights';
-import ScreenSettings from '../components/screenSettings';
+import ScreenSettings from '../scenes/Settings';
 import ScreenModal from '../components/screenModal';
 import ScreenLightDetails from '../scenes/LightDetails';
 import ScreenExitModal from '../scenes/ExitModal';

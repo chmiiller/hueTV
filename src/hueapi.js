@@ -10,6 +10,7 @@ import {
 } from './colors';
 
 const baseUrl = `${apiUrl}/api/${username}`;
+const hueDiscoveryUrl = 'https://discovery.meethue.com/';
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -17,6 +18,18 @@ export const testInternetConnection = async() => {
     const url = `http://itunes.apple.com/us/lookup?id=585027354`
     const response = await fetch(proxyurl + url)
     return await response.json();
+};
+
+export const getBridgeIpAddress = async () => {
+    try {
+        const response = await fetch(hueDiscoveryUrl).then(data => data.json());
+        if (response && response.length > 0 && response[0].internalipaddress) {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> got bridge IP address: ${response[0].internalipaddress} `);
+            return response[0].internalipaddress;
+        }
+    } catch (err) {
+        console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error fetching IP Address with URL ${hueDiscoveryUrl} err: ${err} `);
+    }
 };
 
 // Groups and rooms are the same thing
