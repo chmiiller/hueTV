@@ -27,6 +27,10 @@ export const getBridgeIpAddress = async () => {
             console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> got bridge IP address: ${response[0].internalipaddress} `);
             return response[0].internalipaddress;
         }
+        // recommended 8s timeout
+        // if more than 1 item on response, means more than 1 bridge
+        // if empty array, no bridges found
+
     } catch (err) {
         console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error fetching IP Address with URL ${hueDiscoveryUrl} err: ${err} `);
     }
