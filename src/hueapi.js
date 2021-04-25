@@ -1,73 +1,139 @@
-import {
-    apiUrl,
-    username,
-    allGroups,
-} from './config';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { allGroups } from './config';
 import {
     ctToHex,
     isDark,
     xyToHex,
 } from './colors';
 
-const baseUrl = `${apiUrl}/api/${username}`;
+const appName = 'huetv';
 const hueDiscoveryUrl = 'https://discovery.meethue.com/';
+const keyBridgeIp = `@bridge_ip`;
+const keyBridgeUsername = `@bridge_username`;
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
-    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-    const url = `http://itunes.apple.com/us/lookup?id=585027354`
-    const response = await fetch(proxyurl + url)
-    return await response.json();
+    try {
+        const url = `http://itunes.apple.com/us/lookup?id=585027354`
+        const response = await fetch(url)
+        return await response.json();
+    } catch (err) {
+        return { error: `Connection error: ${err}`}
+    }
 };
 
 export const getBridgeIpAddress = async () => {
     try {
         const response = await fetch(hueDiscoveryUrl).then(data => data.json());
         if (response && response.length > 0 && response[0].internalipaddress) {
-            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> got bridge IP address: ${response[0].internalipaddress} `);
-            return response[0].internalipaddress;
+            const bridgeAddress = response[0].internalipaddress;
+            await AsyncStorage.setItem(keyBridgeIp, bridgeAddress);
+            return bridgeAddress;
+        } else {
+            return { error: `Bridge not found: ${err}`}
         }
         // recommended 8s timeout
         // if more than 1 item on response, means more than 1 bridge
         // if empty array, no bridges found
-
     } catch (err) {
-        console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error fetching IP Address with URL ${hueDiscoveryUrl} err: ${err} `);
+        return { error: `Error looking for bridge: ${err}`}
     }
 };
+
+export const askUsername = async () => {
+    /*
+    if it's the first time, bridge should return an error:
+    [{
+        "error": {
+            "type": 101,
+            "address": "",
+            "description": "link button not pressed"
+        }
+    }]
+    and when the button is pressed a success message:
+    [{
+        "success": {
+            "username": "phyOV2pRfMkQGWCn-xdlwl4gUt1hmxVi76unCEr6"
+        }
+    }]
+    */
+    try {
+        const storedAddress = await AsyncStorage.getItem(keyBridgeIp);
+        if (storedAddress) {
+            const url = `http://${storedAddress}/api`;
+            const response = await fetch(url, {
+                method: 'POST',
+                body: `{"devicetype":"${appName}"}`,
+            }).then(data => data.json());
+            if (response && response.length > 0) {
+                return response[0];
+            }
+        }
+    } catch (err) {
+        return { error: `Error authenticating: ${err}`}
+    }
+};
+
+export const setUsername = async (value) => {
+    try {
+        if (value) {
+            await AsyncStorage.setItem(keyBridgeUsername, value);
+            return value;
+        }
+    } catch (err) {
+        return { error: `Error setting username: ${err}`}
+    }
+};
+
+export const getBaseUrl = async() => {
+    const storedAddress = await AsyncStorage.getItem(keyBridgeIp);
+    const storedUsername = await AsyncStorage.getItem(keyBridgeUsername);
+    if (storedAddress) {
+        return `http://${storedAddress}/api/${storedUsername}`;
+    } else {
+        return null;
+    }
+}
 
 // Groups and rooms are the same thing
 export const getGroups = async() => {
-    const url = `${baseUrl}/groups`
-    console.log(url);
-    const response = await fetch(url)
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/groups`
+        console.log(url);
+        const response = await fetch(url)
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const groups = await response.json();
+        return getGroupsAsArray(groups);
+
+        // Uncomment next line for stress testing
+        // return generateMockGroups();
     }
-
-    const groups = await response.json();
-    return getGroupsAsArray(groups);
-
-    // Uncomment next line for stress testing
-    // return generateMockGroups();
 };
 
 export const getLights = async() => {
-    const url = `${baseUrl}/lights`
-    const response = await fetch(url)
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/lights`
+        const response = await fetch(url)
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const lights = await response.json();
+        return getLightsAsArray(lights);
+
+        // Uncomment next line for stress testing
+        // return generateMockLights();
     }
-
-    const lights = await response.json();
-    return getLightsAsArray(lights);
-
-    // Uncomment next line for stress testing
-    // return generateMockLights();
 };
 
 export const getGroupsWithLights = async() => {
@@ -88,20 +154,22 @@ export const turnLightOff = async(id) => {
         console.log('ID is missing');
         return;
     }
-    const url = `${baseUrl}/lights/${id}/state`;
-    
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"on":false}`,
-    })
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/lights/${id}/state`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"on":false}`,
+        })
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const switchResult = await response.json();
+        return switchResult && switchResult[0].success;
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0].success;
 }
 
 export const turnLightOn = async(id) => {
@@ -109,20 +177,22 @@ export const turnLightOn = async(id) => {
         console.log('ID is missing');
         return;
     }
-    const url = `${baseUrl}/lights/${id}/state`;
-    
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"on":true}`,
-    })
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/lights/${id}/state`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"on":true}`,
+        })
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const switchResult = await response.json();
+        return switchResult && switchResult[0].success;
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0].success;
 }
 
 export const turnGroupOff = async(id) => {
@@ -130,20 +200,22 @@ export const turnGroupOff = async(id) => {
         console.log('ID is missing');
         return;
     }
-    const url = `${baseUrl}/groups/${id}/action`;
-    
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"on":false}`,
-    })
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/groups/${id}/action`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"on":false}`,
+        })
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const switchResult = await response.json();
+        return switchResult && switchResult[0].success;
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0].success;
 }
 
 export const turnGroupOn = async(id) => {
@@ -151,20 +223,22 @@ export const turnGroupOn = async(id) => {
         console.log('ID is missing');
         return;
     }
-    const url = `${baseUrl}/groups/${id}/action`;
-    
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"on":true}`,
-    })
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/groups/${id}/action`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"on":true}`,
+        })
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const switchResult = await response.json();
+        return switchResult && switchResult[0].success;
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0].success;
 }
 
 export const setLightBrightness = async({ id, percentage }) => {
@@ -173,20 +247,22 @@ export const setLightBrightness = async({ id, percentage }) => {
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/lights/${id}/state`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"bri":${brightness}}`,
+        })
 
-    const url = `${baseUrl}/lights/${id}/state`;
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"bri":${brightness}}`,
-    })
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        const switchResult = await response.json();
+        return switchResult && switchResult[0];
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0];
 }
 
 export const setGroupBrightness = async({ id, percentage }) => {
@@ -195,20 +271,22 @@ export const setGroupBrightness = async({ id, percentage }) => {
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/groups/${id}/action`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: `{"bri":${brightness}}`,
+        })
 
-    const url = `${baseUrl}/groups/${id}/action`;
-    const response = await fetch(url, {
-        method: 'PUT',
-        body: `{"bri":${brightness}}`,
-    })
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
 
-    if (!response.ok) {
-        const message = `An error has ocurred: ${response.status}`;
-        throw new Error(message);
+        const switchResult = await response.json();
+        return switchResult && switchResult[0];
     }
-
-    const switchResult = await response.json();
-    return switchResult && switchResult[0];
 }
 
 const getLightsAsArray = obj => {

@@ -56,11 +56,16 @@
   - Refresh interval
   - ~~Support group editing~~
 - Settings:
-  - Test internet
-  - Get bridge IP Address
-  - Get bridge token
-  - Store IP Address
-  - Store token
+  - ~~Test internet~~
+  - ~~Get bridge IP Address~~
+  - ~~Get bridge token~~
+  - ~~Store IP Address~~
+  - ~~Store token~~
+  - Run tests on screen mount
+    - Test internet
+    - Test stored IP Address
+    - Test stored token
+    - Test accessing lights
   - Option to group lights or not
   - Option to remove group with only sensors
   - Versioning

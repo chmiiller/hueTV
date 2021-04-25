@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { getScaledValue } from 'renative';
-import AsyncStorage from '@react-native-community/async-storage';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import { themeStyles } from '../../config';
-import { getBridgeIpAddress } from '../../hueapi';
+import {
+    askUsername,
+    getBridgeIpAddress,
+    setUsername,
+    testInternetConnection,
+} from '../../hueapi';
 import Step from './components/Step';
 
 const screenTitle = 'Settings';
-
-const keyBridgeIp = `@bridge_ip`;
 const numberOfSteps = 3;
+
+const AUTH_SUBTITLE = 'Please press the button on your Hue Bridge (physical device) to finish the setup';
 
 const Settings = (props) => {
     const { setFocus } = props;
@@ -33,24 +37,77 @@ const Settings = (props) => {
         completed: false,
     });
 
-    useEffect(() => {
-        readIpAddress();
-    }, []);
-
-    const readIpAddress = async() => {
-        let finalDebug = debugging;
-        const ipAddress = await AsyncStorage.getItem(keyBridgeIp);
-        if (!ipAddress) {
-            finalDebug = finalDebug + '\nNo IP address, fetching new one';
-            const ipAddressFromAPI = await getBridgeIpAddress();
-            finalDebug = finalDebug + `\nNew IP address from API - ${ipAddressFromAPI}`;
-            finalDebug = finalDebug + `\nStoring new IP`;
-            await AsyncStorage.setItem(keyBridgeIp, ipAddressFromAPI);
-            finalDebug = finalDebug + `\nNew IP Stored`;
+    const testInternet = async() => {
+        const internetTestResult = await testInternetConnection();
+        if (!internetTestResult.error) {
+            setCurrentStep(1);
+            setInternetSetup({
+                ...internetSetup,
+                subtitle: '',
+                completed: true,
+            });
+            setSearchSetup({ ...searchSetup, available: true });
+            setFocus('step_search');
         } else {
-            finalDebug = finalDebug + `\nFound IP address stored - ${ipAddress}`;
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> internetTestResult: ${JSON.stringify(internetTestResult,null,'    ')} `);
+            setInternetSetup({
+                ...internetSetup,
+                subtitle: 'Not connected, please try again',
+            });
         }
-        setDebugging(finalDebug);
+    };
+    
+    const getBridgeAddress = async() => {
+        const bridgeAddressResult = await getBridgeIpAddress();
+        if (!bridgeAddressResult.error) {
+            setCurrentStep(2);
+            setSearchSetup({
+                ...searchSetup,
+                subtitle: '',
+                completed: true,
+            });
+            setAuthSetup({ ...authSetup, available: true });
+            setFocus('step_authenticate');
+        } else {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> bridgeAddressResult: ${JSON.stringify(bridgeAddressResult,null,'    ')} `);
+            setSearchSetup({
+                ...searchSetup,
+                subtitle: 'Bridge not found, please try again',
+            });
+        }
+    };
+    
+    const getUsername = async() => {
+        const userRes = await askUsername();
+        if (userRes.error && userRes.error.type && userRes.error.type === 101) {
+            setAuthSetup({ ...authSetup, subtitle: `${AUTH_SUBTITLE} - 10s` });
+            let count = 20;
+            const countInterval = setInterval(async () => {
+                // ask for username
+                const intervalRes = await askUsername();
+                if (intervalRes && intervalRes.success && intervalRes.success.username) {
+                    // On success, clear interval
+                    setCurrentStep(3);
+                    setAuthSetup({
+                        ...authSetup,
+                        subtitle: ``,
+                        completed: true,
+                    });
+                    const username = await setUsername(intervalRes.success.username);
+                    clearInterval(countInterval);
+                    return;
+                } else {
+                    // on error, keep trying for 20 seconds
+                    setAuthSetup({ ...authSetup, subtitle: `${AUTH_SUBTITLE} - ${count}s` });
+                    if (count === 0) {
+                        clearInterval(countInterval);
+                        setAuthSetup({ ...authSetup, subtitle: '', available: true });
+                        setFocus('step_authenticate');
+                    }
+                    count--;
+                }
+            }, 1100);
+        }
     };
 
     return (
@@ -66,17 +123,8 @@ const Settings = (props) => {
                     title={'Internet Connection'}
                     status={internetSetup}
                     onEnter={() => {
-                        setInternetSetup({ ...internetSetup, subtitle: 'connecting...' });
-                        setTimeout(() => {
-                            setCurrentStep(1);
-                            setInternetSetup({
-                                ...internetSetup,
-                                subtitle: '',
-                                completed: true,
-                            });
-                            setSearchSetup({ ...searchSetup, available: true });
-                            setFocus('step_search');
-                        }, 2000);
+                        setInternetSetup({ ...internetSetup, subtitle: 'testing...' });
+                        testInternet();
                     }}
                 />
                 <Step
@@ -85,32 +133,16 @@ const Settings = (props) => {
                     status={searchSetup}
                     onEnter={() => {
                         setSearchSetup({ ...searchSetup, subtitle: 'searching...' });
-                        setTimeout(() => {
-                            setCurrentStep(2);
-                            setSearchSetup({
-                                ...searchSetup,
-                                subtitle: '',
-                                completed: true,
-                            });
-                            setAuthSetup({ ...authSetup, available: true });
-                            setFocus('step_authenticate');
-                        }, 2000);
+                        getBridgeAddress();
                     }}
                 />
                 <Step
                     focusKey={'step_authenticate'}
-                    title={'Press the Hue Bridge button'}
+                    title={'Connecting to the Hue Bridge'}
                     status={authSetup}
                     onEnter={() => {
-                        setAuthSetup({ ...authSetup, subtitle: 'searching...' });
-                        setTimeout(() => {
-                            setCurrentStep(3);
-                            setAuthSetup({
-                                ...authSetup,
-                                subtitle: '',
-                                completed: true,
-                            });
-                        }, 2000);
+                        setAuthSetup({ ...authSetup, subtitle: 'connecting...' });
+                        getUsername();
                     }}
                 />
             </View>
