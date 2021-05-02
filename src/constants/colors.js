@@ -6,3 +6,4 @@ export const black_pure = '#000000';
 export const dark_gray = '#2e2e30';
 export const gray = '#2d2d2d';
 export const yellow = '#EFE514';
+export const green = '#1AA64B';

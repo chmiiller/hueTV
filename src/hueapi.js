@@ -110,7 +110,12 @@ export const getGroups = async() => {
         }
 
         const groups = await response.json();
-        return getGroupsAsArray(groups);
+        if (groups && groups[0] && groups[0].error) {
+            console.error(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> no groups found. Error: ${JSON.stringify(groups,null,'    ')} `);
+            return null;
+        } else {
+            return getGroupsAsArray(groups);
+        }
 
         // Uncomment next line for stress testing
         // return generateMockGroups();
@@ -129,7 +134,12 @@ export const getLights = async() => {
         }
 
         const lights = await response.json();
-        return getLightsAsArray(lights);
+        if (lights && lights[0] && lights[0].error) {
+            console.error(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> no lights found. Error: ${JSON.stringify(lights,null,'    ')} `);
+            return null;
+        } else {
+            return getLightsAsArray(lights);
+        }
 
         // Uncomment next line for stress testing
         // return generateMockLights();
@@ -142,11 +152,15 @@ export const getGroupsWithLights = async() => {
 
     const lights = await getLights();
     const groups = await getGroups();
-    return groups.reduce((acc, g) => {
-        // Enriches group by adding light objects to group.lights array
-        g.lights = g.lights.map(id => lights.find(l => l.id === id));
-        return [...acc, g];
-      },[]);
+    if (lights && groups) {
+        return groups.reduce((acc, g) => {
+            // Enriches group by adding light objects to group.lights array
+            g.lights = g.lights.map(id => lights.find(l => l.id === id));
+            return [...acc, g];
+        },[]);
+    } else {
+        return false;
+    }
 };
 
 export const turnLightOff = async(id) => {

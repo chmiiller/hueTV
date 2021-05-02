@@ -4,7 +4,8 @@ import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-import { black, dark_gray, white } from '../../../constants/colors';
+import theme from '../../../config';
+import { black, green, white } from '../../../constants/colors';
 
 const Step = ({
     focusKey,
@@ -22,7 +23,7 @@ const Step = ({
                 }]}
             >
                 {completed &&
-                    <MaterialIcon name={'check-circle'} size={60} color={'#1DB954'} />
+                    <MaterialIcon name={'check-circle'} size={48} color={green} />
                 }
                 <View style={styles.messageContainer}>
                     <Text style={styles.title}>{title}</Text>
@@ -54,12 +55,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: 'teal',
-        minHeight: getScaledValue(60),
+        minHeight: getScaledValue(48),
     },
     iconContainer: {
-        width: getScaledValue(60),
-        height: getScaledValue(60),
+        width: getScaledValue(48),
+        height: getScaledValue(48),
     },
     messageContainer: {
         flexDirection: 'column',
@@ -68,16 +68,15 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        // backgroundColor: 'pink',
     },
     title: {
-        fontFamily: 'RobotoCondensed-Regular',
+        fontFamily: theme.primaryFontFamily,
         fontSize: getScaledValue(15),
         color: white, 
         textAlign: 'left',
     },
     subtitle: {
-        fontFamily: 'RobotoCondensed-Regular',
+        fontFamily: theme.primaryFontFamily,
         fontSize: getScaledValue(12),
         marginTop: getScaledValue(4),
         color: white, 
