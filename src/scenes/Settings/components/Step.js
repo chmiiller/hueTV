@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         minHeight: getScaledValue(48),
+        borderRadius: getScaledValue(4),
     },
     iconContainer: {
         width: getScaledValue(48),

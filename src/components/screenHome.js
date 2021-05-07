@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Api, getScaledValue, useNavigate } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import { testInternetConnection, getLights } from '../hueapi';
+import { testInternetConnection, getLights } from '../api/hueapi';
 import Theme, { themeStyles, hasWebFocusableUI } from '../config';
 import List from '../scenes/list';
 

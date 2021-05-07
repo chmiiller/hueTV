@@ -4,7 +4,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { getScaledValue, StyleSheet } from 'renative';
 
 import { themeStyles } from '../../config';
-import { getGroups } from '../../hueapi'; // groups are rooms on Hue API terminology
+import { getGroups } from '../../api/hueapi'; // groups are rooms on Hue API terminology
 
 import List from '../List';
 

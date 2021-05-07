@@ -7,9 +7,15 @@ import theme, { themeStyles } from '../../config';
 import {
     askUsername,
     getBridgeIpAddress,
-    setUsername,
     testInternetConnection,
-} from '../../hueapi';
+} from '../../api/hueapi';
+import {
+    getBridgeIp,
+    setUsername,
+    getUsername,
+    getSetupDone,
+    setSetupDone,
+} from '../../api/storage';
 import Step from './components/Step';
 
 const TOTAL_STEPS = 3;
@@ -52,13 +58,34 @@ const Settings = (props) => {
     });
 
     useEffect(() => {
-        setTimeout(() => {
-            setIsTesting(false);
-        }, 3000);
+        autoTestConfiguration();
     }, []);
 
+    const autoTestConfiguration = async () => {
+        setIsTesting(true);
+        const setupDoneBefore = await getSetupDone();
+
+        // If user set it up once, runs the automatic test
+        if (setupDoneBefore) {
+            const testConn = await testInternetConnection();
+            const testIp = await getBridgeIp();
+            const testUser = await getUsername();
+            
+            if (testConn.error || testIp.error || testUser.error) {
+                setIsTesting(false);
+            } else {
+                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> YOU'RE READY!`);
+                setIsTesting(false);
+                completeSteps();
+            }
+        } else {
+            resetSteps();
+            setIsTesting(false);
+        }
+    };
+
     // STEP 1 - Check internet connection
-    const testInternet = async() => {
+    const stepTestInternet = async() => {
         const internetTestResult = await testInternetConnection();
         if (!internetTestResult.error) {
             setCurrentStep(1);
@@ -67,7 +94,7 @@ const Settings = (props) => {
                 subtitle: '',
                 completed: true,
             });
-            setSearchSetup({ ...searchSetup, available: true });
+            setSearchSetup({ ...searchSetup, completed: false, available: true });
             setFocus('step_search');
         } else {
             console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> internetTestResult: ${JSON.stringify(internetTestResult,null,'    ')} `);
@@ -79,7 +106,7 @@ const Settings = (props) => {
     };
     
     // STEP 2 - Get Hue Bridge IP Address
-    const getBridgeAddress = async() => {
+    const stepGetBridgeAddress = async() => {
         const bridgeAddressResult = await getBridgeIpAddress();
         if (!bridgeAddressResult.error) {
             setCurrentStep(2);
@@ -88,7 +115,7 @@ const Settings = (props) => {
                 subtitle: '',
                 completed: true,
             });
-            setAuthSetup({ ...authSetup, available: true });
+            setAuthSetup({ ...authSetup, completed: false, available: true });
             setFocus('step_authenticate');
         } else {
             console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> bridgeAddressResult: ${JSON.stringify(bridgeAddressResult,null,'    ')} `);
@@ -100,7 +127,7 @@ const Settings = (props) => {
     };
     
     //STEP 3 - Authenticate with Hue Bridge by pressing its button
-    const getUsername = async() => {
+    const stepGetUsername = async() => {
         const userRes = await askUsername();
         if (userRes.error && userRes.error.type && userRes.error.type === 101) {
             setAuthSetup({ ...authSetup, subtitle: `${AUTH_SUBTITLE} - ${TOTAL_AUTH_TRIES}s` });
@@ -115,6 +142,9 @@ const Settings = (props) => {
                     const username = await setUsername(intervalRes.success.username);
                     console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> got username: ${username} `);
                     clearInterval(countInterval);
+                    await autoTestConfiguration();
+                    await setSetupDone();
+                    setFocus('menu_rooms');
                     return;
                 } else {
                     // on error, keep trying for 20 seconds
@@ -130,6 +160,24 @@ const Settings = (props) => {
         }
     };
 
+    const resetSteps = () => {
+        setCurrentStep(0);
+        const resetStep = { subtitle: '', available: false, completed: false }; 
+        setInternetSetup({ ...resetStep, available: true });
+        setSearchSetup(resetStep);
+        setAuthSetup(resetStep);
+        setFocus('step_internet');
+    };
+    
+    const completeSteps = () => {
+        setCurrentStep(3);
+        const completedStep = { subtitle: '', available: false, completed: true };
+        setInternetSetup({ ...completedStep, available: true });
+        setSearchSetup(completedStep);
+        setAuthSetup(completedStep);
+        setFocus('step_internet');
+    };
+
     const Steps = () => (
         <View>
             <Step
@@ -137,8 +185,11 @@ const Settings = (props) => {
                 title={STEP1_TITLE}
                 status={internetSetup}
                 onEnter={() => {
-                    setInternetSetup({ ...internetSetup, subtitle: STEP1_SUBTITLE });
-                    testInternet();
+                    resetSteps();
+                    setInternetSetup({ subtitle: STEP1_SUBTITLE, completed: false });
+                    setTimeout(() => {
+                        stepTestInternet();
+                    }, 500);
                 }}
             />
             <Step
@@ -147,7 +198,7 @@ const Settings = (props) => {
                 status={searchSetup}
                 onEnter={() => {
                     setSearchSetup({ ...searchSetup, subtitle: STEP2_SUBTITLE });
-                    getBridgeAddress();
+                    stepGetBridgeAddress();
                 }}
             />
             <Step
@@ -156,7 +207,7 @@ const Settings = (props) => {
                 status={authSetup}
                 onEnter={() => {
                     setAuthSetup({ ...authSetup, subtitle: STEP3_SUBTITLE });
-                    getUsername();
+                    stepGetUsername();
                 }}
             />
         </View>

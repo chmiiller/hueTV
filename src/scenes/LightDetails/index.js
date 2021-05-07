@@ -13,7 +13,7 @@ import {
     turnLightOff,
     turnGroupOn,
     turnGroupOff,
-} from '../../hueapi'
+} from '../../api/hueapi'
 
 const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
 const brightness_message = 'Brightness';

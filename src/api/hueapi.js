@@ -1,16 +1,17 @@
-import AsyncStorage from '@react-native-community/async-storage';
-
-import { allGroups } from './config';
+import { allGroups } from '../config';
 import {
     ctToHex,
     isDark,
     xyToHex,
-} from './colors';
+} from './colorsApi';
+import {
+    setBridgeIp,
+    getBridgeIp,
+    getUsername,
+} from './storage';
 
 const appName = 'huetv';
 const hueDiscoveryUrl = 'https://discovery.meethue.com/';
-const keyBridgeIp = `@bridge_ip`;
-const keyBridgeUsername = `@bridge_username`;
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -28,8 +29,7 @@ export const getBridgeIpAddress = async () => {
         const response = await fetch(hueDiscoveryUrl).then(data => data.json());
         if (response && response.length > 0 && response[0].internalipaddress) {
             const bridgeAddress = response[0].internalipaddress;
-            await AsyncStorage.setItem(keyBridgeIp, bridgeAddress);
-            return bridgeAddress;
+            return await setBridgeIp(bridgeAddress); 
         } else {
             return { error: `Bridge not found: ${err}`}
         }
@@ -59,8 +59,8 @@ export const askUsername = async () => {
     }]
     */
     try {
-        const storedAddress = await AsyncStorage.getItem(keyBridgeIp);
-        if (storedAddress) {
+        const storedAddress = await getBridgeIp();
+        if (!storedAddress.error) {
             const url = `http://${storedAddress}/api`;
             const response = await fetch(url, {
                 method: 'POST',
@@ -75,23 +75,13 @@ export const askUsername = async () => {
     }
 };
 
-export const setUsername = async (value) => {
-    try {
-        if (value) {
-            await AsyncStorage.setItem(keyBridgeUsername, value);
-            return value;
-        }
-    } catch (err) {
-        return { error: `Error setting username: ${err}`}
-    }
-};
-
 export const getBaseUrl = async() => {
-    const storedAddress = await AsyncStorage.getItem(keyBridgeIp);
-    const storedUsername = await AsyncStorage.getItem(keyBridgeUsername);
-    if (storedAddress) {
+    const storedAddress = await getBridgeIp();
+    const storedUsername = await getUsername();
+    if (!storedAddress.error && !storedUsername.error) {
         return `http://${storedAddress}/api/${storedUsername}`;
     } else {
+        console.error('Error getting baseUrl');
         return null;
     }
 }
