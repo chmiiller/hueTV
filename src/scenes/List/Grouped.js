@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import LightGroup from '../../components/LightGroup';
 import { black, dark_gray, offwhite, white, yellow } from '../../constants/colors';
-import theme, { hasWebFocusableUI } from '../../config';
+import theme, { hasWebFocusableUI, themeStyles } from '../../config';
 
 const styles = StyleSheet.create({
     scroll: {
@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
         marginTop: getScaledValue(12),
         color: white,
     },
+    titleContainer: {
+        marginTop: getScaledValue(16),
+        marginBottom: getScaledValue(4)
+    },
 });
 
 const notFoundTitle = 'No lights found...';
@@ -46,8 +50,14 @@ const Grouped = ({ items }) => {
         scrollRef.current.scrollTo({ y });
     };
     
-    if (!items) {
-        return <Text>{notFoundTitle}</Text>;
+    if (!items || items.length === 0) {
+        return (
+            <View style={themeStyles.screen}>
+                <View style={styles.titleContainer}>
+                    <Text style={themeStyles.textH2}>{notFoundTitle}</Text>
+                </View>
+            </View>
+        );
     } else {
         return (
             <ScrollView contentContainerStyle={styles.scroll} ref={scrollRef}>

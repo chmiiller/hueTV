@@ -24,7 +24,8 @@ const App = () => {
             <View style={themeStyles.appContainer}>
                 <Router>
                     <ScreenRooms path={ROUTES.ROOMS} />
-                    <ScreenLights path={ROUTES.HOME} />
+                    <ScreenRooms path={ROUTES.HOME} />
+                    <ScreenLights path={ROUTES.LIGHTS} />
                     <ScreenSettings path={ROUTES.SETTINGS} />
                     <ScreenModal path={ROUTES.MODAL} />
                     <ScreenLightDetails path={ROUTES.DETAILS} />

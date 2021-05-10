@@ -89,7 +89,7 @@ const Menu = (props) => {
                     iconFocused={'lightbulb-on'}
                     title={btLightsLabel}
                     onEnter={() => {
-                        navigate(ROUTES.HOME, '/[slug]');
+                        navigate(ROUTES.LIGHTS, '/[slug]');
                     }}
                 />
                 <FocusableButtonWithIcon

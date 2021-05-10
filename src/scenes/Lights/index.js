@@ -8,6 +8,7 @@ import { getLights, getGroupsWithLights } from '../../api/hueapi';
 
 import List from '../List';
 import Grouped from '../List/Grouped';
+import LoadingLabel from '../../components/LoadingLabel';
 
 const screenTitle = 'All lights';
 const loadingTitle = 'Loading lights...';
@@ -37,27 +38,29 @@ const Lights = ({ setFocus }) => {
     const fetchLights = async() => {
         const _lights = await getLights();
         const _allGrouped = await getGroupsWithLights();
-        setIsLoaded(true);
-        setLights(_lights);
-        setGroupedLights(_allGrouped);
-        setFocus();
+        setTimeout(() => {
+            setIsLoaded(true);
+            setLights(_lights);
+            setGroupedLights(_allGrouped);
+            setFocus();
+        }, 1000);
     };
 
     return (
         <View style={themeStyles.screen}>
             { !isLoaded ? (
-                <View style={styles.loadingContainer}>
-                    {/* <Text style={themeStyles.textH2}>{loadingTitle}</Text> */}
-                </View>
+                <LoadingLabel text={loadingTitle} />
             ) : (
                 <View style={themeStyles.screen}>
                     <View style={styles.titleContainer}>
                         <Text style={themeStyles.textH2}>{screenTitle}</Text>
                     </View>
-                    {groupLights && <Grouped items={groupedLights} />}
-                    {!groupLights && <List items={lights} type={'lights'} />}
+                    {groupLights ? (
+                        <Grouped items={groupedLights} />
+                    ) : (
+                        <List items={lights} type={'lights'} />
+                    )}
                 </View>
-                
             )}
         </View>
     );
@@ -67,11 +70,6 @@ const styles = StyleSheet.create({
     titleContainer: {
         marginTop: getScaledValue(16),
         marginBottom: getScaledValue(4)
-    },
-    loadingContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
 

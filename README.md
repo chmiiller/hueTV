@@ -78,7 +78,7 @@
   - QR Code to GitHub repo
   - Stack & Libs
 - General:
-  - On App start, "Rooms" should be loaded
+  - ~~On App start, "Rooms" should be loaded~~
   - Name
   - Icon
   - Description

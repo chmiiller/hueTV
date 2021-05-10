@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Light from '../../components/Light';
 import Room from '../../components/Room';
-import { hasWebFocusableUI } from '../../config';
+import { hasWebFocusableUI, themeStyles } from '../../config';
 
 const styles = StyleSheet.create({
     scroll: {
@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
         marginTop: getScaledValue(12),
         paddingHorizontal: getScaledValue(36),
         paddingBottom: getScaledValue(12),
+    },
+    titleContainer: {
+        marginTop: getScaledValue(16),
+        marginBottom: getScaledValue(4)
+    },
+    loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
@@ -35,8 +44,14 @@ const List = ({ items, type }) => {
         return (<Room key={item.id} room={item} onFocus={handleFocus} />);
     };
     
-    if (!items) {
-        return <Text>{notFoundTitle}</Text>;
+    if (!items || items.length === 0) {
+        return (
+            <View style={themeStyles.screen}>
+                <View style={styles.titleContainer}>
+                    <Text style={themeStyles.textH2}>{notFoundTitle}</Text>
+                </View>
+            </View>
+        );
     } else {
         return (
             <ScrollView contentContainerStyle={styles.scroll} ref={scrollRef} >

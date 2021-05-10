@@ -91,7 +91,6 @@ export const getGroups = async() => {
     const base = await getBaseUrl();
     if (base) {
         const url = `${base}/groups`
-        console.log(url);
         const response = await fetch(url)
 
         if (!response.ok) {

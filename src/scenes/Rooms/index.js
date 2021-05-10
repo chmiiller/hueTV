@@ -7,6 +7,7 @@ import { themeStyles } from '../../config';
 import { getGroups } from '../../api/hueapi'; // groups are rooms on Hue API terminology
 
 import List from '../List';
+import LoadingLabel from '../../components/LoadingLabel';
 
 const screenTitle = 'All rooms';
 const loadingTitle = 'Loading rooms...';
@@ -34,17 +35,17 @@ const Rooms = ({ setFocus }) => {
 
     const fetchRooms = async() => {
         const _rooms = await getGroups();
-        setIsLoaded(true);
-        setRooms(_rooms);
-        setFocus();
+        setTimeout(() => {
+            setIsLoaded(true);
+            setRooms(_rooms);
+            setFocus();
+        }, 1000);
     };
 
     return (
         <View style={themeStyles.screen}>
             { !isLoaded ? (
-                <View style={styles.loadingContainer}>
-                    {/* <Text style={themeStyles.textH2}>{loadingTitle}</Text> */}
-                </View>
+                <LoadingLabel text={loadingTitle}/>
             ) : (
                 <View style={themeStyles.screen}>
                     <View style={styles.titleContainer}>
@@ -61,11 +62,6 @@ const styles = StyleSheet.create({
     titleContainer: {
         marginTop: getScaledValue(16),
         marginBottom: getScaledValue(4)
-    },
-    loadingContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
 

@@ -168,6 +168,7 @@ export const themeStyles = StyleSheet.create({
 export const ROUTES = {
     HOME: '/',
     ROOMS: 'rooms',
+    LIGHTS: 'lights',
     SETTINGS: 'settings',
     DETAILS: 'details',
     MODAL: 'modal',
