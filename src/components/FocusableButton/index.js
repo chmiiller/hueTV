@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
         color: white,
         textAlign: 'center',
         fontFamily: Theme.primaryFontFamily,
-        fontSize: getScaledValue(14),
+        fontSize: getScaledValue(12),
     },
     buttonTextFocus: {
         color: yellow,
         textAlign: 'center',
         fontFamily: Theme.primaryFontFamily,
-        fontSize: getScaledValue(14),
+        fontSize: getScaledValue(12),
     }
 });
 

@@ -72,7 +72,9 @@ const Settings = (props) => {
             const testUser = await getUsername();
             
             if (testConn.error || testIp.error || testUser.error) {
+                console.error(` >>>>> Settings error!\n\ntestConn: ${JSON.stringify(testConn)} \ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
                 setIsTesting(false);
+                setFocus('step_internet');
             } else {
                 console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> YOU'RE READY!`);
                 setIsTesting(false);
@@ -102,6 +104,7 @@ const Settings = (props) => {
                 ...internetSetup,
                 subtitle: STEP1_ERROR,
             });
+            setFocus('step_internet');
         }
     };
     
@@ -123,6 +126,7 @@ const Settings = (props) => {
                 ...searchSetup,
                 subtitle: STEP2_ERROR,
             });
+            setFocus('step_search');
         }
     };
     
