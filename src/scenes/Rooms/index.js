@@ -1,4 +1,4 @@
-import React,{ useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { getScaledValue, StyleSheet } from 'renative';
@@ -6,10 +6,11 @@ import { useNavigate } from '@reach/router';
 
 import { ROUTES, themeStyles } from '../../config';
 import { getGroups } from '../../api/hueapi'; // groups are rooms on Hue API terminology
-
 import List from '../List';
 import LoadingLabel from '../../components/LoadingLabel';
 import EmptyState from '../../components/EmptyState';
+import { white } from '../../constants/colors';
+import { primaryFont } from '../../constants/text';
 
 const screenTitle = 'All rooms';
 const loadingTitle = 'Loading rooms...';
@@ -29,6 +30,17 @@ const Rooms = (props) => {
         }, 100);
         props.setFocus();
         fetchRooms();
+
+        const countInterval = setInterval(() => {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking for rooms`);
+            props.setFocus('title');
+            fetchRooms();
+        }, 20000);
+
+        return () => {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> gonna clear interval`);
+            clearInterval(countInterval);
+        };
     }, []);
 
     const onKeyDownList = (event) => {
@@ -71,7 +83,7 @@ const Rooms = (props) => {
         return (
             <View style={themeStyles.screen}>
                 <View style={styles.titleContainer}>
-                    <Text style={themeStyles.textH2}>{screenTitle}</Text>
+                    <Text style={styles.title}>{screenTitle}</Text>
                 </View>
                 <List items={rooms} type={'rooms'} />
             </View>
@@ -90,7 +102,16 @@ const Rooms = (props) => {
 const styles = StyleSheet.create({
     titleContainer: {
         marginTop: getScaledValue(16),
-        marginBottom: getScaledValue(4)
+        marginBottom: getScaledValue(4),
+    },
+    title: {
+        fontFamily: primaryFont,
+        fontSize: getScaledValue(20),
+        marginVertical: getScaledValue(12),
+        color: white,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
     },
 });
 
