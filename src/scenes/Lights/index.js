@@ -17,6 +17,7 @@ const loadingTitle = 'Loading lights...';
 const emptyTitle = 'No lights found.';
 const emptySubtitle = `Please open "Settings" and check if everything is working correctly.`;
 const emptyButton = ' Go to settings ';
+const CHECK_INTERVAL = 20000;
 
 const Lights = (props) => {
     const navigate = useNavigate(props);
@@ -30,6 +31,17 @@ const Lights = (props) => {
         }, 100);
         props.setFocus();
         fetchLights();
+
+        const countInterval = setInterval(() => {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking for lights`);
+            props.setFocus('title');
+            fetchLights();
+        }, CHECK_INTERVAL);
+
+        return () => {
+            console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> gonna clear lights interval`);
+            clearInterval(countInterval);
+        };
     }, []);
 
     const onKeyDownList = (event) => {

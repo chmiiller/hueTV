@@ -17,6 +17,7 @@ const loadingTitle = 'Loading rooms...';
 const emptyTitle = 'No rooms found.';
 const emptySubtitle = `Please open "Settings" and check if everything is working correctly.`;
 const emptyButton = ' Go to settings ';
+const CHECK_INTERVAL = 20000;
 
 const Rooms = (props) => {
     const navigate = useNavigate(props);
@@ -35,7 +36,7 @@ const Rooms = (props) => {
             console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> Checking for rooms`);
             props.setFocus('title');
             fetchRooms();
-        }, 20000);
+        }, CHECK_INTERVAL);
 
         return () => {
             console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> gonna clear interval`);

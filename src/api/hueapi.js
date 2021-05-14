@@ -135,6 +135,56 @@ export const getLights = async() => {
     }
 };
 
+export const getLightById = async id => {
+    if (!id) {
+        console.log('getLightById ID is missing');
+        return;
+    }
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/lights/${id}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const lightResult = await response.json();
+        if (lightResult && lightResult[0] && lightResult[0].error) {
+            console.error(` light with ID ${id} error: ${JSON.stringify(lightResult[0].error)} `);
+            return null;
+        } else {
+            return makeLight(lightResult, id);
+        }
+    }
+};
+
+export const getGroupById = async id => {
+    if (!id) {
+        console.log('getGroupById ID is missing');
+        return;
+    }
+    const base = await getBaseUrl();
+    if (base) {
+        const url = `${base}/groups/${id}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            const message = `An error has ocurred: ${response.status}`;
+            throw new Error(message);
+        }
+
+        const groupResult = await response.json();
+        if (groupResult && groupResult[0] && groupResult[0].error) {
+            console.error(` group with ID ${id} error: ${JSON.stringify(groupResult[0].error)} `);
+            return null;
+        } else {
+            return makeGroup(groupResult, id);
+        }
+    }
+};
+
 export const getGroupsWithLights = async() => {
     // Uncomment next line for stress testing
     // return generateMockGroups();
@@ -152,9 +202,9 @@ export const getGroupsWithLights = async() => {
     }
 };
 
-export const turnLightOff = async(id) => {
+export const turnLightOff = async id => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('turnLightOff ID is missing');
         return;
     }
     const base = await getBaseUrl();
@@ -163,7 +213,7 @@ export const turnLightOff = async(id) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"on":false}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -175,9 +225,9 @@ export const turnLightOff = async(id) => {
     }
 }
 
-export const turnLightOn = async(id) => {
+export const turnLightOn = async id => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('turnLightOn ID is missing');
         return;
     }
     const base = await getBaseUrl();
@@ -186,7 +236,7 @@ export const turnLightOn = async(id) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"on":true}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -198,9 +248,9 @@ export const turnLightOn = async(id) => {
     }
 }
 
-export const turnGroupOff = async(id) => {
+export const turnGroupOff = async id => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('turnGroupOff ID is missing');
         return;
     }
     const base = await getBaseUrl();
@@ -209,7 +259,7 @@ export const turnGroupOff = async(id) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"on":false}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -221,9 +271,9 @@ export const turnGroupOff = async(id) => {
     }
 }
 
-export const turnGroupOn = async(id) => {
+export const turnGroupOn = async id => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('turnGroupOn ID is missing');
         return;
     }
     const base = await getBaseUrl();
@@ -232,7 +282,7 @@ export const turnGroupOn = async(id) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"on":true}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -246,7 +296,7 @@ export const turnGroupOn = async(id) => {
 
 export const setLightBrightness = async({ id, percentage }) => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('setLightBrightness ID is missing');
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
@@ -256,7 +306,7 @@ export const setLightBrightness = async({ id, percentage }) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"bri":${brightness}}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -270,7 +320,7 @@ export const setLightBrightness = async({ id, percentage }) => {
 
 export const setGroupBrightness = async({ id, percentage }) => {
     if (!id) {
-        console.log('ID is missing');
+        console.log('setGroupBrightness ID is missing');
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
@@ -280,7 +330,7 @@ export const setGroupBrightness = async({ id, percentage }) => {
         const response = await fetch(url, {
             method: 'PUT',
             body: `{"bri":${brightness}}`,
-        })
+        });
 
         if (!response.ok) {
             const message = `An error has ocurred: ${response.status}`;
@@ -293,66 +343,64 @@ export const setGroupBrightness = async({ id, percentage }) => {
 }
 
 const getLightsAsArray = obj => {
-    const lightsArray = Object.keys(obj).map(id => {
-        const light = obj[id];
-        const bright = light.state.bri;
-        const brightPercentage = Math.round((bright * 100) / 254);
-        const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut);
-        const color = colorful ? xyToHex(light.state.xy) : ctToHex(light.state.ct);
-        const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
-        return {
-            id,
-            isOn: light.state.on,
-            reachable: light.state.reachable,
-            bright,
-            brightPercentage,
-            colorful,
-            color,
-            colorIsDark,
-            hue: light.state.hue,
-            sat: light.state.sat,
-            name: light.name,
-            type: light.type,
-        };
-    });
-
-    return lightsArray;
+    return Object.keys(obj).map(id => makeLight(obj[id], id));
 }
 
-const getGroupsAsArray = obj => {
-    let groupsArray = Object.keys(obj).map(id => {
-        const group = obj[id];
-        const { all_on, any_on } = group.state;
-        const { on, bri, hue, sat } = group.action;
-        const colorful = (group.action && group.action.colormode && group.action.colormode === 'xy');
-        const color = colorful ? xyToHex(group.action.xy) : ctToHex(group.action.ct);
-        const brightPercentage = Math.round((bri * 100) / 254);
-        const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
-        
-        return {
-            id,
-            name: group.name,
-            type: group.type,
-            lights: group.lights ? group.lights.sort() : [],
-            allOn: all_on,
-            anyOn: any_on,
-            colorful,
-            color,
-            colorIsDark,
-            on,
-            hue,
-            saturation: sat,
-            bright: bri,
-            brightPercentage,
-        };
-    });
+const makeLight = (light, id) => {
+    const bright = light.state.bri;
+    const brightPercentage = Math.round((bright * 100) / 254);
+    const colorful = (light.capabilities && light.capabilities.control && light.capabilities.control.colorgamut);
+    const color = colorful ? xyToHex(light.state.xy) : ctToHex(light.state.ct);
+    const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
+    return {
+        id,
+        isOn: light.state.on,
+        reachable: light.state.reachable,
+        bright,
+        brightPercentage,
+        colorful,
+        color,
+        colorIsDark,
+        hue: light.state.hue,
+        sat: light.state.sat,
+        name: light.name,
+        type: light.type,
+    };
+};
 
+const getGroupsAsArray = obj => {
+    let groupsArray = Object.keys(obj).map(id => makeGroup(obj[id], id));
     if (!allGroups) {
         groupsArray = groupsArray.filter(group => group.type === 'Room');
     }
-
     return groupsArray;
 }
+
+const makeGroup = (group, id) => {
+    const { all_on, any_on } = group.state;
+    const { on, bri, hue, sat } = group.action;
+    const colorful = (group.action && group.action.colormode && group.action.colormode === 'xy');
+    const color = colorful ? xyToHex(group.action.xy) : ctToHex(group.action.ct);
+    const brightPercentage = Math.round((bri * 100) / 254);
+    const colorIsDark = colorful ? isDark(color) : isDark(color, 90);
+    
+    return {
+        id,
+        name: group.name,
+        type: group.type,
+        lights: group.lights ? group.lights.sort() : [],
+        allOn: all_on,
+        anyOn: any_on,
+        colorful,
+        color,
+        colorIsDark,
+        on,
+        hue,
+        saturation: sat,
+        bright: bri,
+        brightPercentage,
+    };
+};
 
 // Random generator functions
 export const generateMockLights = (amount = 40) => {

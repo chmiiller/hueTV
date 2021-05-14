@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { getScaledValue, useNavigate, usePop } from 'renative';
+import { getScaledValue, useNavigate } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { themeStyles, hasWebFocusableUI } from '../../config';
 import { dark_gray, offwhite, white, yellow } from '../../constants/colors';
+import { primaryFont } from '../../constants/text';
+import LoadingLabel from '../../components/LoadingLabel';
 import { 
     setGroupBrightness,
     setLightBrightness,
@@ -13,35 +15,64 @@ import {
     turnLightOff,
     turnGroupOn,
     turnGroupOff,
+    getLightById,
+    getGroupById,
 } from '../../api/hueapi'
 
 const tutorial_message = 'Arrows Up / Down: Brightness\nSelect Button: On / Off';
 const brightness_message = 'Brightness';
+const loadingTitle = 'Loading...';
 const switchHeight = 310;
 const brightness_amount = 10;
+const CHECK_INTERVAL = 20000;
 
 const ScreenLightDetails = (props) => {
-    const pop = usePop(props);
     const navigate = useNavigate(props);
     const { setFocus } = props;
-    const { light, isRoom } = props.location.state;
-    const isOn = !isRoom ? light.isOn : light.allOn || light.anyOn;
-    const [brightness, setBrightness] = useState(isOn ? light.brightPercentage : 0);
-    const [savedBrightness, setSavedBrightness] = useState(light.brightPercentage);
-    const [lampOn, setLampOn] = useState(isOn);
+    const { isRoom } = props.location.state;
+    const [brightness, setBrightness] = useState(0);
+    const [savedBrightness, setSavedBrightness] = useState(0);
+    const [lampOn, setLampOn] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [light, setLight] = useState({});
+    let countInterval;
 
     useEffect(() => {
-        setFocus(`switch_${light.id}`);
         setTimeout(() => {
             window.addEventListener('keydown', onDetailsKeyDown);
         }, 100);
+        fetchLight();
+        countInterval = setInterval(() => {
+            props.setFocus('title');
+            fetchLight();
+        }, CHECK_INTERVAL);
+
+        return () => {
+            clearInterval(countInterval);
+        };
     }, []);
+
+    const fetchLight = async () => {
+        setIsLoaded(false);
+        const { light } = props.location.state;
+        const _light = isRoom ? await getGroupById(light.id) : await getLightById(light.id);
+        if (_light) {
+            setTimeout(() => {
+                setLight(_light);
+                const isOn = !isRoom ? _light.isOn : _light.allOn || _light.anyOn;
+                setBrightness(isOn ? _light.brightPercentage : 0);
+                setSavedBrightness(_light.brightPercentage);
+                setIsLoaded(true);
+                setFocus(`switch_${_light.id}`);
+            }, 500);
+        }
+    };
     
     const onDetailsKeyDown = (event) => {
         switch (event.keyCode) {
             case 8: //backspace
             case 10009:
-                const path = isRoom ? '/rooms' : '/';
+                const path = isRoom ? '/rooms' : '/lights';
                 navigate(path);
                 break;
         }
@@ -57,7 +88,7 @@ const ScreenLightDetails = (props) => {
                     height: brightnessHeight,
                     borderTopLeftRadius: borderTop,
                     borderTopRightRadius: borderTop,
-                    background: light.lightColor,
+                    backgroundColor: light.color,
                 }]} />
                 <View style={styles.iconContainer} >
                     <Icon name={brightness === 0 ? 'lightbulb' : 'lightbulb-on'} size={64} color={(light.colorIsDark || !lampOn) ? white : dark_gray} />
@@ -170,12 +201,16 @@ const ScreenLightDetails = (props) => {
 
     return (
         <View style={themeStyles.screen}>
-            <View style={themeStyles.container}>
-                <Text style={themeStyles.textH2}>{light.name}</Text>
-                <Text style={styles.subtitle}>{`${brightness}% ${brightness_message}`}</Text>
-                <LightSwitch focusKey={`switch_${light.id}`} onEnterPress={onEnter} onArrowPress={onArrow}/>
-                <Text style={styles.tutorial}>{tutorial_message}</Text>
-            </View>
+            { !isLoaded ? (
+                    <LoadingLabel text={loadingTitle} />
+                ) : (
+                    <View style={themeStyles.container}>
+                        <Text style={themeStyles.textH2}>{light.name}</Text>
+                        <Text style={styles.subtitle}>{`${brightness}% ${brightness_message}`}</Text>
+                        <LightSwitch focusKey={`switch_${light.id}`} onEnterPress={onEnter} onArrowPress={onArrow}/>
+                        <Text style={styles.tutorial}>{tutorial_message}</Text>
+                    </View>
+                )}
         </View>
     );
 };
@@ -226,7 +261,7 @@ const styles = StyleSheet.create({
         position: "absolute",
     },
     subtitle: {
-        fontFamily: 'RobotoCondensed-Regular',
+        fontFamily: primaryFont,
         fontSize: getScaledValue(10),
         marginTop: getScaledValue(4),
         marginBottom: getScaledValue(4),
@@ -237,7 +272,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     tutorial: {
-        fontFamily: 'RobotoCondensed-Regular',
+        fontFamily: primaryFont,
         fontSize: getScaledValue(8),
         marginTop: getScaledValue(24),
         color: offwhite,
