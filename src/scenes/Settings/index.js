@@ -17,6 +17,7 @@ import {
     setSetupDone,
 } from '../../api/storage';
 import Step from './components/Step';
+import { primaryFont } from '../../constants/text';
 
 const TOTAL_STEPS = 3;
 const TOTAL_AUTH_TRIES = 20;
@@ -38,7 +39,7 @@ const STEP3_TITLE = 'Connecting to the Hue Bridge';
 const STEP3_SUBTITLE = 'connecting...';
 
 const Settings = (props) => {
-    const { setFocus } = props;
+    const { debug, setFocus } = props;
     const [isTesting, setIsTesting] = useState(true);
     const [currentStep, setCurrentStep] = useState(0);
     const [internetSetup, setInternetSetup] = useState({
@@ -63,20 +64,31 @@ const Settings = (props) => {
 
     const autoTestConfiguration = async () => {
         setIsTesting(true);
+        debug('Gonna auto test');
         const setupDoneBefore = await getSetupDone();
-
+        debug(` setupDoneBefore: ${JSON.stringify(setupDoneBefore,null,'    ')} `);
         // If user set it up once, runs the automatic test
         if (setupDoneBefore) {
             const testConn = await testInternetConnection();
             const testIp = await getBridgeIp();
+            debug(` testIp: ${JSON.stringify(testIp,null,'    ')} `);
             const testUser = await getUsername();
+            debug(` testUser: ${JSON.stringify(testUser,null,'    ')} `);
             
             if (testConn.error || testIp.error || testUser.error) {
-                console.error(` >>>>> Settings error!\n\ntestConn: ${JSON.stringify(testConn)} \ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
+                // console.error(` >>>>> Settings error!\n\ntestConn: ${JSON.stringify(testConn)} \ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
+                if (testConn.error) {
+                    debug(`  testConn.error: ${JSON.stringify(testConn.error,null,'    ')} `);
+                } else {
+                    debug(` >>>>> Settings error!\n\n\ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
+                }
                 setIsTesting(false);
                 setFocus('step_internet');
             } else {
                 console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> YOU'RE READY!`);
+                debug(` testIp: ${JSON.stringify(testIp,null,'    ')} `);
+                debug(` testUser: ${JSON.stringify(testUser,null,'    ')} `);
+                debug(' IT WORKS!!! ');
                 setIsTesting(false);
                 completeSteps();
             }
@@ -144,11 +156,23 @@ const Settings = (props) => {
                     setCurrentStep(3);
                     setAuthSetup({ ...authSetup, subtitle: ``, completed: true });
                     const username = await setUsername(intervalRes.success.username);
-                    console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> got username: ${username} `);
+                    // console.log(` >>> got username: ${username} `);
+                    debug(` >>> got username: ${username} `);
                     clearInterval(countInterval);
-                    await autoTestConfiguration();
-                    await setSetupDone();
-                    setFocus('menu_rooms');
+                    setIsTesting(true);
+                    setTimeout(async () => {
+                        debug(' Gonna run auto test again');
+                        debug('Forcing save/read');
+                        await getSetupDone();
+                        const testIp = await getBridgeIp();
+                        const testUser = await getUsername();
+                        debug(`saving forced testUser: ${testUser} `);
+                        await setUsername(testUser);
+                        debug(`saving forced setup as done`);
+                        await setSetupDone();
+                        setIsTesting(false);
+                        completeSteps();
+                    }, 2000);
                     return;
                 } else {
                     // on error, keep trying for 20 seconds
@@ -179,7 +203,7 @@ const Settings = (props) => {
         setInternetSetup({ ...completedStep, available: true });
         setSearchSetup(completedStep);
         setAuthSetup(completedStep);
-        setFocus('step_internet');
+        setFocus('menu_rooms');
     };
 
     const Steps = () => (
@@ -217,13 +241,12 @@ const Settings = (props) => {
         </View>
     );
 
-    const Loading = () => {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#96969b" />
-            </View>
-        );
-    };
+    const Loading = () => (
+        <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#96969b" />
+        </View>
+    );
+
     return (
         <View style={themeStyles.screen}>
             <View style={styles.titleContainer}>
@@ -254,7 +277,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     sectionTitle: {
-        fontFamily: theme.primaryFontFamily,
+        fontFamily: primaryFont,
         fontSize: getScaledValue(15),
         marginHorizontal: getScaledValue(20),
         marginTop: getScaledValue(5),
@@ -264,7 +287,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     sectionSubtitle: {
-        fontFamily: theme.primaryFontFamily,
+        fontFamily: primaryFont,
         fontSize: getScaledValue(12),
         marginHorizontal: getScaledValue(21),
         marginTop: getScaledValue(-6),

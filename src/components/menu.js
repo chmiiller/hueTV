@@ -58,6 +58,7 @@ const Menu = (props) => {
         useEffect(() => {
             setTimeout(() => {
                 window.addEventListener('keydown', onKeyDownMenu);
+                navigate(ROUTES.ROOMS, '/[slug]');
             }, 100);
             setFocus();
         }, []);

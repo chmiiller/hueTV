@@ -37,7 +37,7 @@
   - ~~Real color light~~
   - ~~Contrast icon against bright/dark colors~~
   - ~~Loading~~
-  - Refresh interval
+  - ~~Refresh interval~~
   - ~~Move container right~~
   - ~~Test 40 lights~~
 - Rooms/Groups
@@ -53,8 +53,8 @@
 - Light Details:
   - ~~Real color light~~
   - ~~Contrast icon against bright/dark colors~~
-  - Refresh interval
-  - Update on useEffect
+  - ~~Refresh interval~~
+  - ~~Update on useEffect~~
   - ~~Support group editing~~
 - Settings:
   - ~~Test internet~~
@@ -80,7 +80,7 @@
   - QR Code to GitHub repo
   - Stack & Libs
 - General:
-  - On App start, "Rooms" should be loaded
+  - ~~On App start, "Rooms" should be loaded~~
   - Name
   - Icon
   - Description

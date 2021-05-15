@@ -21,6 +21,7 @@ const CHECK_INTERVAL = 20000;
 
 const Rooms = (props) => {
     const navigate = useNavigate(props);
+    const debug = props.debug;
     const [isLoaded, setIsLoaded] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
     const [rooms, setRooms] = useState([]);
@@ -55,6 +56,7 @@ const Rooms = (props) => {
 
     const fetchRooms = async() => {
         const _rooms = await getGroups();
+        debug(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> _rooms: ${JSON.stringify(_rooms,null,'    ')} `);
         if (!_rooms || !_rooms.length) {
             setIsLoaded(true);
             setIsEmpty(true);

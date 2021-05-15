@@ -4,8 +4,8 @@ import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-import theme from '../../../config';
 import { black, green, white } from '../../../constants/colors';
+import { primaryFont } from '../../../constants/text';
 
 const Step = ({
     focusKey,
@@ -71,14 +71,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     title: {
-        fontFamily: theme.primaryFontFamily,
+        fontFamily: primaryFont,
         fontSize: getScaledValue(15),
         color: white, 
         textAlign: 'left',
     },
     subtitle: {
-        fontFamily: theme.primaryFontFamily,
-        fontSize: getScaledValue(12),
+        fontFamily: primaryFont,
+        fontSize: getScaledValue(10),
+        lineHeight: '140%',
         marginTop: getScaledValue(4),
         color: white, 
         textAlign: 'left',

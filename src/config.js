@@ -177,5 +177,6 @@ export const ROUTES = {
 
 export const allGroups = false;
 export const groupLights = false;
+export const debugging = true;
 
 export default theme;
