@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { getScaledValue } from 'renative';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import theme, { themeStyles } from '../../config';
+import { themeStyles } from '../../config';
 import {
     askUsername,
     getBridgeIpAddress,
@@ -12,12 +12,12 @@ import {
 import {
     getBridgeIp,
     setUsername,
-    getUsername,
     getSetupDone,
     setSetupDone,
 } from '../../api/storage';
 import Step from './components/Step';
 import { primaryFont } from '../../constants/text';
+import { white } from '../../constants/colors';
 
 const TOTAL_STEPS = 3;
 const TOTAL_AUTH_TRIES = 20;
@@ -25,7 +25,6 @@ const SCREEN_TITLE = 'Settings';
 const SECTION1_TITLE = 'Initial Setup';
 const STEPS_OF = 'of';
 const STEPS_COMPLETED = 'completed';
-const AUTH_SUBTITLE = 'Please press the button on your Hue Bridge (physical device) to finish the setup';
 
 const STEP1_TITLE = 'Internet Connection';
 const STEP1_SUBTITLE = 'testing...';
@@ -36,7 +35,8 @@ const STEP2_SUBTITLE = 'searching...';
 const STEP2_ERROR = 'Bridge not found, please try again';
 
 const STEP3_TITLE = 'Connecting to the Hue Bridge';
-const STEP3_SUBTITLE = 'connecting...';
+const STEP3_INIT_SUBTITLE = 'Note that you will need physical access to the Hue Bridge device';
+const AUTH_SUBTITLE = 'Please press the button on your Hue Bridge (physical device) to finish the setup';
 
 const Settings = (props) => {
     const { debug, setFocus } = props;
@@ -53,12 +53,13 @@ const Settings = (props) => {
         completed: false,
     });
     const [authSetup, setAuthSetup] = useState({
-        subtitle: '',
+        subtitle: STEP3_INIT_SUBTITLE,
         available: false,
         completed: false,
     });
 
     useEffect(() => {
+        debug('clear');
         autoTestConfiguration();
     }, []);
 
@@ -72,8 +73,6 @@ const Settings = (props) => {
             const testConn = await testInternetConnection();
             const testIp = await getBridgeIp();
             debug(` testIp: ${JSON.stringify(testIp,null,'    ')} `);
-            const testUser = await getUsername();
-            debug(` testUser: ${JSON.stringify(testUser,null,'    ')} `);
             
             if (testConn.error || testIp.error || testUser.error) {
                 // console.error(` >>>>> Settings error!\n\ntestConn: ${JSON.stringify(testConn)} \ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
@@ -156,23 +155,13 @@ const Settings = (props) => {
                     setCurrentStep(3);
                     setAuthSetup({ ...authSetup, subtitle: ``, completed: true });
                     const username = await setUsername(intervalRes.success.username);
-                    // console.log(` >>> got username: ${username} `);
                     debug(` >>> got username: ${username} `);
                     clearInterval(countInterval);
                     setIsTesting(true);
                     setTimeout(async () => {
-                        debug(' Gonna run auto test again');
-                        debug('Forcing save/read');
-                        await getSetupDone();
-                        const testIp = await getBridgeIp();
-                        const testUser = await getUsername();
-                        debug(`saving forced testUser: ${testUser} `);
-                        await setUsername(testUser);
-                        debug(`saving forced setup as done`);
-                        await setSetupDone();
                         setIsTesting(false);
                         completeSteps();
-                    }, 2000);
+                    }, 3000);
                     return;
                 } else {
                     // on error, keep trying for 20 seconds
@@ -190,10 +179,10 @@ const Settings = (props) => {
 
     const resetSteps = () => {
         setCurrentStep(0);
-        const resetStep = { subtitle: '', available: false, completed: false }; 
+        const resetStep = { subtitle: '', available: false, completed: false };
         setInternetSetup({ ...resetStep, available: true });
         setSearchSetup(resetStep);
-        setAuthSetup(resetStep);
+        setAuthSetup({ subtitle: STEP3_INIT_SUBTITLE, available: false, completed: false });
         setFocus('step_internet');
     };
     
@@ -234,7 +223,6 @@ const Settings = (props) => {
                 title={STEP3_TITLE}
                 status={authSetup}
                 onEnter={() => {
-                    setAuthSetup({ ...authSetup, subtitle: STEP3_SUBTITLE });
                     stepGetUsername();
                 }}
             />
@@ -258,6 +246,9 @@ const Settings = (props) => {
                 {!isTesting && <Steps />}
             </View>
             {isTesting && <Loading />}
+            <View style={styles.containerBottom}>
+                <Text style={styles.versionTitle}>{`version 202105`}</Text>
+            </View>
         </View>
     );
 };
@@ -294,6 +285,18 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         color: '#FFFFFF',
         textAlign: 'center'
+    },
+    versionTitle: {
+        color: white,
+        fontSize: getScaledValue(8),
+        textAlign: 'center',
+        opacity: 0.8,
+    },
+    containerBottom: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: getScaledValue(24),
+        paddingRight: getScaledValue(12),
     },
 });
 

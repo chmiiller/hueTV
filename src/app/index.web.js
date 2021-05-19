@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Router, navigate } from '@reach/router';
 import { getScaledValue } from 'renative';
@@ -20,16 +20,17 @@ const App = () => {
     }, []);
 
     const [debug, setDebug] = useState('DEBUG:');
-    let myDebug = '';
+    const myDebug = useRef();
 
     const addLog = str => {
         if (str === 'clear') {
+            myDebug.current = '';
             setDebug('');
             return;
         }
-        const current = myDebug + `\n${str}`;
-        myDebug = current;
-        setDebug(myDebug);
+        const newDebug = myDebug.current + `\n${str}`;
+        myDebug.current = newDebug;
+        setDebug(myDebug.current);
     }
 
     return (
@@ -58,7 +59,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
     sectionSubtitle: {
-        fontSize: getScaledValue(6),
+        fontSize: getScaledValue(16),
         color: 'green',
     },
     debugContainer: {

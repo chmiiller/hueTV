@@ -66,7 +66,9 @@
     - ~~Test internet~~
     - ~~Test stored IP Address~~
     - ~~Test stored token~~
-  - [Bug] Settings are not stored the first time
+  - Test settings localStorage
+  - Troubleshoot endless loading of rooms
+  - Migrate everything to localStorage
   - Option to group lights or not
   - Option to remove group with only sensors
   - Versioning

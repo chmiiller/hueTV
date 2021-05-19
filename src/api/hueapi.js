@@ -12,6 +12,7 @@ import {
 
 const appName = 'huetv';
 const hueDiscoveryUrl = 'https://discovery.meethue.com/';
+const keyBridgeUsername = `@bridge_username`;
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -77,7 +78,8 @@ export const askUsername = async () => {
 
 export const getBaseUrl = async() => {
     const storedAddress = await getBridgeIp();
-    const storedUsername = await getUsername();
+    // const storedUsername = await getUsername();
+    const storedUsername = localStorage.getItem(keyBridgeUsername);
     if (!storedAddress.error && !storedUsername.error) {
         return `http://${storedAddress}/api/${storedUsername}`;
     } else {
