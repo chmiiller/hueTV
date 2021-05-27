@@ -7,12 +7,13 @@ import {
 import {
     setBridgeIp,
     getBridgeIp,
+    setUsername,
     getUsername,
+    setSetupDone,
 } from './storage';
 
 const appName = 'huetv';
 const hueDiscoveryUrl = 'https://discovery.meethue.com/';
-const keyBridgeUsername = `@bridge_username`;
 
 export const testInternetConnection = async() => {
     // Google Maps on iOS App Store
@@ -30,7 +31,7 @@ export const getBridgeIpAddress = async () => {
         const response = await fetch(hueDiscoveryUrl).then(data => data.json());
         if (response && response.length > 0 && response[0].internalipaddress) {
             const bridgeAddress = response[0].internalipaddress;
-            return await setBridgeIp(bridgeAddress); 
+            return setBridgeIp(bridgeAddress); 
         } else {
             return { error: `Bridge not found: ${err}`}
         }
@@ -42,7 +43,7 @@ export const getBridgeIpAddress = async () => {
     }
 };
 
-export const askUsername = async () => {
+export const askUsername = async tizenId => {
     /*
     if it's the first time, bridge should return an error:
     [{
@@ -60,14 +61,20 @@ export const askUsername = async () => {
     }]
     */
     try {
-        const storedAddress = await getBridgeIp();
-        if (!storedAddress.error) {
+        const storedAddress = getBridgeIp();
+        if (!storedAddress.error && tizenId) {
             const url = `http://${storedAddress}/api`;
             const response = await fetch(url, {
                 method: 'POST',
-                body: `{"devicetype":"${appName}"}`,
+                body: `{"devicetype":"${tizenId}"}`,
             }).then(data => data.json());
             if (response && response.length > 0) {
+                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> response[0]: ${JSON.stringify(response[0],null,'    ')} `);
+                if (response[0].success && response[0].success.username) {
+                    console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> setting it up from hueapi`);
+                    setUsername(response[0].success.username);
+                    setSetupDone(true);
+                }
                 return response[0];
             }
         }
@@ -76,10 +83,9 @@ export const askUsername = async () => {
     }
 };
 
-export const getBaseUrl = async() => {
-    const storedAddress = await getBridgeIp();
-    // const storedUsername = await getUsername();
-    const storedUsername = localStorage.getItem(keyBridgeUsername);
+export const getBaseUrl = () => {
+    const storedAddress = getBridgeIp();
+    const storedUsername = getUsername();
     if (!storedAddress.error && !storedUsername.error) {
         return `http://${storedAddress}/api/${storedUsername}`;
     } else {
@@ -90,7 +96,7 @@ export const getBaseUrl = async() => {
 
 // Groups and rooms are the same thing
 export const getGroups = async() => {
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/groups`
         const response = await fetch(url)
@@ -114,7 +120,7 @@ export const getGroups = async() => {
 };
 
 export const getLights = async() => {
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/lights`
         const response = await fetch(url)
@@ -142,7 +148,7 @@ export const getLightById = async id => {
         console.log('getLightById ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/lights/${id}`;
         const response = await fetch(url);
@@ -167,7 +173,7 @@ export const getGroupById = async id => {
         console.log('getGroupById ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/groups/${id}`;
         const response = await fetch(url);
@@ -209,7 +215,7 @@ export const turnLightOff = async id => {
         console.log('turnLightOff ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/lights/${id}/state`;
         const response = await fetch(url, {
@@ -232,7 +238,7 @@ export const turnLightOn = async id => {
         console.log('turnLightOn ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/lights/${id}/state`;
         const response = await fetch(url, {
@@ -255,7 +261,7 @@ export const turnGroupOff = async id => {
         console.log('turnGroupOff ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/groups/${id}/action`;
         const response = await fetch(url, {
@@ -278,7 +284,7 @@ export const turnGroupOn = async id => {
         console.log('turnGroupOn ID is missing');
         return;
     }
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/groups/${id}/action`;
         const response = await fetch(url, {
@@ -302,7 +308,7 @@ export const setLightBrightness = async({ id, percentage }) => {
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/lights/${id}/state`;
         const response = await fetch(url, {
@@ -326,7 +332,7 @@ export const setGroupBrightness = async({ id, percentage }) => {
         return;
     }
     const brightness = Math.round((254 * percentage) / 100);
-    const base = await getBaseUrl();
+    const base = getBaseUrl();
     if (base) {
         const url = `${base}/groups/${id}/action`;
         const response = await fetch(url, {

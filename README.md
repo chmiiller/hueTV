@@ -66,9 +66,10 @@
     - ~~Test internet~~
     - ~~Test stored IP Address~~
     - ~~Test stored token~~
-  - Test settings localStorage
+  - ~~Test settings localStorage~~
   - Troubleshoot endless loading of rooms
-  - Migrate everything to localStorage
+  - ~~Migrate everything to localStorage~~
+  - ~~Remove internet testing~~
   - Option to group lights or not
   - Option to remove group with only sensors
   - Versioning

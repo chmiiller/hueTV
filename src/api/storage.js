@@ -1,14 +1,12 @@
-import AsyncStorage from '@react-native-community/async-storage';
+const keyBridgeIp = `bridge_ip`;
+const keyBridgeUsername = `bridge_username`;
+const keySetupDone = `settings_setup_done`;
 
-const keyBridgeIp = `@bridge_ip`;
-const keyBridgeUsername = `@bridge_username`;
-const keySetupDone = `@settings_setup_done`;
-
-export const setBridgeIp = async address => {
+export const setBridgeIp = address => {
     if (address) {
         try {
-            await AsyncStorage.setItem(keyBridgeIp, address);
-            return await getBridgeIp();
+            localStorage.setItem(keyBridgeIp, address);
+            return getBridgeIp();
         } catch (err) {
             return { error: `Error setting username: ${err}`}
         }
@@ -16,8 +14,8 @@ export const setBridgeIp = async address => {
     return { error: `Error setting Bridge IP Address - no param received by function`};
 };
 
-export const getBridgeIp = async () => {
-    const ipAddress = await AsyncStorage.getItem(keyBridgeIp);
+export const getBridgeIp = () => {
+    const ipAddress = localStorage.getItem(keyBridgeIp);
     if (ipAddress) {
         return ipAddress;
     } else {
@@ -26,11 +24,11 @@ export const getBridgeIp = async () => {
     }
 };
 
-export const setUsername = async user => {
+export const setUsername = user => {
     if (user) {
         try {
-            await AsyncStorage.setItem(keyBridgeUsername, user);
-            return await getUsername();
+            localStorage.setItem(keyBridgeUsername, user);
+            return getUsername();
         } catch (err) {
             return { error: `Error setting username: ${err}`}
         }
@@ -38,8 +36,8 @@ export const setUsername = async user => {
     return { error: `Error setting username - no param received by function`};
 };
 
-export const getUsername = async () => {
-    const username = await AsyncStorage.getItem(keyBridgeUsername);
+export const getUsername = () => {
+    const username = localStorage.getItem(keyBridgeUsername);
     if (username) {
         return username;
     } else {
@@ -48,26 +46,23 @@ export const getUsername = async () => {
     }
 };
 
-export const setSetupDone = async () => {
-    const newSetup = await getSetupDone();
-    if (!newSetup) {
-        try {
-            await AsyncStorage.setItem(keySetupDone, true);
-            return await getSetupDone();
-        } catch (err) {
-            return { error: `Error setting new setup: ${err}`}
-        }
+export const setSetupDone = () => {
+    try {
+        localStorage.setItem(keySetupDone, true);
+        return getSetupDone();
+    } catch (err) {
+        return { error: `Error setting new setup: ${err}`}
     }
 };
 
-export const getSetupDone = async () => {
-    return await AsyncStorage.getItem(keySetupDone);
+export const getSetupDone = () => {
+    return localStorage.getItem(keySetupDone);
 };
 
-export const resetSetupDone = async () => {
+export const resetSetupDone = () => {
     try {
-        await AsyncStorage.removeItem(keySetupDone);
-        return await getSetupDone();
+        localStorage.removeItem(keySetupDone);
+        return getSetupDone();
     } catch (err) {
         return { error: `Error removing new setup: ${err}`}
     }

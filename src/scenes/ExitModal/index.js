@@ -46,8 +46,6 @@ const ExitModal = (props) => {
 
     const exitApp = () => {
         window.tizen.application.getCurrentApplication().exit();
-        // tizen.application.getCurrentApplication().appInfo.id // returns App Id
-        // tizen.application.getCurrentApplication().appInfo.packageId // returns packageId
     };
 
     return (
