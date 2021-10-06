@@ -5,7 +5,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import { themeStyles, ROUTES } from '../../config';
 import { askUsername, getBridgeIpAddress } from '../../api/hueapi';
-import { getBridgeIp, getUsername, getSetupDone } from '../../api/storage';
+import { getBridgeIp, getBridgeUsername, getSetupDone } from '../../api/storage';
 
 import Step from './components/Step';
 import { primaryFont } from '../../constants/text';
@@ -53,13 +53,13 @@ const Settings = (props) => {
         const setupDoneBefore = getSetupDone();
         debug(` setupDoneBefore: ${setupDoneBefore} `);
         const checkTestIp = getBridgeIp();
-        debug(` checkTestIp: ${checkTestIp} `);
-        const checkTestUser = getUsername();
+        debug(` checkTestIp: ${JSON.stringify(checkTestIp,null,'    ')} `);
+        const checkTestUser = getBridgeUsername();
         debug(` checkTestUser: ${JSON.stringify(checkTestUser,null,'    ')} `);
         // If user set it up once, runs the automatic test
         if (setupDoneBefore) {
             const testIp = getBridgeIp();
-            const testUser = getUsername();
+            const testUser = getBridgeUsername();
             if (testIp.error || testUser.error) {
                 debug(` >>>>> Settings error!\n\n\ntestIp: ${JSON.stringify(testIp)} \ntestUser: ${JSON.stringify(testUser)} `);
                 setIsTesting(false);
@@ -113,13 +113,13 @@ const Settings = (props) => {
     const stepGetUsername = async() => {
         const tizenId = window.tizen ? window.tizen.systeminfo.getCapability('http://tizen.org/system/tizenid') : 'huetv';
         debug(`tizenId: ${tizenId}`);
-        const userRes = await askUsername(tizenId);
+        const userRes = await askUsername(tizenId, debug);
         if (userRes.error && userRes.error.type && userRes.error.type === 101) {
             setAuthSetup({ ...authSetup, subtitle: `${AUTH_SUBTITLE} - ${TOTAL_AUTH_TRIES}s` });
             let count = TOTAL_AUTH_TRIES;
             const countInterval = setInterval(async () => {
                 // ask for username
-                const intervalRes = await askUsername(tizenId);
+                const intervalRes = await askUsername(tizenId, debug);
                 if (intervalRes && intervalRes.success && intervalRes.success.username) {
                     // On success, clear interval
                     setCurrentStep(2);

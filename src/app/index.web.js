@@ -59,7 +59,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
     sectionSubtitle: {
-        fontSize: getScaledValue(16),
+        fontSize: getScaledValue(12),
         color: 'green',
     },
     debugContainer: {

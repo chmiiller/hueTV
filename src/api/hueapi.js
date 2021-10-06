@@ -7,8 +7,8 @@ import {
 import {
     setBridgeIp,
     getBridgeIp,
-    setUsername,
-    getUsername,
+    setBridgeUsername,
+    getBridgeUsername,
     setSetupDone,
 } from './storage';
 
@@ -33,7 +33,7 @@ export const getBridgeIpAddress = async () => {
             const bridgeAddress = response[0].internalipaddress;
             return setBridgeIp(bridgeAddress); 
         } else {
-            return { error: `Bridge not found: ${err}`}
+            return { error: `Bridge not found`};
         }
         // recommended 8s timeout
         // if more than 1 item on response, means more than 1 bridge
@@ -43,7 +43,7 @@ export const getBridgeIpAddress = async () => {
     }
 };
 
-export const askUsername = async tizenId => {
+export const askUsername = async (tizenId, debug) => {
     /*
     if it's the first time, bridge should return an error:
     [{
@@ -61,6 +61,9 @@ export const askUsername = async tizenId => {
     }]
     */
     try {
+        // tentar com IP hardcoded
+        // tentar com outro fetch
+        // tentar sem fazer fetch
         const storedAddress = getBridgeIp();
         if (!storedAddress.error && tizenId) {
             const url = `http://${storedAddress}/api`;
@@ -68,14 +71,21 @@ export const askUsername = async tizenId => {
                 method: 'POST',
                 body: `{"devicetype":"${tizenId}"}`,
             }).then(data => data.json());
+            debug('on askUsername');
             if (response && response.length > 0) {
-                console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> response[0]: ${JSON.stringify(response[0],null,'    ')} `);
+                debug(` response[0]: ${JSON.stringify(response[0],null,'    ')} `);
                 if (response[0].success && response[0].success.username) {
-                    console.log(` >>>>>>>>>>>>>>>>>>>>>>>>>>>>> setting it up from hueapi`);
-                    setUsername(response[0].success.username);
-                    setSetupDone(true);
+                    debug(` setting username up from hueapi`);
+                    const responseUser = response[0].success.username;
+                    const newUser = setBridgeUsername(responseUser);
+                    return response[0];
+                    // setSetupDone(true);
+                } else {
+                    return response[0];
                 }
-                return response[0];
+            } else {
+                debug(`no response`);
+                return { error: `no response`};
             }
         }
     } catch (err) {
@@ -85,7 +95,7 @@ export const askUsername = async tizenId => {
 
 export const getBaseUrl = () => {
     const storedAddress = getBridgeIp();
-    const storedUsername = getUsername();
+    const storedUsername = getBridgeUsername();
     if (!storedAddress.error && !storedUsername.error) {
         return `http://${storedAddress}/api/${storedUsername}`;
     } else {

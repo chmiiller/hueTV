@@ -1,5 +1,5 @@
 const keyBridgeIp = `bridge_ip`;
-const keyBridgeUsername = `bridge_username`;
+const keyBridgeU = 'bridgeu';
 const keySetupDone = `settings_setup_done`;
 
 export const setBridgeIp = address => {
@@ -24,11 +24,11 @@ export const getBridgeIp = () => {
     }
 };
 
-export const setUsername = user => {
-    if (user) {
+export const setBridgeUsername = bridgeUser => {
+    if (bridgeUser) {
         try {
-            localStorage.setItem(keyBridgeUsername, user);
-            return getUsername();
+            localStorage.setItem(keyBridgeU, bridgeUser);
+            return getBridgeUsername();
         } catch (err) {
             return { error: `Error setting username: ${err}`}
         }
@@ -36,8 +36,8 @@ export const setUsername = user => {
     return { error: `Error setting username - no param received by function`};
 };
 
-export const getUsername = () => {
-    const username = localStorage.getItem(keyBridgeUsername);
+export const getBridgeUsername = () => {
+    const username = localStorage.getItem(keyBridgeU);
     if (username) {
         return username;
     } else {
