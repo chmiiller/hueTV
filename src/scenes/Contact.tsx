@@ -1,6 +1,10 @@
-import React from 'react';
+import CSS from 'csstype';
+import { RouteComponentProps } from 'react-router-dom';
 
-const styles = {
+type Styles = {
+    contact: CSS.Properties
+};
+const styles : Styles = {
     contact: {
         padding: '50px',
         textAlign: 'center',
@@ -9,8 +13,7 @@ const styles = {
     },
 };
 
-const Contact = () => {
-    const name = 'Carlos';
+const Contact = (props: RouteComponentProps): JSX.Element => {
     return (
         <div style={styles.contact}>
             <h1>Contact Us Page</h1>

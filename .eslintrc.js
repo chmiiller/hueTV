@@ -1,38 +1,35 @@
 module.exports = {
-    env: {
-        browser: true,
-        es2021: true,
+    "env": {
+        "browser": true,
+        "es2021": true
     },
-    extends: [
-        'plugin:react/recommended',
-        'airbnb',
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    parserOptions: {
-        ecmaFeatures: {
-            jsx: true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
         },
-        ecmaVersion: 12,
-        sourceType: 'module',
+        "ecmaVersion": 13,
+        "sourceType": "module"
     },
-    plugins: [
-        'react',
+    "plugins": [
+        "react",
+        "@typescript-eslint"
     ],
-    rules: {
-        'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    "rules": {
         'react/jsx-indent': ['warn', 4],
         'react/jsx-indent-props': ['warn', 4],
         'react/jsx-props-no-spreading': [0],
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
         indent: ['warn', 4],
         'linebreak-style': [
             'warn',
             'unix',
-        ],
-        quotes: [
-            'warn',
-            'single',
-            {
-                allowTemplateLiterals: true,
-            },
         ],
         semi: [
             'warn',
@@ -41,6 +38,5 @@ module.exports = {
         'no-unused-vars': [
             'warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
         ],
-        'react/prop-types': 'off',
-    },
+    }
 };

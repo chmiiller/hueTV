@@ -1,20 +1,19 @@
-import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 import FocusableMenuItem from './FocusableMenuItem';
 
-const SideMenuItems = () => {
+const SideMenuItems = (): JSX.Element => {
     const history = useHistory();
-    const onEnter = (path) => {
+    const onEnter = (path: string) => {
         console.log(`>>>>>>>>>>>>> ASDIOJAOISDJOAISJDAOSIDJ`);
         history.push(path);
     };
