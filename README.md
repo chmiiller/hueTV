@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To Do:
+
+- Set focus of a specific component by its focus name
+- Left menu items should follow children
+- Exit modal
+
 ## Available Scripts
 
 In the project directory, you can run:

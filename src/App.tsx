@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Contact from './scenes/Contact';
@@ -49,7 +49,9 @@ type AppProps = {
 
 function App({ setFocus }: AppProps) {
     const classes = useStyles();
-    const onKey = (event: any) => {
+    const history = useHistory();
+
+    const onKey = (event: KeyboardEvent) => {
         console.log(`key: ${event.keyCode}`);
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             console.log('Bye Bye');
@@ -64,8 +66,11 @@ function App({ setFocus }: AppProps) {
     const [modalVisible, setModalVisible] = React.useState(false);
     React.useEffect(() => {
         setFocus();
-        window.addEventListener('tizenhwkey', onKey);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
         window.addEventListener('keydown', onKey);
+        history.push("/home");
     }, []);
     return (
         <ThemeProvider theme={theme}>
