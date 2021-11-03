@@ -4,9 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## To Do:
 
-- Set focus of a specific component by its focus name
-- Left menu items should follow children
-- Exit modal
+- Left menu items focus should follow children
+
+- Exit modal design
+- Display exit modal when back button is pressed
+- Hide exit modal on back button
 
 ## Available Scripts
 
@@ -35,18 +37,30 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### Building for TV
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+build react app:   
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`yarn build`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+build react as tizen app:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`tizen build-web -- ./build`
 
-## Learn More
+create WGT file (package) and `huetv` is the certificate name:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`cd build/.buildResult`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`tizen package -t wgt -s huetv -- ./`
+
+Install WGT on TV:
+
+`tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
+
+run app on TV:
+
+`tizen run -t QE50LS03TASXXN -p a2cD2RV76B.HueTV`
+
+uninstall app from TV:
+
+`tizen uninstall -t QE50LS03TASXXN -p a2cD2RV76B.HueTV`

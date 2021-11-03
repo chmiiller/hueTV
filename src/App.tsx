@@ -7,7 +7,6 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Contact from './scenes/Contact';
 import Contact2 from './scenes/Contact2';
-import Modal from './scenes/Modal';
 import SideMenu from './components/SideMenu';
 
 const theme = createTheme({
@@ -77,7 +76,6 @@ function App({ setFocus }: AppProps) {
             <div className={classes.root}>
                 <CssBaseline />
                 <SideMenu />
-                {modalVisible && <Modal />}
                 <main className={classes.content}>
                     <Switch>
                         <Route exact path="/">
