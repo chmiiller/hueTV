@@ -5,26 +5,43 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import FocusableMenuItem from './FocusableMenuItem';
 import FocusableButton from './FocusableButton';
 
 const SideMenuItems = (): JSX.Element => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const onEnter = (path: string) => {
-        console.log(`>>>>>>>>>>>>> ASDIOJAOISDJOAISJDAOSIDJ`);
-        history.push(path);
+        navigate(path);
     };
     const [dialogVisible, setDialogVisible] = React.useState(false);
+    
+    // Useful for displaying/hiding "Exit App" modal by pressing the back button from the menu
+    const focusedItem = React.useRef('');
+    const dialogDisplayed = React.useRef(false);
+
+    const onKey = (event: KeyboardEvent) => {
+        if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
+            if (focusedItem.current !== '') {
+                setDialogVisible(true);
+                dialogDisplayed.current = true;
+            } else if (dialogDisplayed.current) {
+                setDialogVisible(false);
+                dialogDisplayed.current = false;
+            }
+        }
+    };
+
+    React.useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+        window.addEventListener('keydown', onKey);
+    }, []);
     const exitApp = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -41,6 +58,8 @@ const SideMenuItems = (): JSX.Element => {
                     onEnterPress={() => {
                         onEnter('/');
                     }}
+                    onBecameFocused={() => focusedItem.current = 'Contact'}
+                    onBecameBlurred={() => focusedItem.current = ''}
                 />
                 <FocusableMenuItem
                     icon={<ShoppingCartIcon />}
@@ -50,25 +69,9 @@ const SideMenuItems = (): JSX.Element => {
                     onEnterPress={() => {
                         onEnter('/contact2');
                     }}
+                    onBecameFocused={() => focusedItem.current = 'Contact 2'}
+                    onBecameBlurred={() => focusedItem.current = ''}
                 />
-                <ListItem button component={RouterLink} to="/contact">
-                    <ListItemIcon>
-                        <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Contact" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <BarChartIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Reports" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <LayersIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Integrations" />
-                </ListItem>
                 <FocusableMenuItem
                     icon={<ExitToAppIcon />}
                     path="/modal"
@@ -76,7 +79,10 @@ const SideMenuItems = (): JSX.Element => {
                     title="Exit"
                     onEnterPress={() => {
                         setDialogVisible(true);
+                        dialogDisplayed.current = true;
                     }}
+                    onBecameFocused={() => focusedItem.current = 'bt_exit_app'}
+                    onBecameBlurred={() => focusedItem.current = ''}
                 />
             </List>
             <Dialog
@@ -84,6 +90,7 @@ const SideMenuItems = (): JSX.Element => {
                 fullScreen
                 onClose={() => {
                     setDialogVisible(false);
+                    dialogDisplayed.current = false;
                 }} // Esc key callback
             >
                 <DialogTitle id="simple-dialog-title">{'Do you want to exit HueTV?'}</DialogTitle>
@@ -91,6 +98,7 @@ const SideMenuItems = (): JSX.Element => {
                     <FocusableButton focusKey={'bt_modal_1'} title={'Exit'} onEnterPress={exitApp}/>
                     <FocusableButton focusKey={'bt_modal_2'} title={'Cancel'} onEnterPress={() => {
                         setDialogVisible(false);
+                        dialogDisplayed.current = false;
                     }}/>
                 </DialogContent>
             </Dialog>
@@ -98,4 +106,5 @@ const SideMenuItems = (): JSX.Element => {
     );
 };
 
-export default SideMenuItems;
+const FocusableSideMenu = withFocusable()(SideMenuItems);
+export default FocusableSideMenu;

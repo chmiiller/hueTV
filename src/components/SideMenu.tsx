@@ -23,15 +23,6 @@ const useStyles = makeStyles(() => ({
 
 const SideMenu = (): JSX.Element => {
     const classes = useStyles();
-    const [keyValue, setKeyValue] = React.useState('');
-    React.useEffect(() => {
-        window.addEventListener('keydown', (event) => {
-            setKeyValue(`keydown: ${event.code}`);
-        });
-        window.addEventListener('tizenhwkey', (event: any) => {
-            setKeyValue(`tizenhwkey: ${event.keyName}`);
-        });
-    }, []);
     return (
         <Drawer
             open
@@ -41,7 +32,6 @@ const SideMenu = (): JSX.Element => {
             <div className={classes.toolbarIcon} />
             <Divider />
             <SideMenuItems />
-            <h4>{`${keyValue}`}</h4>
         </Drawer>
     );
 };

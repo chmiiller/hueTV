@@ -4,11 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## To Do:
 
-- Left menu items focus should follow children
-
 - Exit modal design
-- Display exit modal when back button is pressed
-- Hide exit modal on back button
 
 ## Available Scripts
 

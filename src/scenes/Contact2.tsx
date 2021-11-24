@@ -1,5 +1,4 @@
 import CSS from 'csstype';
-import { RouteComponentProps } from 'react-router-dom';
 
 type Styles = {
     contact: CSS.Properties
@@ -14,7 +13,7 @@ const styles : Styles = {
     },
 };
 
-const Contact2 = (props: RouteComponentProps): JSX.Element => {
+const Contact2 = (): JSX.Element => {
     return (
         <div style={styles.contact}>
             <h1>Contact PAGE NUMBER 2</h1>

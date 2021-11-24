@@ -1,6 +1,5 @@
 import React from 'react';
 import CSS from 'csstype';
-import { RouteComponentProps } from 'react-router-dom';
 
 import BasicDialog from '../components/BasicDialog';
 import FocusableButton from '../components/FocusableButton';
@@ -19,7 +18,7 @@ const styles : Styles = {
     },
 };
 
-const Modal = (props: RouteComponentProps): JSX.Element => {
+const Modal = (): JSX.Element => {
     const [visible, setVisible] = React.useState(false);
     const MODAL_OPTIONS = [{
         title: 'Cancel',

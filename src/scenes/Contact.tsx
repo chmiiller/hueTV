@@ -1,6 +1,5 @@
 import React from 'react';
 import CSS from 'csstype';
-import { RouteComponentProps } from 'react-router-dom';
 
 import FocusableButton from '../components/FocusableButton';
 
@@ -16,7 +15,7 @@ const styles : Styles = {
     },
 };
 
-const Contact = (props: RouteComponentProps): JSX.Element => {
+const Contact = (): JSX.Element => {
     const [message, setMessage] = React.useState('first');
     return (
         <div style={styles.contact}>
