@@ -13,7 +13,10 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import FocusableMenuItem from './FocusableMenuItem';
 import FocusableButton from './FocusableButton';
 
-const SideMenuItems = (): JSX.Element => {
+type SideMenuItemsProps = {
+    toggleMenu: (menuOpen: boolean) => void,
+};
+const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
     const navigate = useNavigate();
     const onEnter = (path: string) => {
         navigate(path);
@@ -47,6 +50,21 @@ const SideMenuItems = (): JSX.Element => {
         // @ts-ignore
         window.tizen.application.getCurrentApplication().exit();
     };
+
+    const selectItem = (focusKey: string) => {
+        focusedItem.current = focusKey;
+        toggleMenu(true);
+    };
+    
+    const deselectItem = () => {
+        focusedItem.current = '';
+        setTimeout(() => {
+            if (focusedItem.current === '') {
+                toggleMenu(false);
+            }
+        }, 100);
+    };
+
     return (
         <>
             <List>
@@ -58,8 +76,8 @@ const SideMenuItems = (): JSX.Element => {
                     onEnterPress={() => {
                         onEnter('/');
                     }}
-                    onBecameFocused={() => focusedItem.current = 'Contact'}
-                    onBecameBlurred={() => focusedItem.current = ''}
+                    onBecameFocused={() => selectItem('Contact')}
+                    onBecameBlurred={() => deselectItem()}
                 />
                 <FocusableMenuItem
                     icon={<ShoppingCartIcon />}
@@ -69,8 +87,8 @@ const SideMenuItems = (): JSX.Element => {
                     onEnterPress={() => {
                         onEnter('/contact2');
                     }}
-                    onBecameFocused={() => focusedItem.current = 'Contact 2'}
-                    onBecameBlurred={() => focusedItem.current = ''}
+                    onBecameFocused={() => selectItem('Contact 2')}
+                    onBecameBlurred={() => deselectItem()}
                 />
                 <FocusableMenuItem
                     icon={<ExitToAppIcon />}
@@ -81,8 +99,8 @@ const SideMenuItems = (): JSX.Element => {
                         setDialogVisible(true);
                         dialogDisplayed.current = true;
                     }}
-                    onBecameFocused={() => focusedItem.current = 'bt_exit_app'}
-                    onBecameBlurred={() => focusedItem.current = ''}
+                    onBecameFocused={() => selectItem('bt_exit_app')}
+                    onBecameBlurred={() => deselectItem()}
                 />
             </List>
             <Dialog
