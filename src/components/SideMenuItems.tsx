@@ -71,10 +71,21 @@ const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
                 <FocusableMenuItem
                     icon={<DashboardIcon />}
                     path="/"
+                    focusKey="Home"
+                    title="Home"
+                    onEnterPress={() => {
+                        onEnter('/home');
+                    }}
+                    onBecameFocused={() => selectItem('Home')}
+                    onBecameBlurred={() => deselectItem()}
+                />
+                <FocusableMenuItem
+                    icon={<DashboardIcon />}
+                    path="/"
                     focusKey="Contact"
                     title="Contact"
                     onEnterPress={() => {
-                        onEnter('/');
+                        onEnter('/contact');
                     }}
                     onBecameFocused={() => selectItem('Contact')}
                     onBecameBlurred={() => deselectItem()}

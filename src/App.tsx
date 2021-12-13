@@ -7,6 +7,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Contact from './scenes/Contact';
 import Contact2 from './scenes/Contact2';
+import Home from './scenes/Home';
 import SideMenu from './components/SideMenu';
 
 const theme = createTheme({
@@ -61,8 +62,9 @@ function App({ setFocus }: AppProps) {
                 <SideMenu />
                 <main className={classes.content}>
                     <Routes>
-                        <Route path="/" element={<Contact />} />
-                        <Route path="/home" element={<Contact />} />
+                        <Route path="/" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/contact" element={<Contact />} />
                         <Route path="/contact2" element={<Contact2 />} />
                     </Routes>
                 </main>
