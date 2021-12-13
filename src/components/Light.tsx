@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import Box from '@mui/material/Box';
 
 type FocusedProps = {
     node: HTMLElement,

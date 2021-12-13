@@ -5,8 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## To Do:
 
 - Hide menu *
-- Add lamp cards on screen
-- Scroll down through lamps
+- Add lamp cards on screen *
+- Scroll down through lamps *
 - Exit modal design
 
 ## Available Scripts
