@@ -6,16 +6,20 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link as RouterLink } from 'react-router-dom';
 
 type MenuItemProps = {
-    icon: React.ReactNode,
     path: string,
+    selected: boolean,
+    icon: React.ReactNode,
+    selectedIcon: React.ReactNode,
     title: string,
     focused: boolean,
     setFocus: () => void,
 };
 
 const MenuItem = ({
-    icon,
     path,
+    selected,
+    icon,
+    selectedIcon,
     title,
     focused,
     setFocus,
@@ -25,12 +29,14 @@ const MenuItem = ({
     }, []);
 
     return (
-        <ListItemButton selected={focused} component={RouterLink} to={path}>
-            <ListItemIcon>
-                {icon}
-            </ListItemIcon>
-            <ListItemText primary={title} />
-        </ListItemButton>
+        <div style={{paddingLeft: 16, paddingRight: 16, marginBottom: 16}}>
+            <ListItemButton selected={focused || selected} component={RouterLink} to={path}>
+                <ListItemIcon>
+                    {focused || selected ? selectedIcon : icon}
+                </ListItemIcon>
+                <ListItemText primary={title} />
+            </ListItemButton>
+        </div>
     );
 };
 

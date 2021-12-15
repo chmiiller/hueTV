@@ -1,11 +1,10 @@
 import React from 'react';
 import MuiDrawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
 import SideMenuItems from './SideMenuItems';
 
-const drawerWidth = 240;
+const drawerWidth = 350;
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -24,7 +23,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+        width: `calc(${theme.spacing(11)} + 1px)`,
     },
 });
 
@@ -51,7 +50,7 @@ const SideMenu = (): JSX.Element => {
 
     return (
         <Drawer open={open} variant="permanent">
-            <Divider />
+            <div style={{height: 100}}></div>
             <SideMenuItems toggleMenu={toggleMenu}/>
         </Drawer>
     );

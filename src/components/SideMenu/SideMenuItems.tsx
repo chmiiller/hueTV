@@ -3,28 +3,26 @@ import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import List from '@mui/material/List';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import FocusableMenuItem from './FocusableMenuItem';
-import FocusableButton from './FocusableButton';
+import FocusableMenuItem from '../FocusableMenuItem';
+import FocusableButton from '../FocusableButton';
+import { sideMenuConfig, type SideMenuObject } from './SideMenuConfig';
 
 type SideMenuItemsProps = {
     toggleMenu: (menuOpen: boolean) => void,
 };
 const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
     const navigate = useNavigate();
-    const onEnter = (path: string) => {
-        navigate(path);
-    };
-    const [dialogVisible, setDialogVisible] = React.useState(false);
+    const location = useLocation();
     
-    // Useful for displaying/hiding "Exit App" modal by pressing the back button from the menu
+    const [dialogVisible, setDialogVisible] = React.useState(false);
+    const [menuOpened, setMenuOpened] = React.useState(true);
+    
     const focusedItem = React.useRef('');
+    // Useful for displaying/hiding "Exit App" modal by pressing the back button from the menu
     const dialogDisplayed = React.useRef(false);
 
     const onKey = (event: KeyboardEvent) => {
@@ -54,6 +52,7 @@ const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
     const selectItem = (focusKey: string) => {
         focusedItem.current = focusKey;
         toggleMenu(true);
+        setMenuOpened(true);
     };
     
     const deselectItem = () => {
@@ -61,6 +60,7 @@ const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
         setTimeout(() => {
             if (focusedItem.current === '') {
                 toggleMenu(false);
+                setMenuOpened(false);
             }
         }, 100);
     };
@@ -68,51 +68,30 @@ const SideMenuItems = ({ toggleMenu }: SideMenuItemsProps): JSX.Element => {
     return (
         <>
             <List>
-                <FocusableMenuItem
-                    icon={<DashboardIcon />}
-                    path="/"
-                    focusKey="Home"
-                    title="Home"
-                    onEnterPress={() => {
-                        onEnter('/home');
-                    }}
-                    onBecameFocused={() => selectItem('Home')}
-                    onBecameBlurred={() => deselectItem()}
-                />
-                <FocusableMenuItem
-                    icon={<DashboardIcon />}
-                    path="/"
-                    focusKey="Contact"
-                    title="Contact"
-                    onEnterPress={() => {
-                        onEnter('/contact');
-                    }}
-                    onBecameFocused={() => selectItem('Contact')}
-                    onBecameBlurred={() => deselectItem()}
-                />
-                <FocusableMenuItem
-                    icon={<ShoppingCartIcon />}
-                    path="/contact2"
-                    focusKey="Contact 2"
-                    title="Contact 2"
-                    onEnterPress={() => {
-                        onEnter('/contact2');
-                    }}
-                    onBecameFocused={() => selectItem('Contact 2')}
-                    onBecameBlurred={() => deselectItem()}
-                />
-                <FocusableMenuItem
-                    icon={<ExitToAppIcon />}
-                    path="/modal"
-                    focusKey="bt_exit_app"
-                    title="Exit"
-                    onEnterPress={() => {
-                        setDialogVisible(true);
-                        dialogDisplayed.current = true;
-                    }}
-                    onBecameFocused={() => selectItem('bt_exit_app')}
-                    onBecameBlurred={() => deselectItem()}
-                />
+                {sideMenuConfig.items.map((sideMenuObject: SideMenuObject) => {
+                    return (
+                        <FocusableMenuItem
+                            key={sideMenuObject.id}
+                            path={sideMenuObject.path}
+                            focusKey={sideMenuObject.id} // withFocusable prop
+                            selected={location.pathname == sideMenuObject.path && menuOpened === false}
+                            icon={sideMenuObject.icon}
+                            selectedIcon={sideMenuObject.selectedIcon}
+                            title={sideMenuObject.title}
+                            onEnterPress={() => { // withFocusable prop
+                                if (sideMenuObject.id === 'menu_item_exit') {
+                                    setDialogVisible(true);
+                                    dialogDisplayed.current = true;
+                                    return;
+                                }
+                                navigate(sideMenuObject.path);
+                            }}
+                            onBecameFocused={() => selectItem(sideMenuObject.id)} // withFocusable prop
+                            onBecameBlurred={() => deselectItem()} // withFocusable prop
+                        />
+                    );
+                    
+                })}
             </List>
             <Dialog
                 open={dialogVisible}

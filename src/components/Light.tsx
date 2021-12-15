@@ -23,7 +23,7 @@ const Light = ({ id, onFocus }: LightProps): JSX.Element => {
                     border: focused ? 2 : 0,
                     borderColor: 'white',
                     borderRadius: 2,
-                    width: 1/2,
+                    width: 250,
                     height: 250
                 }}
             />
