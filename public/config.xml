@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://www.chmiiller.com/huetv" version="1.0.0" viewmodes="maximized">
     <tizen:application id="a2cD2RV76B.HueTV" package="a2cD2RV76B" required_version="2.1"/>
+    <name>HueTV</name>
+    <icon src="icon.png"/>
     <author email="cmzinato@gmail.com">Carlos Zinato</author>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
-    <icon src="icon.png"/>
-    <name>HueTV</name>
+    <access origin="*" subdomains="true"></access>
+    <tizen:metadata key="“http://samsung.com/tv/metadata/use.network”" value="“true”"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:profile name="tv-samsung"/>
     <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
 </widget>

@@ -26,6 +26,7 @@ module.exports = {
         'react/jsx-props-no-spreading': [0],
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         indent: ['warn', 4],
         'linebreak-style': [
             'warn',

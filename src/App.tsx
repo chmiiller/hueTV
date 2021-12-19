@@ -6,9 +6,12 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Contact from './scenes/Contact';
-import Contact2 from './scenes/Contact2';
+import Lights from './scenes/Lights';
+import Settings from './scenes/Settings';
 import Home from './scenes/Home';
 import SideMenu from './components/SideMenu';
+
+import { getSetupDone } from './api/storage';
 
 const theme = createTheme({
     palette: {
@@ -53,7 +56,12 @@ function App({ setFocus }: AppProps) {
 
     React.useEffect(() => {
         setFocus();
-        navigate("/home", { replace: true });
+        const setupState = getSetupDone();
+        if (setupState.data) {
+            navigate("/home", { replace: true });
+        } else {
+            navigate("/settings", { replace: true });
+        }
     }, []);
     return (
         <ThemeProvider theme={theme}>
@@ -65,7 +73,8 @@ function App({ setFocus }: AppProps) {
                         <Route path="/" element={<Home />} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/contact" element={<Contact />} />
-                        <Route path="/contact2" element={<Contact2 />} />
+                        <Route path="/lights" element={<Lights />} />
+                        <Route path="/settings" element={<Settings />} />
                     </Routes>
                 </main>
             </div>

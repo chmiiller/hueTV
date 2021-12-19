@@ -1,12 +1,15 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://docs.tizen.org/application/web/get-started/tv/first-samsung-tv-app/
+
 
 ## To Do:
 
-- Hide menu *
-- Add lamp cards on screen *
-- Scroll down through lamps *
+- Light Details
+- Read lamp color
+- Change brightness
+- Onboarding
 - Exit modal design
 
 ## Available Scripts

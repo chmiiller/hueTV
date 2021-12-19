@@ -29,14 +29,14 @@ export const sideMenuConfig: SideMenuConfigObject = {
         },
         {
             id: 'menu_item_lights',
-            path: '/contact',
+            path: '/lights',
             title: 'Lights',
             icon: <LightbulbOutlinedIcon />,
             selectedIcon: <LightbulbIcon />,
         },
         {
             id: 'menu_item_settings',
-            path: '/contact2',
+            path: '/settings',
             title: 'Settings',
             icon: <SettingsOutlinedIcon />,
             selectedIcon: <SettingsIcon />,

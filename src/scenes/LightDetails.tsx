@@ -1,10 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
-import Light from '../components/Light';
 
-import { getGroups } from '../api/hueapi';
-import { type Room } from '../api/types';
+import Light from '../components/Light';
+import { getLights } from '../api/hueapi';
+import { type Light as LightType } from '../api/types';
 
 type FocusedProps = {
     node: HTMLElement,
@@ -19,20 +19,20 @@ for (let index = 0; index < 50; index++) {
     lightsArray.push({ id: `item_${index}` });
 }
 
-const Home = (): JSX.Element => {
+const LightDetails = (): JSX.Element => {
     const handleScrolling = ({ node }: FocusedProps) => {
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
 
-    const [rooms, setRooms] = React.useState<Array<Room>>([]);
+    const [lights, setLights] = React.useState<Array<LightType>>([]);
     React.useEffect(() => {
         homeGetGroups();
     }, []);
 
     const homeGetGroups = async () => {
-        const _rooms = await getGroups();
-        if (_rooms !== null) {
-            setRooms(_rooms);
+        const _lights = await getLights();
+        if (_lights !== null) {
+            setLights(_lights);
         }
     };
     
@@ -40,15 +40,15 @@ const Home = (): JSX.Element => {
         <div style={{padding: 100}}>
             <Fade in timeout={600}>
                 <Box sx={{ display: 'grid', rowGap: 5, gridTemplateColumns: 'repeat(3, 1fr)' }}>   
-                    {rooms.map((room: Room) => (
-                        <Light 
-                            key={room.id}
-                            id={room.id}
-                            name={room.name}
-                            brightness={room.brightPercentage}
+                    {lights.map((light: LightType) => (
+                        <Light
+                            key={light.id}
+                            id={light.id}
+                            name={light.name}
+                            brightness={light.brightPercentage}
                             onFocus={handleScrolling}
-                            isGroup
-                            isOn={room.allOn || room.anyOn}
+                            isGroup={false}
+                            isOn={light.isOn}
                         />
                     ))}
                 </Box>
@@ -57,4 +57,4 @@ const Home = (): JSX.Element => {
     );
 };
 
-export default Home;
+export default LightDetails;
