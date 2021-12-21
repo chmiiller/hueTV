@@ -1,5 +1,6 @@
 import React from 'react';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
 import {
@@ -27,6 +28,7 @@ type SwitchButtonProps = {
 };
 
 const Light = ({ id, onFocus, name, brightness, isGroup, isOn }: LightProps): JSX.Element => {
+    const navigate = useNavigate();
     const [stateOn, setStateOn] = React.useState(isOn);
     const SwitchButton = ({ focused }: SwitchButtonProps) => {
         return (
@@ -54,23 +56,7 @@ const Light = ({ id, onFocus, name, brightness, isGroup, isOn }: LightProps): JS
             focusKey={`light_${id}`}
             onBecameFocused={onFocus}
             onEnterPress={() => {
-                if (isGroup) {
-                    if (stateOn) {
-                        setStateOn(false);
-                        turnGroupOff(id);
-                    } else {
-                        setStateOn(true);
-                        turnGroupOn(id);
-                    }
-                } else {
-                    if (stateOn) {
-                        setStateOn(false);
-                        turnLightOff(id);
-                    } else {
-                        setStateOn(true);
-                        turnLightOn(id);
-                    }                    
-                }
+                isGroup ? navigate('/room', { state: { id } }) : navigate('/light', { state: { id } });
             }}
         />
     );

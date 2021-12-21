@@ -1,8 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
-import Light from '../components/Light';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
+import Light from '../components/Light';
 import { getGroups } from '../api/hueapi';
 import { type Room } from '../api/types';
 
@@ -10,16 +11,11 @@ type FocusedProps = {
     node: HTMLElement,
 };
 
-type LightData = {
-    id: string
+type HomeProps = {
+    setFocus: (item?: any) => void,
 };
 
-const lightsArray: Array<LightData> = [];
-for (let index = 0; index < 50; index++) {
-    lightsArray.push({ id: `item_${index}` });
-}
-
-const Home = (): JSX.Element => {
+const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const handleScrolling = ({ node }: FocusedProps) => {
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
@@ -27,6 +23,7 @@ const Home = (): JSX.Element => {
     const [rooms, setRooms] = React.useState<Array<Room>>([]);
     React.useEffect(() => {
         homeGetGroups();
+        setFocus('menu_item_root');
     }, []);
 
     const homeGetGroups = async () => {
@@ -57,4 +54,4 @@ const Home = (): JSX.Element => {
     );
 };
 
-export default Home;
+export default withFocusable()(Home);

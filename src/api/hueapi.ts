@@ -183,6 +183,7 @@ export const getLightById = async(id: string): Promise<Light | null> => {
     return null;
 };
 
+// Groups and rooms are the same thing
 export const getGroupById = async(id: string): Promise<Room | null> => {
     if (!id) {
         console.log('getGroupById ID is missing');
