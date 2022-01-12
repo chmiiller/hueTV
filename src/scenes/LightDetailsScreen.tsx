@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Light } from '../api/types';
@@ -10,6 +11,9 @@ import {
     turnLightOn,
     turnLightOff,
 } from '../api/hueapi';
+
+const tutorial_message1 = 'Arrows Up / Down: Brightness';
+const tutorial_message2 = 'Select Button: On / Off';
 
 const LightDetailsScreen = (): JSX.Element => {
     const { state } = useLocation();
@@ -50,22 +54,36 @@ const LightDetailsScreen = (): JSX.Element => {
             setLight(_light);
         }
     };
-    return (
-        <div style={{padding: 100}}>
-            { light &&
-                <>
-                    <h3>{`${light.name}`}</h3>
-                    <LightDetails
-                        id={light.id}
-                        isOn={light.isOn}
-                        brightnessPercentage={light.brightPercentage}
-                        setBrightnessApi={setBrightness}
-                        switchOnOffApi={switchOnOff}
-                    />
-                </>
-            }
-        </div>
-    );
+
+    if (light) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 12
+                }}
+            >
+                <Typography variant={'h3'}>{`${light.name}`}</Typography>
+                <Typography sx={{ marginTop: 1 }} gutterBottom variant={'h6'}>{`${light.brightPercentage}% Brightness`}</Typography>
+                <LightDetails
+                    id={light.id}
+                    isOn={light.isOn}
+                    brightnessPercentage={light.brightPercentage}
+                    setBrightnessApi={setBrightness}
+                    switchOnOffApi={switchOnOff}
+                />
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message1}</Typography>
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message2}</Typography>
+            </Box>
+        );
+    } else {
+        return (
+            <h3>Loading...</h3>
+        );
+    }
 };
 
 export default LightDetailsScreen;

@@ -17,6 +17,8 @@ type SwitchButtonProps = {
 
 const switchHeight = 500;
 const switchHeightFocused = 510;
+const switchBackground1 = '#22242b';
+// const switchBackground2 = '#16171c';
 
 const LightDetails = ({ id, isOn, brightnessPercentage, setFocus, setBrightnessApi, switchOnOffApi }: LightDetailsProps): JSX.Element => {
     const [brightness, setBrightness] = React.useState<number>(brightnessPercentage);
@@ -38,20 +40,20 @@ const LightDetails = ({ id, isOn, brightnessPercentage, setFocus, setBrightnessA
                 sx={{
                     display: 'flex',
                     flexDirection: 'column-reverse',
-                    bgcolor: 'white',
-                    border: focused ? 2 : 0,
-                    borderColor: 'white',
+                    bgcolor: switchBackground1,
+                    border: focused ? 1 : 0,
+                    boxShadow: focused ? 12 : 0,
+                    borderColor: '#3f444a',
                     borderRadius: 5,
                     width: 250,
                     height: 500,
+                    margin: 4,
                 }}
             >
                 <Box
                     sx={{
                         display: 'flex',
                         bgcolor: 'primary.main',
-                        border: focused ? 2 : 0,
-                        borderColor: 'white',
                         borderRadius: 5,
                         width: 250,
                         height: brightnessHeight,
