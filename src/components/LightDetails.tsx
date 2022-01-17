@@ -1,11 +1,16 @@
 import React from 'react';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 
 type LightDetailsProps = {
     id: string,
     isOn: boolean,
     brightnessPercentage: number,
+    color: string,
     setFocus: (item: any) => void,
     setBrightnessApi: (brightness: number) => void,
     switchOnOffApi: (turnOn: boolean) => void,
@@ -17,10 +22,9 @@ type SwitchButtonProps = {
 
 const switchHeight = 500;
 const switchHeightFocused = 510;
-const switchBackground1 = '#22242b';
-// const switchBackground2 = '#16171c';
+const switchBackground = '#22242b';
 
-const LightDetails = ({ id, isOn, brightnessPercentage, setFocus, setBrightnessApi, switchOnOffApi }: LightDetailsProps): JSX.Element => {
+const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrightnessApi, switchOnOffApi }: LightDetailsProps): JSX.Element => {
     const [brightness, setBrightness] = React.useState<number>(brightnessPercentage);
     const [savedBrightness, setSavedBrightness] = React.useState<number>(brightnessPercentage);
     const [isOnState, setIsOnState] = React.useState<boolean>(isOn);
@@ -35,39 +39,51 @@ const LightDetails = ({ id, isOn, brightnessPercentage, setFocus, setBrightnessA
         const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
         const brightnessHeight = (switchBaseHeight * brightness) * 0.01;
         // const borderTop = brightness >= 93 ? 15 : 0;
+        const displayBrightness = isOnState ? `${brightness}% Brightness` : 'Turned off';
         return (
-            <Box
-                sx={{
+            <>
+                <Typography sx={{ marginTop: 1 }} gutterBottom variant={'h6'}>{displayBrightness}</Typography>
+                <Box sx={{
                     display: 'flex',
                     flexDirection: 'column-reverse',
-                    bgcolor: switchBackground1,
+                    bgcolor: switchBackground,
                     border: focused ? 1 : 0,
                     boxShadow: focused ? 12 : 0,
                     borderColor: '#3f444a',
-                    borderRadius: 5,
+                    borderRadius: 4,
                     width: 250,
-                    height: 500,
+                    height: switchHeight,
                     margin: 4,
-                }}
-            >
-                <Box
-                    sx={{
+                }}>
+                    <Box sx={{
                         display: 'flex',
-                        bgcolor: 'primary.main',
-                        borderRadius: 5,
+                        bgcolor: `${color}`,
+                        borderRadius: 4,
                         width: 250,
                         height: brightnessHeight,
-                    }}
-                />
-                <div>
-                    <div>Icon</div>
-                </div>
-            </Box>
+                    }} />
+                    <Box sx={{
+                        display: 'flex',
+                        width: 250,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        position: "absolute",
+                        height: 100,
+                    }}>
+                        {isOnState
+                            ? <LightbulbIcon sx={{fontSize: 60, marginBottom: 2}} />
+                            : <LightbulbOutlinedIcon sx={{fontSize: 60, marginBottom: 2}} />
+                        }
+                    </Box>
+                </Box>
+            </>
         );
     };
     const FocusableComponent = withFocusable()(SwitchButton);
 
     const makeBrighter = () => {
+        switchOnOffApi(true);
         setIsOnState(true);
         const newBrightness = brightness + 10;
         if (newBrightness < 100) {

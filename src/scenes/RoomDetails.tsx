@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Room } from '../api/types';
@@ -10,6 +11,9 @@ import {
     turnGroupOn,
     turnGroupOff,
 } from '../api/hueapi';
+
+const tutorial_message1 = 'Arrows Up / Down: Brightness';
+const tutorial_message2 = 'Select Button: On / Off';
 
 const RoomDetails = (): JSX.Element => {
     const { state } = useLocation();
@@ -50,22 +54,34 @@ const RoomDetails = (): JSX.Element => {
             setRoom(_group);
         }
     };
-    return (
-        <div style={{padding: 100}}>
-            { room &&
-                <>
-                    <h3>{`${room.name}`}</h3>
-                    <LightDetails
-                        id={room.id}
-                        isOn={room.allOn || room.anyOn}
-                        brightnessPercentage={room.brightPercentage}
-                        setBrightnessApi={setRoomBrightness}
-                        switchOnOffApi={switchOnOff}
-                    />
-                </>
-            }
-        </div>
-    );
+
+    if (room) {
+        return (
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 12
+            }}>
+                <Typography variant={'h3'}>{`${room.name}`}</Typography>
+                <LightDetails
+                    id={room.id}
+                    isOn={room.allOn || room.anyOn}
+                    brightnessPercentage={room.brightPercentage}
+                    color={room.color}
+                    setBrightnessApi={setRoomBrightness}
+                    switchOnOffApi={switchOnOff}
+                />
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message1}</Typography>
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message2}</Typography>
+            </Box>
+        );
+    } else {
+        return (
+            <h3>Loading...</h3>
+        );
+    }
 };
 
 export default RoomDetails;

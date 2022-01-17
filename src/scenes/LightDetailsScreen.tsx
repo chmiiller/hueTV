@@ -18,7 +18,7 @@ const tutorial_message2 = 'Select Button: On / Off';
 const LightDetailsScreen = (): JSX.Element => {
     const { state } = useLocation();
     const navigate = useNavigate();
-    
+
     React.useEffect(() => {
         fetchLight();
     }, [state.id]);
@@ -57,21 +57,19 @@ const LightDetailsScreen = (): JSX.Element => {
 
     if (light) {
         return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 12
-                }}
-            >
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 12
+            }}>
                 <Typography variant={'h3'}>{`${light.name}`}</Typography>
-                <Typography sx={{ marginTop: 1 }} gutterBottom variant={'h6'}>{`${light.brightPercentage}% Brightness`}</Typography>
                 <LightDetails
                     id={light.id}
                     isOn={light.isOn}
                     brightnessPercentage={light.brightPercentage}
+                    color={light.color}
                     setBrightnessApi={setBrightness}
                     switchOnOffApi={switchOnOff}
                 />

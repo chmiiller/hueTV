@@ -43,6 +43,7 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
                             id={room.id}
                             name={room.name}
                             brightness={room.brightPercentage}
+                            color={room.color}
                             onFocus={handleScrolling}
                             isGroup
                             isOn={room.allOn || room.anyOn}

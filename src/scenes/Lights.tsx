@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import Typography from '@mui/material/Typography';
 
 import Light from '../components/Light';
 import { getLights } from '../api/hueapi';
@@ -43,6 +44,7 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
                             id={light.id}
                             name={light.name}
                             brightness={light.brightPercentage}
+                            color={light.color}
                             onFocus={handleScrolling}
                             isGroup={false}
                             isOn={light.isOn}

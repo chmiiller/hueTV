@@ -2,6 +2,9 @@ import React from 'react';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 
 import {
     turnLightOff,
@@ -18,7 +21,8 @@ type LightProps = {
     id: string,
     onFocus: ({ node }: FocusedProps) => void,
     name?: string,
-    brightness?: number,
+    brightness: number,
+    color?: string,
     isGroup: boolean,
     isOn: boolean
 };
@@ -27,26 +31,47 @@ type SwitchButtonProps = {
     focused: boolean
 };
 
-const Light = ({ id, onFocus, name, brightness, isGroup, isOn }: LightProps): JSX.Element => {
+const switchBackground = '#22242b';
+const switchSize = 250;
+const Light = ({ id, onFocus, name, brightness, color, isGroup, isOn }: LightProps): JSX.Element => {
     const navigate = useNavigate();
     const [stateOn, setStateOn] = React.useState(isOn);
+    const brightnessHeight = (switchSize * brightness) * 0.01;
+    const displayBrightness = stateOn ? `${brightness}% Brightness` : 'Turned off';
+
     const SwitchButton = ({ focused }: SwitchButtonProps) => {
         return (
-            <Box
-                sx={{
-                    bgcolor: stateOn ? 'primary.main' : 'background.paper',
-                    border: focused ? 2 : 0,
-                    borderColor: 'white',
-                    borderRadius: 2,
-                    width: 250,
-                    height: 250,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <h2>{name}</h2>
-                <h3>{`${brightness}%`}</h3>
-            </Box>
+            <div>
+                <Typography sx={{ marginLeft: 1 }} gutterBottom variant={'h5'}>{name}</Typography>
+                <Typography sx={{ marginLeft: 1 }} gutterBottom variant={'subtitle1'}>{displayBrightness}</Typography>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column-reverse',
+                    bgcolor: switchBackground,
+                    border: focused ? 1 : 0,
+                    boxShadow: focused ? 12 : 0,
+                    borderColor: '#3f444a',
+                    borderRadius: 4,
+                    width: switchSize,
+                    height: switchSize,
+                    marginTop: 4,
+                }}>
+                    <Box sx={{
+                        display: 'flex',
+                        bgcolor: stateOn ? color?.toString() : 'transparent',
+                        borderRadius: 4,
+                        width: switchSize,
+                        height: brightnessHeight,
+                    }} />
+                    <Box sx={{
+                        width: switchSize,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        height: 100,
+                    }} />
+                </Box>
+            </div>
         );
     };
     const FocusableComponent = withFocusable()(SwitchButton);

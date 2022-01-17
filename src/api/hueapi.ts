@@ -344,7 +344,13 @@ export const setLightBrightness = async({ id, percentage }: SetLightBrightnessPr
         }
 
         const switchResult = await response.json();
-        return switchResult && switchResult[0];
+        if (switchResult && switchResult[0] && !switchResult[0].error) {
+            const newBrightness = switchResult[0].success[`/lights/${id}/state/bri`];
+            const newBrightPercentage = Math.round((newBrightness * 100) / 254);
+            return newBrightPercentage;
+        } else {
+            return switchResult && switchResult[0];
+        }
     }
 };
 
