@@ -2,9 +2,9 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
-import Typography from '@mui/material/Typography';
 
 import Light from '../components/Light';
+import useInterval from '../api/useInterval';
 import { getLights } from '../api/hueapi';
 import { type Light as LightType } from '../api/types';
 
@@ -16,6 +16,8 @@ type LightsProps = {
     setFocus: (item?: any) => void,
 };
 
+const API_DELAY = 10000;
+
 const Lights = ({ setFocus }: LightsProps): JSX.Element => {
     const handleScrolling = ({ node }: FocusedProps) => {
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
@@ -26,6 +28,11 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
         homeGetLights();
         setFocus('menu_item_lights');
     }, []);
+
+    useInterval(() => {
+        // TO DO: fetching lights is losing focus on Light components
+        homeGetLights();
+    }, API_DELAY);
 
     const homeGetLights = async () => {
         const _lights = await getLights();

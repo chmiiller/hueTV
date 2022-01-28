@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Room } from '../api/types';
+import useInterval from '../api/useInterval';
 import LightDetails from '../components/LightDetails';
 import {
     getGroupById,
@@ -14,6 +15,7 @@ import {
 
 const tutorial_message1 = 'Arrows Up / Down: Brightness';
 const tutorial_message2 = 'Select Button: On / Off';
+const API_DELAY = 3000;
 
 const RoomDetails = (): JSX.Element => {
     const { state } = useLocation();
@@ -39,6 +41,10 @@ const RoomDetails = (): JSX.Element => {
     };
 
     const [room, setRoom] = React.useState<Room>();
+
+    useInterval(() => {
+        fetchRoom();
+    }, API_DELAY);
 
     const setRoomBrightness = async(brightness: number) => {
         await setGroupBrightness({ id: state.id, percentage: brightness});

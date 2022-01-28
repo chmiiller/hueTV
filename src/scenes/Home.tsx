@@ -5,6 +5,7 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Light from '../components/Light';
 import { getGroups } from '../api/hueapi';
+import useInterval from '../api/useInterval';
 import { type Room } from '../api/types';
 
 type FocusedProps = {
@@ -14,6 +15,8 @@ type FocusedProps = {
 type HomeProps = {
     setFocus: (item?: any) => void,
 };
+
+const API_DELAY = 10000;
 
 const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const handleScrolling = ({ node }: FocusedProps) => {
@@ -26,19 +29,24 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
         setFocus('menu_item_root');
     }, []);
 
+    useInterval(() => {
+        // TO DO: fetching lights is losing focus on Light components
+        homeGetGroups();
+    }, API_DELAY);
+
     const homeGetGroups = async () => {
         const _rooms = await getGroups();
         if (_rooms !== null) {
             setRooms(_rooms);
         }
     };
-    
+
     return (
         <div style={{padding: 100}}>
             <Fade in timeout={600}>
                 <Box sx={{ display: 'grid', rowGap: 5, gridTemplateColumns: 'repeat(3, 1fr)' }}>   
                     {rooms.map((room: Room) => (
-                        <Light 
+                        <Light
                             key={room.id}
                             id={room.id}
                             name={room.name}

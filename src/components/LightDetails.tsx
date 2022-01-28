@@ -33,6 +33,10 @@ const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrig
         setFocus(`switch_${id}`);
     }, []);
     
+    React.useEffect(() => {
+        setBrightness(brightnessPercentage);
+    }, [brightnessPercentage]);
+    
     const SwitchButton = ({ focused }: SwitchButtonProps) => {
         // const containerLight = focused ? styles.containerLightFocused : styles.containerLight;
         // const containerBg = focused ? styles.containerBgFocused : styles.containerBg;
