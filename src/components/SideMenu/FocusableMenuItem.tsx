@@ -29,15 +29,21 @@ const MenuItem = ({
     }, []);
 
     return (
-        <div style={{paddingLeft: 16, paddingRight: 16, marginBottom: 16}}>
+        <div style={{paddingLeft: 32, paddingRight: 16, marginBottom: 16}}>
             <ListItemButton selected={focused || selected} component={RouterLink} to={path}>
                 <ListItemIcon>
                     {focused || selected ? selectedIcon : icon}
                 </ListItemIcon>
-                <ListItemText primary={title} />
+                <ListItemText primary={title} primaryTypographyProps={{ fontSize: 30, marginLeft: 4 }} />
             </ListItemButton>
         </div>
     );
+    // return (
+    //     <div style={{paddingLeft: 16, paddingRight: 16, marginBottom: 16, height: 25}}>
+
+    //         {icon}
+    //     </div>
+    // );
 };
 
 const FocusableMenuItem = withFocusable()(MenuItem);

@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import FocusableMenuItem from '../FocusableMenuItem';
+import FocusableMenuItem from './FocusableMenuItem';
 import FocusableButton from '../FocusableButton';
 import { sideMenuConfig, type SideMenuObject } from './SideMenuConfig';
 
