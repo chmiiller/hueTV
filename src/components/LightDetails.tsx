@@ -11,7 +11,7 @@ type LightDetailsProps = {
     isOn: boolean,
     brightnessPercentage: number,
     color: string,
-    setFocus: (item: any) => void,
+    setFocus: (item?: any) => void,
     setBrightnessApi: (brightness: number) => void,
     switchOnOffApi: (turnOn: boolean) => void,
 };
@@ -24,7 +24,15 @@ const switchHeight = 500;
 const switchHeightFocused = 510;
 const switchBackground = '#22242b';
 
-const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrightnessApi, switchOnOffApi }: LightDetailsProps): JSX.Element => {
+const LightDetails = ({
+    id,
+    isOn,
+    brightnessPercentage,
+    color,
+    setFocus,
+    setBrightnessApi,
+    switchOnOffApi
+}: LightDetailsProps): JSX.Element => {
     const [brightness, setBrightness] = React.useState<number>(brightnessPercentage);
     const [savedBrightness, setSavedBrightness] = React.useState<number>(brightnessPercentage);
     const [isOnState, setIsOnState] = React.useState<boolean>(isOn);
@@ -33,16 +41,9 @@ const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrig
         setFocus(`switch_${id}`);
     }, []);
     
-    React.useEffect(() => {
-        setBrightness(brightnessPercentage);
-    }, [brightnessPercentage]);
-    
     const SwitchButton = ({ focused }: SwitchButtonProps) => {
-        // const containerLight = focused ? styles.containerLightFocused : styles.containerLight;
-        // const containerBg = focused ? styles.containerBgFocused : styles.containerBg;
         const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
-        const brightnessHeight = (switchBaseHeight * brightness) * 0.01;
-        // const borderTop = brightness >= 93 ? 15 : 0;
+        const brightnessHeight = isOnState ? (switchBaseHeight * brightness) * 0.01 : 0;
         const displayBrightness = isOnState ? `${brightness}% Brightness` : 'Turned off';
         return (
             <>
@@ -119,7 +120,6 @@ const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrig
     };
     
     const turnOn = () => {
-        // setBrightnessApi(brightness);
         setBrightness(savedBrightness);
         setIsOnState(true);
         switchOnOffApi(true);
@@ -133,16 +133,6 @@ const LightDetails = ({ id, isOn, brightnessPercentage, color, setFocus, setBrig
             
         case 'down':
             makeDarker();
-            break;
-            
-        case 'left':
-            // back to menu
-            // setFocus('menu_rooms');
-            break;
-        
-        default:
-            // back to menu
-            // setFocus('menu_rooms');
             break;
         }
     };

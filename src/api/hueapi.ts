@@ -18,10 +18,12 @@ import {
     type RawGroup,
     type RawLight,
     type StorageResult,
+    type SuccessObject,
 } from './types';
 
 // const appName = 'huetv';
 const hueDiscoveryUrl = 'https://discovery.meethue.com/';
+
 
 export const testInternetConnection = async(): Promise<StorageResult> => {
     // Google Maps on iOS App Store
@@ -232,7 +234,7 @@ export const getGroupById = async(id: string): Promise<Room | null> => {
 //     }
 // };
 
-export const turnLightOff = async(id: string) => {
+export const turnLightOff = async(id: string): Promise<SuccessObject | void> => {
     if (!id) {
         console.log('turnLightOff ID is missing');
         return;
@@ -251,11 +253,12 @@ export const turnLightOff = async(id: string) => {
         }
 
         const switchResult = await response.json();
+        console.log(`switchResult[0].success: ${JSON.stringify(switchResult[0].success)}`);
         return switchResult && switchResult[0].success;
     }
 };
 
-export const turnLightOn = async(id: string) => {
+export const turnLightOn = async(id: string): Promise<SuccessObject | void> => {
     if (!id) {
         console.log('turnLightOn ID is missing');
         return;
@@ -278,7 +281,7 @@ export const turnLightOn = async(id: string) => {
     }
 };
 
-export const turnGroupOff = async(id: string) => {
+export const turnGroupOff = async(id: string): Promise<SuccessObject | void> => {
     if (!id) {
         console.log('turnGroupOff ID is missing');
         return;
@@ -301,7 +304,7 @@ export const turnGroupOff = async(id: string) => {
     }
 };
 
-export const turnGroupOn = async(id: string) => {
+export const turnGroupOn = async(id: string): Promise<SuccessObject | void> => {
     if (!id) {
         console.log('turnGroupOn ID is missing');
         return;
@@ -324,7 +327,7 @@ export const turnGroupOn = async(id: string) => {
     }
 };
 
-export const setLightBrightness = async({ id, percentage }: SetLightBrightnessProps) => {
+export const setLightBrightness = async({ id, percentage }: SetLightBrightnessProps): Promise<SuccessObject | number | void> => {
     if (!id) {
         console.log('setLightBrightness ID is missing');
         return;
@@ -354,7 +357,7 @@ export const setLightBrightness = async({ id, percentage }: SetLightBrightnessPr
     }
 };
 
-export const setGroupBrightness = async({ id, percentage }: SetLightBrightnessProps) => {
+export const setGroupBrightness = async({ id, percentage }: SetLightBrightnessProps): Promise<SuccessObject | void> => {
     if (!id) {
         console.log('setGroupBrightness ID is missing');
         return;

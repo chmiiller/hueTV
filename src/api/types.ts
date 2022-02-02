@@ -136,3 +136,7 @@ export type SetLightBrightnessProps = {
     id: string,
     percentage: number,
 };
+
+export type SuccessObject = {
+    [key: string]: boolean
+};

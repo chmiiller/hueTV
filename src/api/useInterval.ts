@@ -3,7 +3,7 @@
 */
 import React from "react";
 
-export default function useInterval(callback: () => void, delay: number) {
+export default function useInterval(callback: () => void, delay: number): void {
     const savedCallback = React.useRef<() => void>();
     // Remember the latest function.
     React.useEffect(() => {

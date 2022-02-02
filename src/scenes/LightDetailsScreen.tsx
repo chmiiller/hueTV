@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Light } from '../api/types';
-import useInterval from '../api/useInterval';
 import LightDetails from '../components/LightDetails';
 import {
     getLightById,
@@ -15,7 +14,6 @@ import {
 
 const tutorial_message1 = 'Arrows Up / Down: Brightness';
 const tutorial_message2 = 'Select Button: On / Off';
-const API_DELAY = 3000;
 
 const LightDetailsScreen = (): JSX.Element => {
     const { state } = useLocation();
@@ -41,10 +39,6 @@ const LightDetailsScreen = (): JSX.Element => {
     };
 
     const [light, setLight] = React.useState<Light>();
-
-    useInterval(() => {
-        fetchLight();
-    }, API_DELAY);
 
     const setBrightness = async(brightness: number) => {
         await setLightBrightness({ id: state.id, percentage: brightness});

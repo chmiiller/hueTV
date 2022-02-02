@@ -3,15 +3,6 @@ import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-
-import {
-    turnLightOff,
-    turnLightOn,
-    turnGroupOff,
-    turnGroupOn
-} from '../api/hueapi';
 
 type FocusedProps = {
     node: HTMLElement,
@@ -35,9 +26,9 @@ const switchBackground = '#22242b';
 const switchSize = 250;
 const Light = ({ id, onFocus, name, brightness, color, isGroup, isOn }: LightProps): JSX.Element => {
     const navigate = useNavigate();
-    const [stateOn, setStateOn] = React.useState(isOn);
+    // const [stateOn, setStateOn] = React.useState(isOn);
     const brightnessHeight = (switchSize * brightness) * 0.01;
-    const displayBrightness = stateOn ? `${brightness}% Brightness` : 'Turned off';
+    const displayBrightness = isOn ? `${brightness}% Brightness` : 'Turned off';
 
     const SwitchButton = ({ focused }: SwitchButtonProps) => {
         return (
@@ -58,7 +49,7 @@ const Light = ({ id, onFocus, name, brightness, color, isGroup, isOn }: LightPro
                 }}>
                     <Box sx={{
                         display: 'flex',
-                        bgcolor: stateOn ? color?.toString() : 'transparent',
+                        bgcolor: isOn ? color?.toString() : 'transparent',
                         borderRadius: 4,
                         width: switchSize,
                         height: brightnessHeight,

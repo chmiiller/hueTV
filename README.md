@@ -6,11 +6,22 @@ https://docs.tizen.org/application/web/get-started/tv/first-samsung-tv-app/
 
 ## To Do:
 
-- Light Details
-- Read lamp color
-- Change brightness
 - Onboarding
-- Exit modal design
+- Animation changing brightness
+- Fix update focused component bug * (gave up)
+- Settings layout
+    - about
+    - Buy me a coffee
+    - 3rd party libraries
+    - Reset settings
+    - Test settings
+    - Display all lights
+- Rasterize icons
+- Update libs and react
+- Blog post
+- Documentation
+- App Icon
+- Store description
 
 ## Available Scripts
 
