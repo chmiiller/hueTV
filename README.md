@@ -10,15 +10,24 @@ https://docs.tizen.org/application/web/get-started/tv/first-samsung-tv-app/
 - Animation changing brightness
 - Fix update focused component bug * (gave up)
 - Settings layout
-    - about
+    - about (motivation, repo, who I am?)
     - Buy me a coffee
-    - 3rd party libraries
+    - Platform and libraries
+        - ReactJS: https://reactjs.org
+        - Typescript: https://www.typescriptlang.org
+        - React Router: https://reactrouter.com
+        - MUI: https://mui.com
+        - react-spatial-navigation by noriginmedia: https://github.com/NoriginMedia/react-spatial-navigation
     - Reset settings
     - Test settings
-    - Display all lights
 - Rasterize icons
 - Update libs and react
 - Blog post
+    - How to install Samsung SDK
+    - How to install Tizen SDK
+    - Using React to build an web app: https://stackoverflow.com/a/59603438/1272263
+    - Deploying to the TV
+    - Spatial Navigation
 - Documentation
 - App Icon
 - Store description
