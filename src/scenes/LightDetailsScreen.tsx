@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Light } from '../api/types';
 import LightDetails from '../components/LightDetails';
+import LightDetailsAnimated from '../components/LightDetailsAnimated';
 import {
     getLightById,
     setLightBrightness,
@@ -39,6 +40,7 @@ const LightDetailsScreen = (): JSX.Element => {
     };
 
     const [light, setLight] = React.useState<Light>();
+    const [visualBrightness, setVisualBrightness] = React.useState<number>(0);
 
     const setBrightness = async(brightness: number) => {
         await setLightBrightness({ id: state.id, percentage: brightness});
@@ -51,10 +53,23 @@ const LightDetailsScreen = (): JSX.Element => {
     const fetchLight = async() => {
         const _light = await getLightById(state.id);
         if (_light) {
+            setVisualBrightness(_light.brightPercentage);
             setLight(_light);
         }
     };
 
+    const onArrow = (direction: string) => {
+        switch (direction) {
+        case 'up':
+            setVisualBrightness(visualBrightness + 10);
+            break;
+            
+        case 'down':
+            setVisualBrightness(visualBrightness - 10);
+            break;
+        }
+    };
+    
     if (light) {
         return (
             <Box sx={{
@@ -65,13 +80,16 @@ const LightDetailsScreen = (): JSX.Element => {
                 padding: 12
             }}>
                 <Typography variant={'h3'}>{`${light.name}`}</Typography>
-                <LightDetails
+                <LightDetailsAnimated
+                    focusKey={`switch_${light.id}`}
                     id={light.id}
                     isOn={light.isOn}
-                    brightnessPercentage={light.brightPercentage}
+                    // brightnessPercentage={light.brightPercentage}
+                    brightnessPercentage={visualBrightness}
                     color={light.color}
                     setBrightnessApi={setBrightness}
                     switchOnOffApi={switchOnOff}
+                    onArrowPress={onArrow}
                 />
                 <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message1}</Typography>
                 <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message2}</Typography>

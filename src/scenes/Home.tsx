@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
+// import AnimatedLight from '../components/AnimatedLight';
 import Light from '../components/Light';
 import { getGroups } from '../api/hueapi';
 import { type Room } from '../api/types';
@@ -17,6 +18,7 @@ type HomeProps = {
 
 const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const handleScrolling = ({ node }: FocusedProps) => {
+        console.log(`>>>>>>>>>>>>> ON FOCUS`);
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
 
@@ -48,6 +50,8 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
                             onFocus={handleScrolling}
                             isGroup
                             isOn={room.allOn || room.anyOn}
+                            // onEnterPress={() => { console.log(`>>>>>>>>>>>>> EITA`); }}
+                            // onBecameFocused={handleScrolling}
                         />
                     ))}
                 </Box>
