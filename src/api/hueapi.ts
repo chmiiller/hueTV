@@ -398,7 +398,7 @@ const makeLight = (light: RawLight, id: string): Light => {
         bright,
         brightPercentage,
         colorful,
-        color,
+        color: color.toString(),
         colorIsDark,
         hue: light.state.hue,
         sat: light.state.sat,

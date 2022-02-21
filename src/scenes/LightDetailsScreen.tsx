@@ -5,16 +5,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Light } from '../api/types';
 import LightDetails from '../components/LightDetails';
-import LightDetailsAnimated from '../components/LightDetailsAnimated';
 import {
     getLightById,
     setLightBrightness,
     turnLightOn,
     turnLightOff,
 } from '../api/hueapi';
+import useInterval from '../api/useInterval';
 
-const tutorial_message1 = 'Arrows Up / Down: Brightness';
-const tutorial_message2 = 'Select Button: On / Off';
+const STR_TUTORIAL1 = 'Arrows Up / Down: Brightness';
+const STR_TUTORIAL2 = 'Select Button: On / Off';
+const API_DELAY = 2000;
 
 const LightDetailsScreen = (): JSX.Element => {
     const { state } = useLocation();
@@ -40,32 +41,48 @@ const LightDetailsScreen = (): JSX.Element => {
     };
 
     const [light, setLight] = React.useState<Light>();
-    const [visualBrightness, setVisualBrightness] = React.useState<number>(0);
+    const [opacity, setOpacity] = React.useState<number>(1);
+
+    useInterval(() => {
+        fetchLight();
+    }, API_DELAY);
 
     const setBrightness = async(brightness: number) => {
         await setLightBrightness({ id: state.id, percentage: brightness});
+        fetchLight();
     };
     
     const switchOnOff = async(turnOn: boolean) => {
         turnOn ? await turnLightOn(state.id) :  await turnLightOff(state.id);
+        turnOn ? setOpacity(1) : setOpacity(0);
+        fetchLight();
     };
 
     const fetchLight = async() => {
         const _light = await getLightById(state.id);
         if (_light) {
-            setVisualBrightness(_light.brightPercentage);
             setLight(_light);
         }
     };
 
     const onArrow = (direction: string) => {
+        if (!light) return;
+
+        let newBrightness = light.brightPercentage;
         switch (direction) {
         case 'up':
-            setVisualBrightness(visualBrightness + 10);
+            newBrightness += 10;
+            newBrightness < 100 ? setBrightness(newBrightness) : setBrightness(100);
             break;
             
         case 'down':
-            setVisualBrightness(visualBrightness - 10);
+            newBrightness -= 10;
+            if (newBrightness > 0) {
+                setBrightness(newBrightness);
+            } else {
+                switchOnOff(false);
+                setBrightness(0);
+            }
             break;
         }
     };
@@ -80,19 +97,22 @@ const LightDetailsScreen = (): JSX.Element => {
                 padding: 12
             }}>
                 <Typography variant={'h3'}>{`${light.name}`}</Typography>
-                <LightDetailsAnimated
+                <LightDetails
                     focusKey={`switch_${light.id}`}
                     id={light.id}
                     isOn={light.isOn}
-                    // brightnessPercentage={light.brightPercentage}
-                    brightnessPercentage={visualBrightness}
+                    opacity={opacity}
+                    brightnessPercentage={light.brightPercentage}
                     color={light.color}
                     setBrightnessApi={setBrightness}
                     switchOnOffApi={switchOnOff}
                     onArrowPress={onArrow}
+                    onEnterPress={() => {
+                        switchOnOff(!light.isOn);
+                    }}
                 />
-                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message1}</Typography>
-                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{tutorial_message2}</Typography>
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL1}</Typography>
+                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL2}</Typography>
             </Box>
         );
     } else {

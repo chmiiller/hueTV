@@ -12,17 +12,17 @@ type LightDetailsProps = {
     brightnessPercentage: number,
     color: string,
     setFocus: (item?: any) => void,
-    setBrightnessApi: (brightness: number) => void,
-    switchOnOffApi: (turnOn: boolean) => void,
-};
-
-type SwitchButtonProps = {
-    focused: boolean
+    focused: boolean,
+    opacity?: number,
 };
 
 const switchHeight = 500;
 const switchHeightFocused = 510;
 const switchBackground = '#22242b';
+const iconStyle = { fontSize: 60, marginBottom: 2 };
+
+const STR_TURNED_OFF = 'Turned off';
+const STR_BRIGHTNESS = 'Brightness';
 
 const LightDetails = ({
     id,
@@ -30,121 +30,57 @@ const LightDetails = ({
     brightnessPercentage,
     color,
     setFocus,
-    setBrightnessApi,
-    switchOnOffApi
+    focused,
+    opacity,
 }: LightDetailsProps): JSX.Element => {
-    const [brightness, setBrightness] = React.useState<number>(brightnessPercentage);
-    const [savedBrightness, setSavedBrightness] = React.useState<number>(brightnessPercentage);
-    const [isOnState, setIsOnState] = React.useState<boolean>(isOn);
-    
     React.useEffect(() => {
         setFocus(`switch_${id}`);
     }, []);
     
-    const SwitchButton = ({ focused }: SwitchButtonProps) => {
-        const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
-        const brightnessHeight = isOnState ? (switchBaseHeight * brightness) * 0.01 : 0;
-        const displayBrightness = isOnState ? `${brightness}% Brightness` : 'Turned off';
-        return (
-            <>
-                <Typography sx={{ marginTop: 1 }} gutterBottom variant={'h6'}>{displayBrightness}</Typography>
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column-reverse',
-                    bgcolor: switchBackground,
-                    border: focused ? 1 : 0,
-                    boxShadow: focused ? 12 : 0,
-                    borderColor: '#3f444a',
-                    borderRadius: 4,
-                    width: 250,
-                    height: switchHeight,
-                    margin: 4,
-                }}>
-                    <Box sx={{
-                        display: 'flex',
-                        bgcolor: `${color}`,
-                        borderRadius: 4,
-                        width: 250,
-                        height: brightnessHeight,
-                    }} />
-                    <Box sx={{
-                        display: 'flex',
-                        width: 250,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: 'transparent',
-                        position: "absolute",
-                        height: 100,
-                    }}>
-                        {isOnState
-                            ? <LightbulbIcon sx={{fontSize: 60, marginBottom: 2}} />
-                            : <LightbulbOutlinedIcon sx={{fontSize: 60, marginBottom: 2}} />
-                        }
-                    </Box>
-                </Box>
-            </>
-        );
-    };
-    const FocusableComponent = withFocusable()(SwitchButton);
+    const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
+    const brightnessHeight = isOn ? (switchBaseHeight * brightnessPercentage) * 0.01 : 0;
+    const displayBrightness = isOn ? `${brightnessPercentage}% ${STR_BRIGHTNESS}` : STR_TURNED_OFF;
 
-    const makeBrighter = () => {
-        switchOnOffApi(true);
-        setIsOnState(true);
-        const newBrightness = brightness + 10;
-        if (newBrightness < 100) {
-            setBrightnessApi(newBrightness);
-            setBrightness(newBrightness);
-        } else {
-            setBrightnessApi(100);
-            setBrightness(100);
-        }
-        setFocus(`switch_${id}`);
-    };
-    
-    const makeDarker = () => {
-        const newBrightness = brightness - 10;
-        if (newBrightness > 0) {
-            setBrightnessApi(newBrightness);
-            setBrightness(newBrightness);
-        } else {
-            turnOff();
-        }
-        setFocus(`switch_${id}`);
-    };
-
-    const turnOff = () => {
-        setSavedBrightness(brightness);
-        setBrightness(0);
-        setIsOnState(false);
-        switchOnOffApi(false);
-    };
-    
-    const turnOn = () => {
-        setBrightness(savedBrightness);
-        setIsOnState(true);
-        switchOnOffApi(true);
-    };
-
-    const onArrow = (direction: string) => {
-        switch (direction) {
-        case 'up':
-            makeBrighter();
-            break;
-            
-        case 'down':
-            makeDarker();
-            break;
-        }
+    const dynamicStyle = {
+        bgcolor: color,
+        borderRadius: 4,
+        width: 250,
+        height: brightnessHeight,
+        opacity: opacity,
+        transition: "250ms",
     };
     return (
-        <FocusableComponent
-            focusKey={`switch_${id}`}
-            onArrowPress={onArrow}
-            onEnterPress={() => {
-                isOnState ? turnOff() : turnOn();
-                setFocus(`switch_${id}`);
-            }}
-        />
+        <>
+            <Typography sx={{ marginTop: 1 }} gutterBottom variant={'h6'}>{displayBrightness}</Typography>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column-reverse',
+                bgcolor: switchBackground,
+                border: focused ? 1 : 0,
+                boxShadow: focused ? 12 : 0,
+                borderColor: '#3f444a',
+                borderRadius: 4,
+                width: 250,
+                height: switchBaseHeight,
+                margin: 4,
+            }}>
+                {/* Light Brightness view */}
+                <Box sx={dynamicStyle} />
+                {/* Light Bulb icon container */}
+                <Box sx={{
+                    display: 'flex',
+                    width: 250,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'transparent',
+                    position: "absolute",
+                    height: 100,
+                }}>
+                    {/* Light Bulb icon */}
+                    {isOn ? <LightbulbIcon sx={iconStyle} /> : <LightbulbOutlinedIcon sx={iconStyle} /> }
+                </Box>
+            </Box>
+        </>
     );
 };
 
