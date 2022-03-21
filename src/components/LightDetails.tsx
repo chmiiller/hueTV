@@ -21,8 +21,8 @@ const switchHeightFocused = 510;
 const switchBackground = '#22242b';
 const iconStyle = { fontSize: 60, marginBottom: 2 };
 
-const STR_TURNED_OFF = 'Turned off';
 const STR_BRIGHTNESS = 'Brightness';
+const STR_TURNED_OFF = 'Turned off';
 
 const LightDetails = ({
     id,

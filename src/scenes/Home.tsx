@@ -2,9 +2,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import { useNavigate } from 'react-router-dom';
 
-// import AnimatedLight from '../components/AnimatedLight';
 import Light from '../components/Light';
+import useInterval from '../api/useInterval';
 import { getGroups } from '../api/hueapi';
 import { type Room } from '../api/types';
 
@@ -16,9 +17,11 @@ type HomeProps = {
     setFocus: (item?: any) => void,
 };
 
+const API_DELAY = 2000;
+
 const Home = ({ setFocus }:HomeProps ): JSX.Element => {
+    const navigate = useNavigate();
     const handleScrolling = ({ node }: FocusedProps) => {
-        console.log(`>>>>>>>>>>>>> ON FOCUS`);
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
 
@@ -28,11 +31,14 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
         setFocus('menu_item_root');
     }, []);
 
+    useInterval(() => {
+        homeGetGroups();
+    }, API_DELAY);
+
     const homeGetGroups = async () => {
         const _rooms = await getGroups();
         if (_rooms !== null) {
             setRooms(_rooms);
-            setFocus('');
         }
     };
 
@@ -50,8 +56,10 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
                             onFocus={handleScrolling}
                             isGroup
                             isOn={room.allOn || room.anyOn}
-                            // onEnterPress={() => { console.log(`>>>>>>>>>>>>> EITA`); }}
-                            // onBecameFocused={handleScrolling}
+                            onBecameFocused={handleScrolling}
+                            onEnterPress={() => {
+                                navigate('/room', { state: { id: room.id } });
+                            }}
                         />
                     ))}
                 </Box>

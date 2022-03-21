@@ -8,7 +8,6 @@ https://docs.tizen.org/application/web/get-started/tv/first-samsung-tv-app/
 
 - Onboarding
 - Animation navigating between lights
-    - After updating component, try interval refresh again
 - Settings layout
     - about (motivation, repo, who I am?)
     - Buy me a coffee
