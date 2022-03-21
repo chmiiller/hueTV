@@ -6,7 +6,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import Contact from './scenes/Contact';
-import RoomDetails from './scenes/RoomDetails';
+import RoomDetailsScreen from './scenes/RoomDetailsScreen';
 import LightDetailsScreen from './scenes/LightDetailsScreen';
 import Lights from './scenes/Lights';
 import Settings from './scenes/Settings';
@@ -77,7 +77,7 @@ function App({ setFocus }: AppProps) {
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/lights" element={<Lights />} />
                         <Route path="/light" element={<LightDetailsScreen />} />
-                        <Route path="/room" element={<RoomDetails />} />
+                        <Route path="/room" element={<RoomDetailsScreen />} />
                         <Route path="/settings" element={<Settings />} />
                     </Routes>
                 </main>

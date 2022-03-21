@@ -7,7 +7,6 @@ https://docs.tizen.org/application/web/get-started/tv/first-samsung-tv-app/
 ## To Do:
 
 - Onboarding
-- Animation changing brightness (room)
 - Animation navigating between lights
     - After updating component, try interval refresh again
 - Settings layout

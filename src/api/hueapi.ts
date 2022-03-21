@@ -431,7 +431,7 @@ const makeGroup = (group: RawGroup, id: string): Room => {
         allOn: all_on,
         anyOn: any_on,
         colorful: colorful ? true : false,
-        color,
+        color: color.toString(),
         colorIsDark,
         on,
         hue,
