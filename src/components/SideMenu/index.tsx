@@ -8,12 +8,12 @@ const drawerWidth = 525;
 const closedDrawerWidth = drawerWidth / 4;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-    width: drawerWidth,
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
+    width: drawerWidth,
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -23,17 +23,11 @@ const closedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     width: closedDrawerWidth,
-    // [theme.breakpoints.up('sm')]: {
-    //     width: `calc(${theme.spacing(11)} + 1px)`,
-    // },
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
         width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
         ...(open && {
             ...openedMixin(theme),
             '& .MuiDrawer-paper': openedMixin(theme),
