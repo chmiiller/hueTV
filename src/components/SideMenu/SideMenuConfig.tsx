@@ -11,8 +11,8 @@ export type SideMenuObject = {
     id: string,
     path: string,
     title: string,
-    icon: JSX.Element,
-    selectedIcon: JSX.Element,
+    icon?: JSX.Element,
+    selectedIcon?: JSX.Element,
 };
 
 type SideMenuConfigObject = {
@@ -40,6 +40,11 @@ export const sideMenuConfig: SideMenuConfigObject = {
             title: 'Settings',
             icon: <SettingsOutlinedIcon style={{ fontSize: 30 }} />,
             selectedIcon: <SettingsIcon style={{ fontSize: 30 }} />,
+        },
+        {
+            id: 'menu_item_about',
+            path: '/about',
+            title: 'About',
         },
         {
             id: 'menu_item_exit',

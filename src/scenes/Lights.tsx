@@ -50,12 +50,9 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
                         <Light
                             key={light.id}
                             focusKey={`light_${light.id}`}
-                            id={light.id}
                             name={light.name}
                             brightness={light.brightPercentage}
                             color={light.color}
-                            onFocus={handleScrolling}
-                            isGroup={false}
                             isOn={light.isOn}
                             onBecameFocused={handleScrolling}
                             onEnterPress={() => {

@@ -50,8 +50,6 @@ const Light = ({
                 width: switchSize,
                 height: switchSize,
                 marginTop: 4,
-                // transition: '150ms',
-                // transform: 'translateX(-25%) translateY(-25%)',
             }}>
                 <Box sx={dynamicStyle} />
                 <Box sx={{

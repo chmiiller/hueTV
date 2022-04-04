@@ -38,12 +38,6 @@ const MenuItem = ({
             </ListItemButton>
         </div>
     );
-    // return (
-    //     <div style={{paddingLeft: 16, paddingRight: 16, marginBottom: 16, height: 25}}>
-
-    //         {icon}
-    //     </div>
-    // );
 };
 
 const FocusableMenuItem = withFocusable()(MenuItem);

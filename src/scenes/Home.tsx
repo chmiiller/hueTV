@@ -49,12 +49,10 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
                     {rooms.map((room: Room) => (
                         <Light
                             key={room.id}
-                            id={room.id}
+                            focusKey={`room_${room.id}`}
                             name={room.name}
                             brightness={room.brightPercentage}
                             color={room.color}
-                            onFocus={handleScrolling}
-                            isGroup
                             isOn={room.allOn || room.anyOn}
                             onBecameFocused={handleScrolling}
                             onEnterPress={() => {
