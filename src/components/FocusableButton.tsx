@@ -5,25 +5,16 @@ import Button, { ButtonProps } from '@mui/material/Button';
 
 type FocusButtonProps = {
     title: string,
-    focused: boolean,
-    setFocus: () => void,
+    focused: boolean
 };
 
 const ColorButton = styled(Button)<ButtonProps>(() => ({
     marginLeft: 16,
 }));
 
-const FocusButton = ({
-    title,
-    focused,
-    setFocus,
-}: FocusButtonProps): JSX.Element => {
-    React.useEffect(() => {
-        setFocus();
-    }, []);
-
-    return <ColorButton variant={focused ? 'contained' : 'outlined'}>{title}</ColorButton>;
-};
+const FocusButton = ({ title, focused }: FocusButtonProps): JSX.Element => (
+    <ColorButton variant={focused ? 'contained' : 'outlined'}>{title}</ColorButton>
+);
 
 const FocusableButton = withFocusable()(FocusButton);
 export default FocusableButton;

@@ -6,10 +6,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 export type SideMenuObject = {
     id: string,
     path: string,
+    focusName?: string,
     title: string,
     icon?: JSX.Element,
     selectedIcon?: JSX.Element,
@@ -18,40 +21,48 @@ export type SideMenuObject = {
 type SideMenuConfigObject = {
     items: Array<SideMenuObject>
 };
+
+const iconStyle = { fontSize: 32 };
 export const sideMenuConfig: SideMenuConfigObject = {
     items: [
         {
             id: 'menu_item_root',
             path: '/home',
+            focusName: 'home_screen',
             title: 'Home',
-            icon: <HomeOutlinedIcon style={{ fontSize: 30 }} />,
-            selectedIcon: <HomeIcon style={{ fontSize: 30 }} />,
+            icon: <HomeOutlinedIcon style={iconStyle} />,
+            selectedIcon: <HomeIcon style={iconStyle} />,
         },
         {
             id: 'menu_item_lights',
             path: '/lights',
+            focusName: 'lights_screen',
             title: 'Lights',
-            icon: <LightbulbOutlinedIcon style={{ fontSize: 30 }} />,
-            selectedIcon: <LightbulbIcon style={{ fontSize: 30 }} />,
+            icon: <LightbulbOutlinedIcon style={iconStyle} />,
+            selectedIcon: <LightbulbIcon style={iconStyle} />,
         },
         {
             id: 'menu_item_settings',
             path: '/settings',
+            focusName: 'settings_screen',
             title: 'Settings',
-            icon: <SettingsOutlinedIcon style={{ fontSize: 30 }} />,
-            selectedIcon: <SettingsIcon style={{ fontSize: 30 }} />,
+            icon: <SettingsOutlinedIcon style={iconStyle} />,
+            selectedIcon: <SettingsIcon style={iconStyle} />,
         },
         {
             id: 'menu_item_about',
             path: '/about',
+            focusName: 'about_screen',
             title: 'About',
+            icon: <PersonOutlineIcon style={iconStyle} />,
+            selectedIcon: <PersonIcon style={iconStyle} />,
         },
         {
             id: 'menu_item_exit',
             path: '/exit',
             title: 'Exit',
-            icon: <LogoutOutlinedIcon style={{ fontSize: 30 }} />,
-            selectedIcon: <LogoutIcon style={{ fontSize: 30 }} />,
+            icon: <LogoutOutlinedIcon style={iconStyle} />,
+            selectedIcon: <LogoutIcon style={iconStyle} />,
         },
     ]
 };

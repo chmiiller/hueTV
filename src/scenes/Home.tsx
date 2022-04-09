@@ -26,14 +26,31 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     };
 
     const [rooms, setRooms] = React.useState<Array<Room>>([]);
+    
     React.useEffect(() => {
-        homeGetGroups();
-        setFocus('menu_item_root');
+        homeGetGroups();    
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+        window.addEventListener('keydown', onKey);
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
     }, []);
 
     useInterval(() => {
         homeGetGroups();
     }, API_DELAY);
+
+    const onKey = (event: KeyboardEvent) => {
+        if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
+            // back button
+            setFocus('menu_item_root');
+        }
+    };
 
     const homeGetGroups = async () => {
         const _rooms = await getGroups();

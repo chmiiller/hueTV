@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { type Light } from '../api/types';
 import LightDetails from '../components/LightDetails';
+import LightDetailsSkeleton from '../components/LightDetailsSkeleton';
 import {
     getLightById,
     setLightBrightness,
@@ -31,6 +32,12 @@ const LightDetailsScreen = (): JSX.Element => {
         // @ts-ignore
         window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
         window.addEventListener('keydown', onKey);
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
     }, []);
 
     const onKey = (event: KeyboardEvent) => {
@@ -87,39 +94,40 @@ const LightDetailsScreen = (): JSX.Element => {
         }
     };
     
-    if (light) {
-        return (
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 12
-            }}>
-                <Typography variant={'h3'}>{`${light.name}`}</Typography>
-                <LightDetails
-                    focusKey={`switch_${light.id}`}
-                    id={light.id}
-                    isOn={light.isOn}
-                    opacity={opacity}
-                    brightnessPercentage={light.brightPercentage}
-                    color={light.color}
-                    setBrightnessApi={setBrightness}
-                    switchOnOffApi={switchOnOff}
-                    onArrowPress={onArrow}
-                    onEnterPress={() => {
-                        switchOnOff(!light.isOn);
-                    }}
-                />
-                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL1}</Typography>
-                <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL2}</Typography>
-            </Box>
-        );
-    } else {
-        return (
-            <h3>Loading...</h3>
-        );
-    }
+    return (
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 12
+        }}>
+            {!light ? (
+                <LightDetailsSkeleton />
+            ) : (
+                <>
+                    <Typography variant={'h3'}>{`${light.name}`}</Typography>
+                    <LightDetails
+                        focusKey={`switch_${light.id}`}
+                        id={light.id}
+                        isOn={light.isOn}
+                        opacity={opacity}
+                        brightnessPercentage={light.brightPercentage}
+                        color={light.color}
+                        setBrightnessApi={setBrightness}
+                        switchOnOffApi={switchOnOff}
+                        onArrowPress={onArrow}
+                        onEnterPress={() => {
+                            switchOnOff(!light.isOn);
+                        }}
+                    />
+                    <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL1}</Typography>
+                    <Typography sx={{ opacity: 0.75 }} gutterBottom variant={'subtitle2'}>{STR_TUTORIAL2}</Typography>
+                </>
+            )}
+            
+        </Box>
+    );
 };
 
 export default LightDetailsScreen;

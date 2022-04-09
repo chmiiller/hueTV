@@ -1,5 +1,7 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import ScrollableBox from '../../components/ScrollableBox';
 import {
@@ -20,7 +22,31 @@ const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/
 const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 const VERSION_DATE = `2022-04-06`;
 
-const About = (): JSX.Element => {
+type AboutProps = {
+    setFocus: (item?: any) => void,
+};
+
+const About = ({ setFocus }: AboutProps): JSX.Element => {
+    React.useEffect(() => {
+        // settingsGetBridgeAddress();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+        window.addEventListener('keydown', onKey);
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
+    }, []);
+
+    const onKey = (event: KeyboardEvent) => {
+        if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
+            // back button
+            setFocus('menu_item_about');
+        }
+    };
     return (
         <Box sx={{
             display: 'flex',
@@ -33,38 +59,38 @@ const About = (): JSX.Element => {
             <ScrollableBox>
                 <Typography variant={'h4'}>{WELCOME_TITLE}</Typography>
                 <p/>
-                <Typography variant={'body1'}>{WELCOME_MESSAGE}</Typography>
+                <Typography variant={'h6'}>{WELCOME_MESSAGE}</Typography>
                 <br />
                 <Typography variant={'h4'}>{ABOUT_TITLE}</Typography>
                 <p/>
-                <Typography variant={'body1'}>{ABOUT_ME}</Typography>
+                <Typography variant={'h6'}>{ABOUT_ME}</Typography>
                 <p/>
-                <Typography variant={'body1'}><strong>Buy me a coffee</strong></Typography><p/>
-                <Typography variant={'body1'}>
+                <Typography variant={'h6'}><strong>Buy me a coffee</strong></Typography><p/>
+                <Typography variant={'h6'}>
                     <img src={QR_COFFEE_URL} alt="Buy me a coffee" />
                 </Typography>
                 <br />
                 <Typography variant={'h4'}>{MOTIVATION_TITLE}</Typography>
                 <p/>
-                <Typography variant={'body1'}>{MOTIVATION1}</Typography><p/>
-                <Typography variant={'body1'}>{MOTIVATION2}</Typography><p/>
-                <Typography variant={'body1'}>{MOTIVATION3}</Typography>
+                <Typography variant={'h6'}>{MOTIVATION1}</Typography><p/>
+                <Typography variant={'h6'}>{MOTIVATION2}</Typography><p/>
+                <Typography variant={'h6'}>{MOTIVATION3}</Typography>
                 <br />
                 <Typography variant={'h4'}>{OPEN_SOURCE_TITLE}</Typography>
                 <p/>
-                <Typography variant={'body1'}>{OPEN_SOURCE}</Typography>
+                <Typography variant={'h6'}>{OPEN_SOURCE}</Typography>
                 <p/>
-                <Typography variant={'body1'}> <strong>GitHub Repository</strong></Typography><p/>
-                <Typography variant={'body1'}>
+                <Typography variant={'h6'}> <strong>GitHub Repository</strong></Typography><p/>
+                <Typography variant={'h6'}>
                     <img src={QR_REPO_URL} alt="GitHub Repository" />
                 </Typography>
                 <br />
-                <Typography variant={'body1'}><strong>{`important note: `}</strong>{NOTE}</Typography>
+                <Typography variant={'h6'}><strong>{`important note: `}</strong>{NOTE}</Typography>
                 <br/>
-                <Typography variant={'body2'}>{VERSION_DATE}</Typography>
+                <Typography variant={'body1'}>{VERSION_DATE}</Typography>
             </ScrollableBox> 
         </Box>
     );
 };
 
-export default About;
+export default withFocusable()(About);

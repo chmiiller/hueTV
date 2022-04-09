@@ -35,8 +35,8 @@ For those interested in how you can build and deploy an app to the Samsung TV an
 
 - Onboarding
 - Animation navigating between lights
+- About (width)
 - Settings layout
-    - about (motivation, repo, who I am?)
     - Buy me a coffee
     - Platform and libraries
         - ReactJS: https://reactjs.org
@@ -48,6 +48,7 @@ For those interested in how you can build and deploy an app to the Samsung TV an
     - Test settings
 - Rasterize icons
 - Update libs and react
+- SideMenu code improvement
 - Blog post
     - How to install Samsung SDK
     - How to install Tizen SDK

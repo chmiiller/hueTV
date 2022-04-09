@@ -4,7 +4,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 
 import SideMenuItems from './SideMenuItems';
 
-const drawerWidth = 525;
+const drawerWidth = 500;
 const closedDrawerWidth = drawerWidth / 4;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -14,6 +14,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     width: drawerWidth,
+    backgroundColor: 'transparent',
+    borderWidth: 0.5,
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -23,6 +25,8 @@ const closedMixin = (theme: Theme): CSSObject => ({
     }),
     overflowX: 'hidden',
     width: closedDrawerWidth,
+    backgroundColor: 'transparent',
+    borderWidth: 0.5,
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -45,7 +49,7 @@ const SideMenu = (): JSX.Element => {
 
     return (
         <Drawer open={open} variant="permanent">
-            <div style={{height: 100}}></div>
+            <div style={{ height: 100 }}></div>
             <SideMenuItems toggleMenu={toggleMenu}/>
         </Drawer>
     );

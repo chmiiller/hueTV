@@ -1,9 +1,14 @@
 import React from 'react';
 import CSS from 'csstype';
 import { useNavigate } from 'react-router-dom';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import FocusableButton from '../components/FocusableButton';
 import { getBridgeIpAddress, askUsername } from '../api/hueapi';
+
+type SettingsProps = {
+    setFocus: (item?: any) => void,
+};
 
 type Styles = {
     contact: CSS.Properties
@@ -19,13 +24,31 @@ const styles : Styles = {
 
 const TOTAL_AUTH_TRIES = 20;
 
-const Settings = (): JSX.Element => {
+const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
     const navigate = useNavigate();
     const [message, setMessage] = React.useState('Welcome');
     const [debug, setDebug] = React.useState('');
-    // React.useEffect(() => {
-    //     settingsGetBridgeAddress();
-    // }, []);
+    
+    React.useEffect(() => {
+        // settingsGetBridgeAddress();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+        window.addEventListener('keydown', onKey);
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
+    }, []);
+
+    const onKey = (event: KeyboardEvent) => {
+        if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
+            // back button
+            setFocus('menu_item_settings');
+        }
+    };
     
     const settingsGetBridgeAddress = async () => {
         const bridgeAddress = await getBridgeIpAddress();
@@ -82,4 +105,4 @@ const Settings = (): JSX.Element => {
     );
 };
 
-export default Settings;
+export default withFocusable()(Settings);

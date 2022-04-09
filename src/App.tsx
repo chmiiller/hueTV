@@ -73,12 +73,12 @@ function App({ setFocus }: AppProps) {
                 <main className={classes.content}>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/lights" element={<Lights />} />
+                        <Route path="/home" element={<Home focusKey={`home_screen`}/>} />
+                        <Route path="/about" element={<About focusKey={`about_screen`} />} />
+                        <Route path="/lights" element={<Lights focusKey={`lights_screen`}/>} />
                         <Route path="/light" element={<LightDetailsScreen />} />
                         <Route path="/room" element={<RoomDetailsScreen />} />
-                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/settings" element={<Settings focusKey={`settings_screen`}/>} />
                     </Routes>
                 </main>
             </div>

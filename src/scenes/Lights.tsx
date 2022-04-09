@@ -28,12 +28,29 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
     const [lights, setLights] = React.useState<Array<LightType>>([]);
     React.useEffect(() => {
         homeGetLights();
-        setFocus('menu_item_lights');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+        window.addEventListener('keydown', onKey);
+
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
     }, []);
 
     useInterval(() => {
         homeGetLights();
     }, API_DELAY);
+
+    const onKey = (event: KeyboardEvent) => {
+        if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
+            // back button
+            setFocus('menu_item_lights');
+        }
+    };
 
     const homeGetLights = async () => {
         const _lights = await getLights();
