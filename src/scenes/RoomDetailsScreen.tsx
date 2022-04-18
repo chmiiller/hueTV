@@ -32,12 +32,18 @@ const RoomDetailsScreen = (): JSX.Element => {
         // @ts-ignore
         window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
         window.addEventListener('keydown', onKey);
+        return () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
+            window.removeEventListener('keydown', onKey);
+        };
     }, []);
 
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            navigate('/home');
+            navigate('/home', { state: 'details' });
         }
     };
 

@@ -10,6 +10,8 @@ type FocusableScrollableBoxProps = {
     focused: boolean,
 };
 
+const SCROLL_OFFSET = 80;
+
 const ScrollableBox = ({ children }: ScrollableBoxProps ): JSX.Element => {
     const paperRef = useRef<HTMLHeadingElement>(null);
     
@@ -17,7 +19,7 @@ const ScrollableBox = ({ children }: ScrollableBoxProps ): JSX.Element => {
         switch (direction) {
         case 'up':
             paperRef.current?.scrollTo({
-                top: paperRef.current?.scrollTop - 60,
+                top: paperRef.current?.scrollTop - SCROLL_OFFSET,
                 left: 0,
                 behavior: 'smooth'
             });
@@ -25,7 +27,7 @@ const ScrollableBox = ({ children }: ScrollableBoxProps ): JSX.Element => {
             
         case 'down':
             paperRef.current?.scrollTo({
-                top: paperRef.current?.scrollTop + 60,
+                top: paperRef.current?.scrollTop + SCROLL_OFFSET,
                 left: 0,
                 behavior: 'smooth'
             });
@@ -54,10 +56,7 @@ const ScrollableBox = ({ children }: ScrollableBoxProps ): JSX.Element => {
     };
 
     const FocusableScrollBox = withFocusable()(ScrollableComponent);
-
-    return (        
-        <FocusableScrollBox onArrowPress={onArrow}/>
-    );
+    return <FocusableScrollBox onArrowPress={onArrow}/>;
 };
 
 export default ScrollableBox;

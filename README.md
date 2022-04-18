@@ -33,31 +33,38 @@ For those interested in how you can build and deploy an app to the Samsung TV an
 
 ## To Do:
 
-- Onboarding
-- Animation navigating between lights
-- About (width)
-- Settings layout
-    - Buy me a coffee
-    - Platform and libraries
-        - ReactJS: https://reactjs.org
-        - Typescript: https://www.typescriptlang.org
-        - React Router: https://reactrouter.com
-        - MUI: https://mui.com
-        - react-spatial-navigation by noriginmedia: https://github.com/NoriginMedia/react-spatial-navigation
-    - Reset settings
-    - Test settings
-- Rasterize icons
-- Update libs and react
-- SideMenu code improvement
-- Blog post
-    - How to install Samsung SDK
-    - How to install Tizen SDK
-    - Using React to build an web app: https://stackoverflow.com/a/59603438/1272263
-    - Deploying to the TV
-    - Spatial Navigation
-- Documentation
-- App Icon
-- Store description
+- Development:
+    - About (width)
+    - Rasterize icons
+    - Update libs and react
+    - Turn all lights On/Off switch button
+
+- About the app:
+    - Blog post
+        - How to install Samsung SDK
+        - How to install Tizen SDK
+        - Using React to build an web app: https://stackoverflow.com/a/59603438/1272263
+        - Deploying to the TV
+        - Spatial Navigation
+    - Documentation
+        - Buy domain?
+    - Buy me a coffee:
+        - My own email?
+    - Store description
+
+- Design:
+    - App Icon
+    - Onboarding / Settings screen
+        - Platform and libraries
+            - ReactJS: https://reactjs.org
+            - Typescript: https://www.typescriptlang.org
+            - React Router: https://reactrouter.com
+            - MUI: https://mui.com
+            - react-spatial-navigation by noriginmedia: https://github.com/NoriginMedia/react-spatial-navigation
+        - Reset settings
+        - Test settings
+    - Home / Lights screen
+    - Light details screen
 
 ## Available Scripts
 
@@ -113,4 +120,8 @@ run app on TV:
 uninstall app from TV:
 
 `tizen uninstall -t QE50LS03TASXXN -p a2cD2RV76B.HueTV`
+
+All at once:
+
+`yarn build && tizen build-web -- ./build && cd build/.buildResult && tizen package -t wgt -s huetv -- ./ && tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
 

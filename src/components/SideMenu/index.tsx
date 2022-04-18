@@ -15,7 +15,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     overflowX: 'hidden',
     width: drawerWidth,
     backgroundColor: 'transparent',
-    borderWidth: 0.5,
+    borderWidth: 1,
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -26,7 +26,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     overflowX: 'hidden',
     width: closedDrawerWidth,
     backgroundColor: 'transparent',
-    borderWidth: 0.5,
+    borderWidth: 1,
 });
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -44,12 +44,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const SideMenu = (): JSX.Element => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState<boolean>(true);
     const toggleMenu = (menuOpen: boolean) => setOpen(menuOpen);
 
     return (
         <Drawer open={open} variant="permanent">
-            <div style={{ height: 100 }}></div>
             <SideMenuItems toggleMenu={toggleMenu}/>
         </Drawer>
     );

@@ -10,8 +10,8 @@ type MenuItemProps = {
     selected?: boolean,
     current?: boolean,
     menuOpened: boolean,
-    icon: React.ReactNode,
-    selectedIcon: React.ReactNode,
+    icon?: React.ReactNode,
+    selectedIcon?: React.ReactNode,
     title: string,
     focused: boolean,
     setFocus: () => void,
@@ -33,24 +33,25 @@ const MenuItem = ({
     }, []);
 
     return (
-        <div style={{paddingLeft: 32, paddingRight: 32, marginBottom: 12}}>
+        <div style={{ paddingLeft: 32, paddingRight: 32, marginBottom: 12 }}>
             <ListItemButton
                 selected={focused || selected}
                 component={RouterLink}
                 to={path}
                 sx={{
-                    height: 78,
+                    height: icon ? 78 : 62,
                     borderRadius: 2,
-                    transition: '0.35s',
                 }}
             >
-                <ListItemIcon sx={{ marginLeft: 0 }}>
-                    {focused || current ? selectedIcon : icon}
-                </ListItemIcon>
+                { icon &&
+                    <ListItemIcon sx={{ marginLeft: 0 }}>
+                        {focused || current ? selectedIcon : icon}
+                    </ListItemIcon>
+                }
                 <ListItemText
                     primary={title}
                     primaryTypographyProps={{
-                        fontSize: 28,
+                        fontSize: icon ? 28 : 22,
                         marginLeft: 2,
                     }}
                     sx={{

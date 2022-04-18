@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Light from '../components/Light';
 import useInterval from '../api/useInterval';
@@ -21,6 +21,7 @@ const API_DELAY = 2000;
 
 const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const navigate = useNavigate();
+    const location = useLocation();
     const handleScrolling = ({ node }: FocusedProps) => {
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
@@ -28,7 +29,7 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const [rooms, setRooms] = React.useState<Array<Room>>([]);
     
     React.useEffect(() => {
-        homeGetGroups();    
+        homeGetGroups();
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         window.addEventListener('tizenhwkey', onKey); // No event type for Tizen events =/
@@ -41,6 +42,14 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
         };
     }, []);
 
+    React.useEffect(() => {
+        if (location.state === 'focus'){
+            setTimeout(() => {
+                setFocus();
+            }, 100);
+        }
+    }, [location.state]);
+
     useInterval(() => {
         homeGetGroups();
     }, API_DELAY);
@@ -48,7 +57,7 @@ const Home = ({ setFocus }:HomeProps ): JSX.Element => {
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            setFocus('menu_item_root');
+            setFocus('menu_home_screen');
         }
     };
 

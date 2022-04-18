@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Light from '../components/Light';
 import useInterval from '../api/useInterval';
@@ -21,6 +21,7 @@ const API_DELAY = 2000;
 
 const Lights = ({ setFocus }: LightsProps): JSX.Element => {
     const navigate = useNavigate();
+    const location = useLocation();
     const handleScrolling = ({ node }: FocusedProps) => {
         node.scrollIntoView({ behavior: "smooth", block: 'center' });
     };
@@ -41,6 +42,14 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
         };
     }, []);
 
+    React.useEffect(() => {
+        if (location.state === 'focus'){
+            setTimeout(() => {
+                setFocus();
+            }, 100);
+        }
+    }, [location.state]);
+
     useInterval(() => {
         homeGetLights();
     }, API_DELAY);
@@ -48,7 +57,7 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            setFocus('menu_item_lights');
+            setFocus('menu_lights_screen');
         }
     };
 

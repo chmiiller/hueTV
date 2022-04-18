@@ -43,7 +43,7 @@ const LightDetailsScreen = (): JSX.Element => {
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            navigate('/lights');
+            navigate('/lights', { state: 'details' });
         }
     };
 

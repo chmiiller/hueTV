@@ -1,6 +1,6 @@
 import React from 'react';
 import CSS from 'csstype';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import FocusableButton from '../components/FocusableButton';
@@ -26,8 +26,9 @@ const TOTAL_AUTH_TRIES = 20;
 
 const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
     const navigate = useNavigate();
-    const [message, setMessage] = React.useState('Welcome');
-    const [debug, setDebug] = React.useState('');
+    const location = useLocation();
+    const [message, setMessage] = React.useState<string>('Welcome');
+    const [debug, setDebug] = React.useState<string>('');
     
     React.useEffect(() => {
         // settingsGetBridgeAddress();
@@ -43,10 +44,16 @@ const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
         };
     }, []);
 
+    React.useEffect(() => {
+        setTimeout(() => {
+            setFocus();
+        }, 100);
+    }, [location]);
+
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            setFocus('menu_item_settings');
+            setFocus('menu_settings_screen');
         }
     };
     

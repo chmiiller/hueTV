@@ -36,3 +36,5 @@ learn how to run it locally, ask questions, give some feedback,
 open issues and of course - contribute!`;
 
 export const NOTE = `this is an unofficial and independent app, with no affiliations with Philips Hue, Signify or Samsung.`;
+
+export const VERSION_DATE = `2022-04-19`;

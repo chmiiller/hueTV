@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import { useLocation } from 'react-router-dom';
 
 import ScrollableBox from '../../components/ScrollableBox';
 import {
@@ -16,17 +17,18 @@ import {
     OPEN_SOURCE_TITLE,
     OPEN_SOURCE,
     NOTE,
+    VERSION_DATE,
 } from './content';
 
 const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
-const VERSION_DATE = `2022-04-06`;
 
 type AboutProps = {
     setFocus: (item?: any) => void,
 };
 
 const About = ({ setFocus }: AboutProps): JSX.Element => {
+    const location = useLocation();
     React.useEffect(() => {
         // settingsGetBridgeAddress();
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -44,9 +46,16 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
-            setFocus('menu_item_about');
+            setFocus('menu_about_screen');
         }
     };
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            setFocus();
+        }, 100);
+    }, [location]);
+
     return (
         <Box sx={{
             display: 'flex',

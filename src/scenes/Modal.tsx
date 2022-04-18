@@ -19,7 +19,7 @@ const styles : Styles = {
 };
 
 const Modal = (): JSX.Element => {
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = React.useState<boolean>(false);
     const MODAL_OPTIONS = [{
         title: 'Cancel',
         variant: 'outlined',
