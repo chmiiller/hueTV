@@ -327,6 +327,21 @@ export const turnGroupOn = async(id: string): Promise<SuccessObject | void> => {
     }
 };
 
+export const turnAllLightsOff = async(turnOn: boolean): Promise<void> => {
+    const allLights = await getLights();
+    if (turnOn) {
+        // To Do: put this inside Promise.all() with TS
+        allLights?.map(async (light) => {
+            await turnLightOn(light.id);
+        });
+    } else {
+        // To Do: put this inside Promise.all() with TS
+        allLights?.map(async (light) => {
+            await turnLightOff(light.id);
+        });
+    }
+};
+
 export const setLightBrightness = async({ id, percentage }: SetLightBrightnessProps): Promise<SuccessObject | number | void> => {
     if (!id) {
         console.log('setLightBrightness ID is missing');

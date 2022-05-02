@@ -31,41 +31,6 @@ For those interested in how you can build and deploy an app to the Samsung TV an
 
 **important note:** this is an unofficial and independent app, with no affiliations with Philips Hue, Signify or Samsung.
 
-## To Do:
-
-- Development:
-    - About (width)
-    - Rasterize icons
-    - Update libs and react
-    - Turn all lights On/Off switch button
-
-- About the app:
-    - Blog post
-        - How to install Samsung SDK
-        - How to install Tizen SDK
-        - Using React to build an web app: https://stackoverflow.com/a/59603438/1272263
-        - Deploying to the TV
-        - Spatial Navigation
-    - Documentation
-        - Buy domain?
-    - Buy me a coffee:
-        - My own email?
-    - Store description
-
-- Design:
-    - App Icon
-    - Onboarding / Settings screen
-        - Platform and libraries
-            - ReactJS: https://reactjs.org
-            - Typescript: https://www.typescriptlang.org
-            - React Router: https://reactrouter.com
-            - MUI: https://mui.com
-            - react-spatial-navigation by noriginmedia: https://github.com/NoriginMedia/react-spatial-navigation
-        - Reset settings
-        - Test settings
-    - Home / Lights screen
-    - Light details screen
-
 ## Available Scripts
 
 In the project directory, you can run:
