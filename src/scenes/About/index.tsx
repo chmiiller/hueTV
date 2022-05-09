@@ -17,9 +17,6 @@ import {
     OPEN_SOURCE_TITLE,
     OPEN_SOURCE,
     NOTE,
-    NOTE2,
-    NOTE3,
-    NOTE4,
     VERSION_DATE,
 } from './content';
 
@@ -99,12 +96,6 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
                 </Typography>
                 <br />
                 <Typography align={'left'} variant={'h6'}><strong>{`important note: `}</strong>{NOTE}</Typography>
-                <br/>
-                <Typography align={'left'} variant={'h6'}><strong>{`important note2: `}</strong>{NOTE2}</Typography>
-                <br/>
-                <Typography align={'left'} variant={'h6'}><strong>{`important note3: `}</strong>{NOTE3}</Typography>
-                <br/>
-                <Typography align={'left'} variant={'h6'}><strong>{`important note4: `}</strong>{NOTE4}</Typography>
                 <br/>
                 <Typography align={'left'} variant={'body1'}>{VERSION_DATE}</Typography>
             </ScrollableBox> 

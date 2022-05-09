@@ -35,17 +35,8 @@ project is available on GitHub as open source. There you can clone the project,
 learn how to run it locally, ask questions, give some feedback, 
 open issues and of course - contribute!`;
 
-export const NOTE = `this is an unofficial and independent app, with no affiliations with Koninklijke Philips N.V., Signify N.V. or Samsung.`;
-
-export const NOTE2 = `this is an unofficial and independent app not affiliated, associated, authorized, endorsed by,
- or in any way officially connected with Koninklijke Philips N.V., Signify N.V. or any of its subsidiaries or its affiliates.
-The names Philips, Philips Hue, Signify as well as related names, marks, emblems and images are registered trademarks of their respective owners.`;
-
-export const NOTE3 = `this is an unofficial and independent app not endorsed by, directly affiliated with, maintained, authorized, or sponsored by Koninklijke Philips N.V. or Signify N.V..
+export const NOTE = `this is an unofficial and independent app not endorsed by, directly affiliated with, maintained, authorized, or sponsored by Koninklijke Philips N.V. or Signify N.V..
  All product and company names are the registered trademarks of their original owners.
 The use of any trade name or trademark is for identification and reference purposes only and does not imply any association with the trademark holder of their product brand.`;
 
-export const NOTE4 = `this is an unofficial and independent app not affiliated, associated, authorized, endorsed by, or in any way officially
- connected with Koninklijke Philips N.V., Signify N.V. or any of its subsidiaries or its affiliates.
- The names Philips, Philips Hue, Signify as well as related names, marks, emblems and images are registered trademarks of their respective owners.`;
 export const VERSION_DATE = `2022-05-09`;
