@@ -9,7 +9,6 @@ import SwitchMui from '../SwitchMui';
 type MenuItemProps = {
     path: string,
     selected?: boolean,
-    current?: boolean,
     checked: boolean,
     menuOpened: boolean,
     title: string,
@@ -20,7 +19,6 @@ type MenuItemProps = {
 const MenuItem = ({
     path,
     selected,
-    current,
     checked,
     menuOpened,
     title,

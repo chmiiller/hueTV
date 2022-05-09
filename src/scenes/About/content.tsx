@@ -26,7 +26,7 @@ for it to collect analytics or any other private information from your TV, light
 house, in fact this app doesn't even connect to the internet, everything happens 
 inside your private Wi-Fi network!`;
 
-export const MOTIVATION3 = `I hope it becomes useful and fun to use for you as it became to me.`;
+export const MOTIVATION3 = `I hope it becomes useful and fun to use for you as it became for me.`;
 
 export const OPEN_SOURCE_TITLE = `Open source`;
 export const OPEN_SOURCE = `For those interested in how you can build and deploy an app 
@@ -35,6 +35,17 @@ project is available on GitHub as open source. There you can clone the project,
 learn how to run it locally, ask questions, give some feedback, 
 open issues and of course - contribute!`;
 
-export const NOTE = `this is an unofficial and independent app, with no affiliations with Philips Hue, Signify or Samsung.`;
+export const NOTE = `this is an unofficial and independent app, with no affiliations with Koninklijke Philips N.V., Signify N.V. or Samsung.`;
 
-export const VERSION_DATE = `2022-05-02`;
+export const NOTE2 = `this is an unofficial and independent app not affiliated, associated, authorized, endorsed by,
+ or in any way officially connected with Koninklijke Philips N.V., Signify N.V. or any of its subsidiaries or its affiliates.
+The names Philips, Philips Hue, Signify as well as related names, marks, emblems and images are registered trademarks of their respective owners.`;
+
+export const NOTE3 = `this is an unofficial and independent app not endorsed by, directly affiliated with, maintained, authorized, or sponsored by Koninklijke Philips N.V. or Signify N.V..
+ All product and company names are the registered trademarks of their original owners.
+The use of any trade name or trademark is for identification and reference purposes only and does not imply any association with the trademark holder of their product brand.`;
+
+export const NOTE4 = `this is an unofficial and independent app not affiliated, associated, authorized, endorsed by, or in any way officially
+ connected with Koninklijke Philips N.V., Signify N.V. or any of its subsidiaries or its affiliates.
+ The names Philips, Philips Hue, Signify as well as related names, marks, emblems and images are registered trademarks of their respective owners.`;
+export const VERSION_DATE = `2022-05-09`;

@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { useLocation } from 'react-router-dom';
 
-import FocusableButton from '../../components/FocusableButton';
 import ScrollableBox from '../../components/ScrollableBox';
 import {
     WELCOME_TITLE,
@@ -18,6 +17,9 @@ import {
     OPEN_SOURCE_TITLE,
     OPEN_SOURCE,
     NOTE,
+    NOTE2,
+    NOTE3,
+    NOTE4,
     VERSION_DATE,
 } from './content';
 
@@ -44,8 +46,6 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
         };
     }, []);
 
-    const [alignment, setAlignment] = React.useState(false);
-
     const onKey = (event: KeyboardEvent) => {
         if (event.keyCode === 10009 || event.keyCode === 8 || event.keyCode === 27) {
             // back button
@@ -69,44 +69,44 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
             marginRight: 0,
             marginTop: 8,
         }}>
-            <div style={{ width: 100, margin: 16, }}>
-                <FocusableButton title={'Change alignment'} onEnterPress={() => {
-                    const newAlignment = !alignment;
-                    setAlignment(newAlignment);
-                }}/>
-            </div>
             <ScrollableBox>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h4'}>{WELCOME_TITLE}</Typography>
+                <Typography align={'left'} variant={'h4'}>{WELCOME_TITLE}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{WELCOME_MESSAGE}</Typography>
-                <br />
-                <Typography align={alignment ? 'center' : 'left'} variant={'h4'} sx={{ fontWeight: 'bold' }}>{ABOUT_TITLE}</Typography>
+                <Typography align={'left'} variant={'h6'}>{WELCOME_MESSAGE}</Typography>
+                <br /><br />
+                <Typography align={'left'} variant={'h4'}>{ABOUT_TITLE}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{ABOUT_ME}</Typography>
+                <Typography align={'left'} variant={'h6'}>{ABOUT_ME}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}><strong>Buy me a coffee</strong></Typography><p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>
+                <Typography align={'left'} variant={'h6'}><strong>Buy me a coffee</strong></Typography><p/>
+                <Typography align={'left'} variant={'h6'}>
                     <img src={QR_COFFEE_URL} alt="Buy me a coffee" />
                 </Typography>
-                <br />
-                <Typography align={alignment ? 'center' : 'left'} variant={'h4'}>{MOTIVATION_TITLE}</Typography>
+                <br /><br />
+                <Typography align={'left'} variant={'h4'}>{MOTIVATION_TITLE}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{MOTIVATION1}</Typography><p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{MOTIVATION2}</Typography><p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{MOTIVATION3}</Typography>
-                <br />
-                <Typography align={alignment ? 'center' : 'left'} variant={'h4'}>{OPEN_SOURCE_TITLE}</Typography>
+                <Typography align={'left'} variant={'h6'}>{MOTIVATION1}</Typography><p/>
+                <Typography align={'left'} variant={'h6'}>{MOTIVATION2}</Typography><p/>
+                <Typography align={'left'} variant={'h6'}>{MOTIVATION3}</Typography>
+                <br /><br />
+                <Typography align={'left'} variant={'h4'}>{OPEN_SOURCE_TITLE}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>{OPEN_SOURCE}</Typography>
+                <Typography align={'left'} variant={'h6'}>{OPEN_SOURCE}</Typography>
                 <p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}> <strong>GitHub Repository</strong></Typography><p/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}>
+                <Typography align={'left'} variant={'h6'}> <strong>GitHub Repository</strong></Typography><p/>
+                <Typography align={'left'} variant={'h6'}>
                     <img src={QR_REPO_URL} alt="GitHub Repository" />
                 </Typography>
                 <br />
-                <Typography align={alignment ? 'center' : 'left'} variant={'h6'}><strong>{`important note: `}</strong>{NOTE}</Typography>
+                <Typography align={'left'} variant={'h6'}><strong>{`important note: `}</strong>{NOTE}</Typography>
                 <br/>
-                <Typography align={alignment ? 'center' : 'left'} variant={'body1'}>{VERSION_DATE}</Typography>
+                <Typography align={'left'} variant={'h6'}><strong>{`important note2: `}</strong>{NOTE2}</Typography>
+                <br/>
+                <Typography align={'left'} variant={'h6'}><strong>{`important note3: `}</strong>{NOTE3}</Typography>
+                <br/>
+                <Typography align={'left'} variant={'h6'}><strong>{`important note4: `}</strong>{NOTE4}</Typography>
+                <br/>
+                <Typography align={'left'} variant={'body1'}>{VERSION_DATE}</Typography>
             </ScrollableBox> 
         </Box>
     );

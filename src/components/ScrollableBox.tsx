@@ -45,7 +45,7 @@ const ScrollableBox = ({ children }: ScrollableBoxProps ): JSX.Element => {
                     marginLeft: 8,
                     marginRight: 8,
                     height: '85vh',
-                    padding: 3,
+                    padding: 5,
                     border: focused ? 1 : 0,
                     borderColor: '#3f444a',
                     overflowY: 'auto'

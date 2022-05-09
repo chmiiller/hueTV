@@ -4,7 +4,6 @@ import List from '@mui/material/List';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-import AllLightsSwitch from './AllLightsSwitch';
 import FocusableMenuItem from './FocusableMenuItem';
 import { sideMenuConfig, type SideMenuObject } from './SideMenuConfig';
 
@@ -102,13 +101,6 @@ const SideMenuItems = ({ toggleMenu, setFocus }: SideMenuItemsProps): JSX.Elemen
                         />
                     );
                 })}
-                <AllLightsSwitch
-                    menuOpened={menuOpened}
-                    onBecameFocused={() => { // withFocusable prop
-                        selectItem('all_lights');
-                    }}
-                    onBecameBlurred={() => deselectItem()} // withFocusable prop
-                />
             </List>
             {/* Second list of buttons */}
             <List sx={ListStyle}>
