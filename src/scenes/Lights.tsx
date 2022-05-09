@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Light from '../components/Light';
 import useInterval from '../api/useInterval';
 import { getLights } from '../api/hueapi';
-import { type Light as LightType } from '../api/types';
+import { Light as LightType } from '../api/types';
 
 type FocusedProps = {
     node: HTMLElement,

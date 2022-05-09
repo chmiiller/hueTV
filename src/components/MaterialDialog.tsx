@@ -52,7 +52,7 @@ const MaterialDialog = ({
         >
             <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
             <DialogContent>{children}</DialogContent>
-            <DialogActions>{options}</DialogActions>
+            {/* <DialogActions>{options}</DialogActions> */}
         </Dialog>
     );
 };

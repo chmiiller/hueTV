@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { type Room } from '../api/types';
+import { Room } from '../api/types';
 import LightDetails from '../components/LightDetails';
 import LightDetailsSkeleton from '../components/LightDetailsSkeleton';
 import {
@@ -18,8 +18,13 @@ const STR_TUTORIAL1 = 'Arrows Up / Down: Brightness';
 const STR_TUTORIAL2 = 'Select Button: On / Off';
 const API_DELAY = 2000;
 
+interface RoomDetailsLocation {
+    id: string
+}
+
 const RoomDetailsScreen = (): JSX.Element => {
-    const { state } = useLocation();
+    const location = useLocation();
+    const state = location.state as RoomDetailsLocation;
     const navigate = useNavigate();
     
     React.useEffect(() => {

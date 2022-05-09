@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 import FocusableMenuItem from './FocusableMenuItem';
-import { sideMenuConfig, type SideMenuObject } from './SideMenuConfig';
+import { sideMenuConfig, SideMenuObject } from './SideMenuConfig';
 
 type SideMenuItemsProps = {
     toggleMenu: (menuOpen: boolean) => void,

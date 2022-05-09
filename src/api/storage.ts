@@ -1,6 +1,6 @@
 const keyBridgeIp = `bridge_ip`;
 const keyBridgeU = 'bridgeuser';
-import { type StorageResult } from './types';
+import { StorageResult } from './types';
 
 export const setBridgeIp = (address: string): StorageResult => {
     if (address) {

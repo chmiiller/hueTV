@@ -12,13 +12,13 @@ import {
 } from './storage';
 
 import {
-    type Room,
-    type Light,
-    type SetLightBrightnessProps,
-    type RawGroup,
-    type RawLight,
-    type StorageResult,
-    type SuccessObject,
+    Room,
+    Light,
+    SetLightBrightnessProps,
+    RawGroup,
+    RawLight,
+    StorageResult,
+    SuccessObject,
 } from './types';
 
 // const appName = 'huetv';
