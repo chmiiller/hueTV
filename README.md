@@ -68,7 +68,7 @@ build react as tizen app:
 
 `tizen build-web -- ./build`
 
-create WGT file (package) and `huetv` is the certificate name:
+create WGT file (package) and passing `huetv` as the certificate name:
 
 `cd build/.buildResult`
 
