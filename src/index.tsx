@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 
 import FocusableApp from './App';
 import "./index.css";
-import { initNavigation } from "@noriginmedia/react-spatial-navigation";
+import { init } from '@noriginmedia/norigin-spatial-navigation';
 
-// initNavigation();
+init();
 
 
 const root = ReactDOM.createRoot(
