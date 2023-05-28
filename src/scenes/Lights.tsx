@@ -1,10 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import Light from "../components/Light";
+import { Light } from "../components/Light";
 import useInterval from "../api/useInterval";
 import { getLights } from "../api/hueapi";
 import { Light as LightType } from "../api/types";
@@ -19,7 +19,8 @@ type LightsProps = {
 
 const API_DELAY = 2000;
 
-const Lights = ({ setFocus }: LightsProps): JSX.Element => {
+export const Lights = (): JSX.Element => {
+  const { ref } = useFocusable();
   const navigate = useNavigate();
   const location = useLocation();
   const handleScrolling = ({ node }: FocusedProps) => {
@@ -45,7 +46,7 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
   React.useEffect(() => {
     if (location.state === "focus") {
       setTimeout(() => {
-        setFocus();
+        // setFocus();
       }, 100);
     }
   }, [location.state]);
@@ -61,7 +62,7 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      setFocus("menu_lights_screen");
+      // setFocus("menu_lights_screen");
     }
   };
 
@@ -73,7 +74,7 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
   };
 
   return (
-    <div style={{ padding: 100 }}>
+    <div ref={ref} style={{ padding: 100 }}>
       <Fade in timeout={600}>
         <Box
           sx={{
@@ -85,15 +86,15 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
           {lights.map((light: LightType) => (
             <Light
               key={light.id}
-              focusKey={`light_${light.id}`}
+              // focusKey={`light_${light.id}`}
               name={light.name}
               brightness={light.brightPercentage}
               color={light.color}
               isOn={light.isOn}
-              onBecameFocused={handleScrolling}
-              onEnterPress={() => {
-                navigate("/light", { state: { id: light.id } });
-              }}
+              // onBecameFocused={handleScrolling}
+              // onEnterPress={() => {
+              //   navigate("/light", { state: { id: light.id } });
+              // }}
             />
           ))}
         </Box>
@@ -101,5 +102,3 @@ const Lights = ({ setFocus }: LightsProps): JSX.Element => {
     </div>
   );
 };
-
-export default withFocusable()(Lights);

@@ -1,22 +1,19 @@
-import React from "react";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { styled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 
-type FocusButtonProps = {
+type FocusableButtonProps = {
   title: string;
-  focused: boolean;
 };
 
 const ColorButton = styled(Button)<ButtonProps>(() => ({
   marginLeft: 16,
 }));
-
-const FocusButton = ({ title, focused }: FocusButtonProps): JSX.Element => (
-  <ColorButton variant={focused ? "contained" : "outlined"}>
-    {title}
-  </ColorButton>
-);
-
-const FocusableButton = withFocusable()(FocusButton);
-export default FocusableButton;
+export const FocusableButton = ({ title }: FocusableButtonProps): JSX.Element => {
+  const { ref, focused } = useFocusable();
+  return (
+    <ColorButton ref={ref} variant={focused ? "contained" : "outlined"}>
+      {title}
+    </ColorButton>
+  );
+};

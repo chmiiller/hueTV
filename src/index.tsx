@@ -7,7 +7,6 @@ import { init } from '@noriginmedia/norigin-spatial-navigation';
 
 init();
 
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Room } from "../api/types";
-import LightDetails from "../components/LightDetails";
+import { LightDetails } from "../components/LightDetails";
 import LightDetailsSkeleton from "../components/LightDetailsSkeleton";
 import {
   getGroupById,
@@ -121,18 +121,18 @@ const RoomDetailsScreen = (): JSX.Element => {
         <>
           <Typography variant={"h3"}>{`${room.name}`}</Typography>
           <LightDetails
-            focusKey={`switch_${room.id}`}
+            // focusKey={`switch_${room.id}`}
             id={room.id}
             isOn={room.allOn || room.anyOn}
             opacity={opacity}
             brightnessPercentage={room.brightPercentage}
             color={room.color}
-            setBrightnessApi={setRoomBrightness}
-            switchOnOffApi={switchOnOff}
-            onArrowPress={onArrow}
-            onEnterPress={() => {
-              switchOnOff(!room.allOn || !room.anyOn);
-            }}
+            // setBrightnessApi={setRoomBrightness}
+            // switchOnOffApi={switchOnOff}
+            // onArrowPress={onArrow}
+            // onEnterPress={() => {
+            //   switchOnOff(!room.allOn || !room.anyOn);
+            // }}
           />
           <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
             {STR_TUTORIAL1}

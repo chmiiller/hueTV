@@ -2,14 +2,14 @@ import React from "react";
 
 import List from "@mui/material/List";
 import { useNavigate, useLocation } from "react-router-dom";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 
-import FocusableMenuItem from "./FocusableMenuItem";
+import { MenuItem } from "./FocusableMenuItem";
 import { sideMenuConfig, SideMenuObject } from "./SideMenuConfig";
 
 type SideMenuItemsProps = {
   toggleMenu: (menuOpen: boolean) => void;
-  setFocus: (item?: string) => void;
+  // setFocus: (item?: string) => void;
 };
 
 const ListStyle = {
@@ -21,10 +21,11 @@ const ListStyle = {
   },
 };
 
-const SideMenuItems = ({
+export const SideMenuItems = ({
   toggleMenu,
-  setFocus,
+  // setFocus,
 }: SideMenuItemsProps): JSX.Element => {
+  const { ref } = useFocusable();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,7 +35,7 @@ const SideMenuItems = ({
 
   React.useEffect(() => {
     setTimeout(() => {
-      setFocus("menu_home_screen");
+      // setFocus("menu_home_screen");
     }, 100);
   }, []);
 
@@ -68,6 +69,7 @@ const SideMenuItems = ({
 
   return (
     <div
+      ref={ref}
       style={{
         paddingTop: 100,
         display: "flex",
@@ -81,10 +83,10 @@ const SideMenuItems = ({
       <List sx={ListStyle}>
         {sideMenuConfig.items.map((sideMenuObject: SideMenuObject) => {
           return (
-            <FocusableMenuItem
+            <MenuItem
               key={sideMenuObject.id}
               path={sideMenuObject.path}
-              focusKey={sideMenuObject.focusName} // withFocusable prop
+              // focusKey={sideMenuObject.focusName} // withFocusable prop
               current={
                 location.pathname == sideMenuObject.path && menuOpened === false
               } // if it's the current selected menu item
@@ -92,24 +94,24 @@ const SideMenuItems = ({
               icon={sideMenuObject.icon}
               selectedIcon={sideMenuObject.selectedIcon}
               title={sideMenuObject.title}
-              onEnterPress={() => {
-                // withFocusable prop
-                navigate(sideMenuObject.path, { state: "focus" });
-                deselectItem();
-              }}
-              onBecameFocused={() => {
-                // withFocusable prop
-                if (location.state !== "details") {
-                  selectItem(sideMenuObject.id);
-                }
-                // if on details, don't automatically render screen
-                if (sideMenuObject.id !== "menu_item_settings" && !onDetails) {
-                  navigate(sideMenuObject.path, {
-                    state: fromDetails ? "focus" : null,
-                  });
-                }
-              }}
-              onBecameBlurred={() => deselectItem()} // withFocusable prop
+              // onEnterPress={() => {
+              //   // withFocusable prop
+              //   navigate(sideMenuObject.path, { state: "focus" });
+              //   deselectItem();
+              // }}
+              // onBecameFocused={() => {
+              //   // withFocusable prop
+              //   if (location.state !== "details") {
+              //     selectItem(sideMenuObject.id);
+              //   }
+              //   // if on details, don't automatically render screen
+              //   if (sideMenuObject.id !== "menu_item_settings" && !onDetails) {
+              //     navigate(sideMenuObject.path, {
+              //       state: fromDetails ? "focus" : null,
+              //     });
+              //   }
+              // }}
+              // onBecameBlurred={() => deselectItem()} // withFocusable prop
             />
           );
         })}
@@ -118,26 +120,26 @@ const SideMenuItems = ({
       <List sx={ListStyle}>
         {sideMenuConfig.extra.map((sideMenuObject: SideMenuObject) => {
           return (
-            <FocusableMenuItem
+            <MenuItem
               key={sideMenuObject.id}
               path={sideMenuObject.path}
-              focusKey={sideMenuObject.focusName} // withFocusable prop
+              // focusKey={sideMenuObject.focusName} // withFocusable prop
               current={
                 location.pathname == sideMenuObject.path && menuOpened === false
               } // if it's the current selected menu item
               menuOpened={menuOpened}
               title={sideMenuObject.title}
-              onEnterPress={() => {
-                // withFocusable prop
-                if (sideMenuObject.id === "menu_item_exit") {
-                  exitApp();
-                  return;
-                }
-                // deselectItem();
-                navigate(sideMenuObject.path, { state: "focus" });
-              }}
-              onBecameFocused={() => selectItem(sideMenuObject.id)} // withFocusable prop
-              onBecameBlurred={() => deselectItem()} // withFocusable prop
+              // onEnterPress={() => {
+              //   // withFocusable prop
+              //   if (sideMenuObject.id === "menu_item_exit") {
+              //     exitApp();
+              //     return;
+              //   }
+              //   // deselectItem();
+              //   navigate(sideMenuObject.path, { state: "focus" });
+              // }}
+              // onBecameFocused={() => selectItem(sideMenuObject.id)} // withFocusable prop
+              // onBecameBlurred={() => deselectItem()} // withFocusable prop
             />
           );
         })}
@@ -145,6 +147,3 @@ const SideMenuItems = ({
     </div>
   );
 };
-
-const FocusableSideMenu = withFocusable()(SideMenuItems);
-export default FocusableSideMenu;

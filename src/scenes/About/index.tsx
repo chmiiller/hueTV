@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { useLocation } from "react-router-dom";
 
 import ScrollableBox from "../../components/ScrollableBox";
@@ -27,7 +27,8 @@ type AboutProps = {
   setFocus: (item?: any) => void;
 };
 
-const About = ({ setFocus }: AboutProps): JSX.Element => {
+export const About = (): JSX.Element => {
+  const { ref } = useFocusable();
   const location = useLocation();
   React.useEffect(() => {
     // settingsGetBridgeAddress();
@@ -50,18 +51,19 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      setFocus("menu_about_screen");
+      // setFocus("menu_about_screen");
     }
   };
 
   React.useEffect(() => {
     setTimeout(() => {
-      setFocus();
+      // setFocus();
     }, 100);
   }, [location]);
 
   return (
     <Box
+      ref={ref}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -145,5 +147,3 @@ const About = ({ setFocus }: AboutProps): JSX.Element => {
     </Box>
   );
 };
-
-export default withFocusable()(About);

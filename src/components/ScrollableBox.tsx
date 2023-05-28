@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Paper from "@mui/material/Paper";
 
 type ScrollableBoxProps = {
@@ -7,7 +7,7 @@ type ScrollableBoxProps = {
 };
 
 type FocusableScrollableBoxProps = {
-  focused: boolean;
+  // focused: boolean;
 };
 
 const SCROLL_OFFSET = 80;
@@ -17,47 +17,52 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
 
   const onArrow = (direction: string) => {
     switch (direction) {
-      case "up":
-        paperRef.current?.scrollTo({
-          top: paperRef.current?.scrollTop - SCROLL_OFFSET,
-          left: 0,
-          behavior: "smooth",
-        });
-        break;
+    case "up":
+      paperRef.current?.scrollTo({
+        top: paperRef.current?.scrollTop - SCROLL_OFFSET,
+        left: 0,
+        behavior: "smooth",
+      });
+      break;
 
-      case "down":
-        paperRef.current?.scrollTo({
-          top: paperRef.current?.scrollTop + SCROLL_OFFSET,
-          left: 0,
-          behavior: "smooth",
-        });
-        break;
+    case "down":
+      paperRef.current?.scrollTo({
+        top: paperRef.current?.scrollTop + SCROLL_OFFSET,
+        left: 0,
+        behavior: "smooth",
+      });
+      break;
     }
   };
 
-  const ScrollableComponent = ({ focused }: FocusableScrollableBoxProps) => {
+  const ScrollableComponent = () => {
+    const { ref, focused } = useFocusable();
     return (
-      <Paper
-        ref={paperRef}
-        elevation={20}
-        sx={{
-          background: "#22242b",
-          marginLeft: 8,
-          marginRight: 8,
-          height: "85vh",
-          padding: 5,
-          border: focused ? 1 : 0,
-          borderColor: "#3f444a",
-          overflowY: "auto",
-        }}
-      >
-        {children}
-      </Paper>
+      <div ref={ref}>
+        <Paper
+          ref={paperRef}
+          elevation={20}
+          sx={{
+            background: "#22242b",
+            marginLeft: 8,
+            marginRight: 8,
+            height: "85vh",
+            padding: 5,
+            border: focused ? 1 : 0,
+            borderColor: "#3f444a",
+            overflowY: "auto",
+          }}
+        >
+          {children}
+        </Paper>
+      </div>
     );
   };
-
-  const FocusableScrollBox = withFocusable()(ScrollableComponent);
-  return <FocusableScrollBox onArrowPress={onArrow} />;
+  return (
+    <ScrollableComponent
+      // onArrowPress={onArrow}
+    />
+  );
 };
 
 export default ScrollableBox;

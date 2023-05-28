@@ -1,9 +1,9 @@
 import React from "react";
 import CSS from "csstype";
 import { useNavigate, useLocation } from "react-router-dom";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 
-import FocusableButton from "../components/FocusableButton";
+import { FocusableButton } from "../components/FocusableButton";
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
 
 type SettingsProps = {
@@ -24,7 +24,8 @@ const styles: Styles = {
 
 const TOTAL_AUTH_TRIES = 20;
 
-const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
+export const Settings = (): JSX.Element => {
+  const { ref } = useFocusable();
   const navigate = useNavigate();
   const location = useLocation();
   const [message, setMessage] = React.useState<string>("Welcome");
@@ -46,7 +47,7 @@ const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      setFocus();
+      // setFocus();
     }, 100);
   }, [location]);
 
@@ -57,7 +58,7 @@ const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      setFocus("menu_settings_screen");
+      // setFocus("menu_settings_screen");
     }
   };
 
@@ -119,30 +120,28 @@ const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
   };
 
   return (
-    <div style={styles.contact}>
+    <div ref={ref} style={styles.contact}>
       <h1>Settings</h1>
       <p>{`${message}`}</p>
       <FocusableButton
         title={"Find Bridge"}
-        onEnterPress={() => {
-          settingsGetBridgeAddress();
-        }}
+        // onEnterPress={() => {
+        //   settingsGetBridgeAddress();
+        // }}
       />
       <FocusableButton
         title={"Setup Bridge"}
-        onEnterPress={() => {
-          stepGetUsername();
-        }}
+        // onEnterPress={() => {
+        //   stepGetUsername();
+        // }}
       />
       <FocusableButton
         title={"Go Home"}
-        onEnterPress={() => {
-          // navigate('/home');
-        }}
+        // onEnterPress={() => {
+        //   // navigate('/home');
+        // }}
       />
       <p>{debug}</p>
     </div>
   );
 };
-
-export default withFocusable()(Settings);

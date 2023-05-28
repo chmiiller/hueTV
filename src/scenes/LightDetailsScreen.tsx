@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Light } from "../api/types";
-import LightDetails from "../components/LightDetails";
+import { LightDetails } from "../components/LightDetails";
 import LightDetailsSkeleton from "../components/LightDetailsSkeleton";
 import {
   getLightById,
@@ -119,18 +119,18 @@ const LightDetailsScreen = (): JSX.Element => {
         <>
           <Typography variant={"h3"}>{`${light.name}`}</Typography>
           <LightDetails
-            focusKey={`switch_${light.id}`}
+            // focusKey={`switch_${light.id}`}
             id={light.id}
             isOn={light.isOn}
             opacity={opacity}
             brightnessPercentage={light.brightPercentage}
             color={light.color}
-            setBrightnessApi={setBrightness}
-            switchOnOffApi={switchOnOff}
-            onArrowPress={onArrow}
-            onEnterPress={() => {
-              switchOnOff(!light.isOn);
-            }}
+            // setBrightnessApi={setBrightness}
+            // switchOnOffApi={switchOnOff}
+            // onArrowPress={onArrow}
+            // onEnterPress={() => {
+            //   switchOnOff(!light.isOn);
+            // }}
           />
           <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
             {STR_TUTORIAL1}

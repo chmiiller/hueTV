@@ -2,12 +2,12 @@ import React from "react";
 import { createBrowserRouter, Outlet, useNavigate } from "react-router-dom";
 
 import SideMenu from "./components/SideMenu";
-import About from "./scenes/About";
+import { About } from "./scenes/About";
 import RoomDetailsScreen from "./scenes/RoomDetailsScreen";
 import LightDetailsScreen from "./scenes/LightDetailsScreen";
-import Lights from "./scenes/Lights";
-import Settings from "./scenes/Settings";
-import Home from "./scenes/Home";
+import { Lights } from "./scenes/Lights";
+import { Settings } from "./scenes/Settings";
+import { Home } from "./scenes/Home";
 
 import { getSetupDone } from "./api/storage";
 
@@ -41,11 +41,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <Home focusKey={`home_screen`} />,
+        element: <Home />,
       },
       {
         path: "lights",
-        element: <Lights focusKey={`lights_screen`}/>,
+        element: <Lights />,
       },
       {
         path: "light",
@@ -57,11 +57,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <Settings focusKey={`settings_screen`}/>,
+        element: <Settings />,
       },
       {
         path: "about",
-        element: <About focusKey={`about_screen`}/>,
+        element: <About />,
       },
     ],
   },

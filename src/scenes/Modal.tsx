@@ -2,7 +2,7 @@ import React from "react";
 import CSS from "csstype";
 
 import BasicDialog from "../components/BasicDialog";
-import FocusableButton from "../components/FocusableButton";
+import { FocusableButton } from "../components/FocusableButton";
 
 type Styles = {
   contact: CSS.Properties;
@@ -42,11 +42,11 @@ const Modal = (): JSX.Element => {
     <>
       <div style={styles.contact}>
         <FocusableButton
-          focusKey={"bt_open_modal"}
+          // focusKey={"bt_open_modal"}
           title={"Show Modal"}
-          onEnterPress={() => {
-            setVisible(true);
-          }}
+          // onEnterPress={() => {
+          //   setVisible(true);
+          // }}
         />
       </div>
       <BasicDialog

@@ -1,4 +1,4 @@
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -7,7 +7,7 @@ type LightProps = {
   brightness: number;
   color?: string;
   isOn: boolean;
-  focused: boolean;
+  // focused: boolean;
 };
 
 const switchBackground = "#22242b";
@@ -16,13 +16,14 @@ const switchSize = 250;
 const STR_BRIGHTNESS = "Brightness";
 const STR_TURNED_OFF = "Turned off";
 
-const Light = ({
+export const Light = ({
   name,
   brightness,
   color,
   isOn,
-  focused,
+  // focused,
 }: LightProps): JSX.Element => {
+  const { ref, focused } = useFocusable();
   const brightnessHeight = switchSize * brightness * 0.01;
   const displayBrightness = isOn
     ? `${brightness}% ${STR_BRIGHTNESS}`
@@ -38,7 +39,7 @@ const Light = ({
   };
 
   return (
-    <div>
+    <div ref={ref}>
       <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
         {name}
       </Typography>
@@ -73,5 +74,3 @@ const Light = ({
     </div>
   );
 };
-
-export default withFocusable()(Light);

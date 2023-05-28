@@ -2,7 +2,7 @@ import React from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 
-import SideMenuItems from "./SideMenuItems";
+import { SideMenuItems } from "./SideMenuItems";
 
 const drawerWidth = 500;
 const closedDrawerWidth = drawerWidth / 4;

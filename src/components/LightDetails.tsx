@@ -1,5 +1,5 @@
 import React from "react";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -11,8 +11,8 @@ type LightDetailsProps = {
   isOn: boolean;
   brightnessPercentage: number;
   color: string;
-  setFocus: (item?: any) => void;
-  focused: boolean;
+  // setFocus: (item?: any) => void;
+  // focused: boolean;
   opacity?: number;
 };
 
@@ -24,17 +24,18 @@ const iconStyle = { fontSize: 60, marginBottom: 2 };
 const STR_BRIGHTNESS = "Brightness";
 const STR_TURNED_OFF = "Turned off";
 
-const LightDetails = ({
+export const LightDetails = ({
   id,
   isOn,
   brightnessPercentage,
   color,
-  setFocus,
-  focused,
+  // setFocus,
+  // focused,
   opacity,
 }: LightDetailsProps): JSX.Element => {
+  const { ref, focused } = useFocusable();
   React.useEffect(() => {
-    setFocus(`switch_${id}`);
+    // setFocus(`switch_${id}`);
   }, []);
 
   const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
@@ -54,7 +55,7 @@ const LightDetails = ({
     transition: "250ms",
   };
   return (
-    <>
+    <div ref={ref}>
       <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h6"}>
         {displayBrightness}
       </Typography>
@@ -94,8 +95,6 @@ const LightDetails = ({
           )}
         </Box>
       </Box>
-    </>
+    </div>
   );
 };
-
-export default withFocusable()(LightDetails);

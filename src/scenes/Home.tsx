@@ -1,10 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import Light from "../components/Light";
+import { Light } from "../components/Light";
 import useInterval from "../api/useInterval";
 import { getGroups } from "../api/hueapi";
 import { Room } from "../api/types";
@@ -19,7 +19,8 @@ type HomeProps = {
 
 const API_DELAY = 2000;
 
-const Home = ({ setFocus }: HomeProps): JSX.Element => {
+export const Home = (): JSX.Element => {
+  const { ref } = useFocusable();
   const navigate = useNavigate();
   const location = useLocation();
   const handleScrolling = ({ node }: FocusedProps) => {
@@ -45,7 +46,7 @@ const Home = ({ setFocus }: HomeProps): JSX.Element => {
   React.useEffect(() => {
     if (location.state === "focus") {
       setTimeout(() => {
-        setFocus();
+        // setFocus();
       }, 100);
     }
   }, [location.state]);
@@ -61,7 +62,7 @@ const Home = ({ setFocus }: HomeProps): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      setFocus("menu_home_screen");
+      // setFocus("menu_home_screen");
     }
   };
 
@@ -73,7 +74,7 @@ const Home = ({ setFocus }: HomeProps): JSX.Element => {
   };
 
   return (
-    <div style={{ padding: 100 }}>
+    <div ref={ref} style={{ padding: 100 }}>
       <Fade in timeout={600}>
         <Box
           sx={{
@@ -85,15 +86,15 @@ const Home = ({ setFocus }: HomeProps): JSX.Element => {
           {rooms.map((room: Room) => (
             <Light
               key={room.id}
-              focusKey={`room_${room.id}`}
+              // focusKey={`room_${room.id}`}
               name={room.name}
               brightness={room.brightPercentage}
               color={room.color}
               isOn={room.allOn || room.anyOn}
-              onBecameFocused={handleScrolling}
-              onEnterPress={() => {
-                navigate("/room", { state: { id: room.id } });
-              }}
+              // onBecameFocused={handleScrolling}
+              // onEnterPress={() => {
+              //   navigate("/room", { state: { id: room.id } });
+              // }}
             />
           ))}
         </Box>
@@ -101,5 +102,3 @@ const Home = ({ setFocus }: HomeProps): JSX.Element => {
     </div>
   );
 };
-
-export default withFocusable()(Home);
