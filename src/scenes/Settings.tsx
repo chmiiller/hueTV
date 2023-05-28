@@ -77,10 +77,12 @@ const Settings = ({ setFocus }: SettingsProps): JSX.Element => {
 
   const stepGetUsername = async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const tizenId = window.tizen
-      ? window.tizen.systeminfo.getCapability("http://tizen.org/system/tizenid")
-      : "huetv";
+    let tizenId = "huetv";
+    // @ts-expect-error .tizen is not typed
+    if(window.tizen) {
+      // @ts-expect-error .tizen is not typed
+      tizenId = window.tizen.systeminfo.getCapability("http://tizen.org/system/tizenid");
+    }
     setMessage(`TizenId ${tizenId}`);
     const userRes = await askUsername(tizenId);
     if (

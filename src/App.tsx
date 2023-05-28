@@ -1,19 +1,11 @@
-import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { withFocusable } from "@noriginmedia/react-spatial-navigation";
 
-import About from "./scenes/About";
-import RoomDetailsScreen from "./scenes/RoomDetailsScreen";
-import LightDetailsScreen from "./scenes/LightDetailsScreen";
-import Lights from "./scenes/Lights";
-import Settings from "./scenes/Settings";
-import Home from "./scenes/Home";
-import SideMenu from "./components/SideMenu";
+import { router } from "./Routes";
 
-import { getSetupDone } from "./api/storage";
 
 const theme = createTheme({
   palette: {
@@ -52,50 +44,14 @@ type AppProps = {
   setFocus: () => void;
 };
 
-function App({ setFocus }: AppProps) {
-  const classes = useStyles();
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    setFocus();
-    const setupState = getSetupDone();
-    if (setupState.data) {
-      console.log("-------------------> goes home");
-      // navigate("/home", { replace: true });
-    } else {
-      console.log("-------------------> should open settings");
-      // navigate("/settings", { replace: true });
-    }
-  }, []);
+function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <SideMenu />
-        <main className={classes.content}>
-          <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/home" element={<Home focusKey={`home_screen`} />} />
-            <Route
-              path="/about"
-              element={<About focusKey={`about_screen`} />}
-            />
-            <Route
-              path="/lights"
-              element={<Lights focusKey={`lights_screen`} />}
-            />
-            <Route path="/light" element={<LightDetailsScreen />} />
-            <Route path="/room" element={<RoomDetailsScreen />} />
-            <Route
-              path="/settings"
-              element={<Settings focusKey={`settings_screen`} />}
-            />
-          </Routes>
-        </main>
-      </div>
+      <CssBaseline />
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 }
 
-const FocusableApp = withFocusable()(App);
+const FocusableApp = App; //withFocusable()(App);
 export default FocusableApp;
