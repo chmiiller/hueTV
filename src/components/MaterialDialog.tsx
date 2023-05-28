@@ -1,22 +1,22 @@
-import React from 'react';
-import { withStyles } from '@mui/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import MuiDialogActions from '@mui/material/DialogActions';
+import React from "react";
+import { withStyles } from "@mui/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import MuiDialogActions from "@mui/material/DialogActions";
 
 const DialogActions = withStyles(() => ({
-    root: { padding: 24 },
+  root: { padding: 24 },
 }))(MuiDialogActions);
 
 type MaterialDialogProps = {
-    children: React.ReactNode,
-    // contentStyle,
-    maxWidth: 'xs' | 'sm' | 'md' | 'lg' | 'xl',
-    onClose: () => void,
-    options: Array<JSX.Element>,
-    title: string,
-    visible: boolean,
+  children: React.ReactNode;
+  // contentStyle,
+  maxWidth: "xs" | "sm" | "md" | "lg" | "xl";
+  onClose: () => void;
+  options: Array<JSX.Element>;
+  title: string;
+  visible: boolean;
 };
 /**
  * @component
@@ -31,30 +31,30 @@ type MaterialDialogProps = {
  * @param {Boolean} props.visible when *false* the dialog is hidden and displayed when *true*
  */
 const MaterialDialog = ({
-    children,
-    // contentStyle = {},
-    maxWidth = 'xs',
-    onClose,
-    options = [],
-    title = '',
-    visible = false,
+  children,
+  // contentStyle = {},
+  maxWidth = "xs",
+  onClose,
+  options = [],
+  title = "",
+  visible = false,
 }: MaterialDialogProps) => {
-    // <DialogContent style={contentStyle}>{children}</DialogContent>
-    return (
-        <Dialog
-            open={visible}
-            fullWidth={true}
-            fullScreen
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            maxWidth={maxWidth}
-            onClose={onClose} // Esc key callback
-        >
-            <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
-            <DialogContent>{children}</DialogContent>
-            {/* <DialogActions>{options}</DialogActions> */}
-        </Dialog>
-    );
+  // <DialogContent style={contentStyle}>{children}</DialogContent>
+  return (
+    <Dialog
+      open={visible}
+      fullWidth={true}
+      fullScreen
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      maxWidth={maxWidth}
+      onClose={onClose} // Esc key callback
+    >
+      <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
+      <DialogContent>{children}</DialogContent>
+      {/* <DialogActions>{options}</DialogActions> */}
+    </Dialog>
+  );
 };
 
 export default MaterialDialog;

@@ -1,24 +1,23 @@
-import React from 'react';
-import Button from '@mui/material/Button';
+import React from "react";
+import Button from "@mui/material/Button";
 
-import MaterialDialog from './MaterialDialog';
+import MaterialDialog from "./MaterialDialog";
 
 type DialogOptions = {
-    title: string,
-    onClick: () => void,
-    variant: string,
-    color?: string,
+  title: string;
+  onClick: () => void;
+  variant: string;
+  color?: string;
 };
 
 type BasicDialogProps = {
-    children: React.ReactNode,
-    // contentStyle,
-    onClose: () => void,
-    options: Array<DialogOptions>,
-    title: string,
-    visible: boolean,
+  children: React.ReactNode;
+  // contentStyle,
+  onClose: () => void;
+  options: Array<DialogOptions>;
+  title: string;
+  visible: boolean;
 };
-
 
 /**
  * @component
@@ -33,43 +32,43 @@ type BasicDialogProps = {
  * @param {Boolean} props.visible when *false* the dialog is hidden and displayed when *true*
  */
 const BasicDialog = ({
-    children,
-    // contentStyle,
-    onClose,
-    options = [],
-    title = '',
-    visible = false,
-}: BasicDialogProps ) => {
-    const DialogButtons = () => {
-        // const btStyle = { textTransform: 'none' };
-        return options.map((op: DialogOptions) => (
-            <Button
-                key={`bt_${op.title}`}
-                // color={op.color}
-                disableElevation
-                onClick={op.onClick}
-                // style={btStyle}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                variant={op.variant}
-            >
-                {op.title}
-            </Button>
-        ));
-    };
+  children,
+  // contentStyle,
+  onClose,
+  options = [],
+  title = "",
+  visible = false,
+}: BasicDialogProps) => {
+  const DialogButtons = () => {
+    // const btStyle = { textTransform: 'none' };
+    return options.map((op: DialogOptions) => (
+      <Button
+        key={`bt_${op.title}`}
+        // color={op.color}
+        disableElevation
+        onClick={op.onClick}
+        // style={btStyle}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        variant={op.variant}
+      >
+        {op.title}
+      </Button>
+    ));
+  };
 
-    return (
-        <MaterialDialog
-            // contentStyle={contentStyle}
-            maxWidth="sm"
-            onClose={onClose}
-            options={DialogButtons()}
-            title={title}
-            visible={visible}
-        >
-            {children}
-        </MaterialDialog>
-    );
+  return (
+    <MaterialDialog
+      // contentStyle={contentStyle}
+      maxWidth="sm"
+      onClose={onClose}
+      options={DialogButtons()}
+      title={title}
+      visible={visible}
+    >
+      {children}
+    </MaterialDialog>
+  );
 };
 
 export default BasicDialog;

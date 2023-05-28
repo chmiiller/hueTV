@@ -1,4 +1,4 @@
-module.exports = {
+  module.exports = {
     "env": {
         "browser": true,
         "es2021": true
@@ -6,7 +6,8 @@ module.exports = {
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -27,7 +28,7 @@ module.exports = {
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        indent: ['warn', 4],
+        indent: ['warn', 2],
         'linebreak-style': [
             'warn',
             'unix',
@@ -40,4 +41,4 @@ module.exports = {
             'warn', { vars: 'all', args: 'none', ignoreRestSiblings: false },
         ],
     }
-};
+  };

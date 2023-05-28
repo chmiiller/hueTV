@@ -1,1 +1,1 @@
-declare module '@noriginmedia/react-spatial-navigation';
+declare module "@noriginmedia/react-spatial-navigation";
