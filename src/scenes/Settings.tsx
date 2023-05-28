@@ -1,7 +1,10 @@
 import React from "react";
 import CSS from "csstype";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import {
+  useFocusable,
+  FocusContext,
+} from "@noriginmedia/norigin-spatial-navigation";
 
 import { FocusableButton } from "../components/FocusableButton";
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
@@ -25,7 +28,9 @@ const styles: Styles = {
 const TOTAL_AUTH_TRIES = 20;
 
 export const Settings = (): JSX.Element => {
-  const { ref } = useFocusable();
+  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
+    focusKey: 'settings_screen'
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const [message, setMessage] = React.useState<string>("Welcome");
@@ -47,7 +52,7 @@ export const Settings = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      // setFocus();
+      focusSelf();
     }, 100);
   }, [location]);
 
@@ -80,9 +85,11 @@ export const Settings = (): JSX.Element => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     let tizenId = "huetv";
     // @ts-expect-error .tizen is not typed
-    if(window.tizen) {
+    if (window.tizen) {
       // @ts-expect-error .tizen is not typed
-      tizenId = window.tizen.systeminfo.getCapability("http://tizen.org/system/tizenid");
+      tizenId = window.tizen.systeminfo.getCapability(
+        "http://tizen.org/system/tizenid"
+      );
     }
     setMessage(`TizenId ${tizenId}`);
     const userRes = await askUsername(tizenId);
@@ -120,28 +127,39 @@ export const Settings = (): JSX.Element => {
   };
 
   return (
-    <div ref={ref} style={styles.contact}>
-      <h1>Settings</h1>
-      <p>{`${message}`}</p>
-      <FocusableButton
-        title={"Find Bridge"}
-        // onEnterPress={() => {
-        //   settingsGetBridgeAddress();
-        // }}
-      />
-      <FocusableButton
-        title={"Setup Bridge"}
-        // onEnterPress={() => {
-        //   stepGetUsername();
-        // }}
-      />
-      <FocusableButton
-        title={"Go Home"}
-        // onEnterPress={() => {
-        //   // navigate('/home');
-        // }}
-      />
-      <p>{debug}</p>
-    </div>
+    <FocusContext.Provider value={focusKey}>
+      <div ref={ref} style={styles.contact}>
+        <h1>Settings</h1>
+        <p>{`${message}`}</p>
+        <FocusableButton
+          title={"Find Bridge"}
+          focusKey="find_bridge"
+          onClick={() => {
+            settingsGetBridgeAddress();
+          }}
+          onArrow={(direction) => {
+            if (direction === 'left') {
+              setFocus("menu_lights_screen");
+            }
+            return true;
+          }}
+        />
+        <FocusableButton
+          title={"Setup Bridge"}
+          focusKey="setup_bridge"
+          onClick={() => {
+            stepGetUsername();
+          }}
+        />
+        <FocusableButton
+          title={"Go Home"}
+          focusKey="home"
+          onClick={() => {
+            navigate('/home');
+          }}
+        />
+        <p>{debug}</p>
+      </div>
+    </FocusContext.Provider>
   );
 };

@@ -1,7 +1,10 @@
 import React from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
-
+import {
+  useFocusable,
+  FocusContext,
+} from "@noriginmedia/norigin-spatial-navigation";
 import { SideMenuItems } from "./SideMenuItems";
 
 const drawerWidth = 500;
@@ -44,13 +47,35 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const SideMenu = (): JSX.Element => {
+  const { ref, focusSelf, focusKey, hasFocusedChild } = useFocusable({
+    focusable: true,
+    saveLastFocusedChild: false,
+    trackChildren: true,
+    autoRestoreFocus: true,
+    isFocusBoundary: false,
+    focusKey: "sidemenu",
+    extraProps: { foo: "bar" },
+  });
+
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     focusSelf();
+  //   }, 100);
+  // }, []);
+
+  React.useEffect(() => {
+    focusSelf();
+  }, [focusSelf]);
+
   const [open, setOpen] = React.useState<boolean>(true);
   const toggleMenu = (menuOpen: boolean) => setOpen(menuOpen);
 
   return (
-    <Drawer open={open} variant="permanent">
-      <SideMenuItems toggleMenu={toggleMenu} />
-    </Drawer>
+    <FocusContext.Provider value={focusKey}>
+      <Drawer open={open} variant="permanent">
+        <SideMenuItems ref={ref} hasFocusedChild={hasFocusedChild} toggleMenu={toggleMenu} />
+      </Drawer>
+    </FocusContext.Provider>
   );
 };
 

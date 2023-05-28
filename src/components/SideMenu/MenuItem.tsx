@@ -13,8 +13,8 @@ type MenuItemProps = {
   icon?: React.ReactNode;
   selectedIcon?: React.ReactNode;
   title: string;
-  // focused: boolean;
-  // setFocus: () => void;
+  focusKey: string;
+  onClick: () => void;
 };
 
 export const MenuItem = ({
@@ -25,14 +25,14 @@ export const MenuItem = ({
   icon,
   selectedIcon,
   title,
-  // focused,
-  // setFocus,
+  focusKey,
+  onClick,
 }: MenuItemProps): JSX.Element => {
-  const { ref, focused } = useFocusable();
-  React.useEffect(() => {
-    // setFocus();
-  }, []);
-
+  const { ref, focused } = useFocusable({
+    onEnterPress: onClick,
+    focusKey
+  });
+  
   return (
     <div ref={ref} style={{ paddingLeft: 32, paddingRight: 32, marginBottom: 12 }}>
       <ListItemButton

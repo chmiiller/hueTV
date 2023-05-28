@@ -42,11 +42,11 @@ const Modal = (): JSX.Element => {
     <>
       <div style={styles.contact}>
         <FocusableButton
-          // focusKey={"bt_open_modal"}
+          focusKey={"bt_open_modal"}
           title={"Show Modal"}
-          // onEnterPress={() => {
-          //   setVisible(true);
-          // }}
+          onClick={() => {
+            setVisible(true);
+          }}
         />
       </div>
       <BasicDialog
