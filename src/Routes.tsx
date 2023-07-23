@@ -28,7 +28,6 @@ const Root = () => {
       <SideMenu focusKey="MENU"/>
       <div id="detail">
         <Outlet />
-        <h1>INSIDE ROUTES</h1>
       </div>
     </>
   );

@@ -11,6 +11,7 @@ type LightDetailsProps = {
   isOn: boolean;
   brightnessPercentage: number;
   color: string;
+  onEnterPress?: () => void;
   // setFocus: (item?: any) => void;
   // focused: boolean;
   opacity?: number;
@@ -29,14 +30,20 @@ export const LightDetails = ({
   isOn,
   brightnessPercentage,
   color,
+  onEnterPress,
   // setFocus,
   // focused,
   opacity,
 }: LightDetailsProps): JSX.Element => {
-  const { ref, focused } = useFocusable();
+  const { ref, focused, focusSelf, setFocus } = useFocusable({
+    onEnterPress,
+    focusKey: `switch_${id}`
+  });
   React.useEffect(() => {
-    // setFocus(`switch_${id}`);
-  }, []);
+    setTimeout(() => {
+      focusSelf();
+    }, 100);
+  }, [location]);
 
   const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
   const brightnessHeight = isOn

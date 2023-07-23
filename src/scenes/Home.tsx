@@ -9,10 +9,6 @@ import useInterval from "../api/useInterval";
 import { getGroups } from "../api/hueapi";
 import { Room } from "../api/types";
 
-type HomeProps = {
-  setFocus: (item?: any) => void;
-};
-
 const API_DELAY = 2000;
 
 export const Home = (): JSX.Element => {
@@ -50,7 +46,7 @@ export const Home = (): JSX.Element => {
   }, [location]);
 
   useInterval(() => {
-    // homeGetGroups();
+    homeGetGroups();
   }, API_DELAY);
 
   const onKey = (event: KeyboardEvent) => {
