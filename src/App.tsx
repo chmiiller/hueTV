@@ -1,8 +1,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
 import { RouterProvider } from "react-router-dom";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
 
 import { router } from "./Routes";
 
@@ -29,21 +27,6 @@ const theme = createTheme({
   },
 });
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: "flex",
-  },
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-  },
-}));
-
-type AppProps = {
-  setFocus: () => void;
-};
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -53,5 +36,4 @@ function App() {
   );
 }
 
-const FocusableApp = App; //withFocusable()(App);
-export default FocusableApp;
+export default App;

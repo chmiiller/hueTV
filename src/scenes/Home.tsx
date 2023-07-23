@@ -1,17 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable, FocusContext, FocusableComponentLayout } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { Light } from "../components/Light";
 import useInterval from "../api/useInterval";
 import { getGroups } from "../api/hueapi";
 import { Room } from "../api/types";
-
-type FocusedProps = {
-  node: HTMLElement;
-};
 
 type HomeProps = {
   setFocus: (item?: any) => void;
@@ -20,11 +16,15 @@ type HomeProps = {
 const API_DELAY = 2000;
 
 export const Home = (): JSX.Element => {
-  const { ref } = useFocusable();
+  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
+    focusKey: 'settings_screen'
+  });
   const navigate = useNavigate();
   const location = useLocation();
-  const handleScrolling = ({ node }: FocusedProps) => {
-    node.scrollIntoView({ behavior: "smooth", block: "center" });
+  const handleScrolling = (
+    layout: FocusableComponentLayout,
+  ) => {
+    layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const [rooms, setRooms] = React.useState<Array<Room>>([]);
@@ -44,15 +44,13 @@ export const Home = (): JSX.Element => {
   }, []);
 
   React.useEffect(() => {
-    if (location.state === "focus") {
-      setTimeout(() => {
-        // setFocus();
-      }, 100);
-    }
-  }, [location.state]);
+    setTimeout(() => {
+      focusSelf();
+    }, 100);
+  }, [location]);
 
   useInterval(() => {
-    homeGetGroups();
+    // homeGetGroups();
   }, API_DELAY);
 
   const onKey = (event: KeyboardEvent) => {
@@ -62,7 +60,7 @@ export const Home = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      // setFocus("menu_home_screen");
+      setFocus("menu_home_screen");
     }
   };
 
@@ -74,31 +72,33 @@ export const Home = (): JSX.Element => {
   };
 
   return (
-    <div ref={ref} style={{ padding: 100 }}>
-      <Fade in timeout={600}>
-        <Box
-          sx={{
-            display: "grid",
-            rowGap: 5,
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
-        >
-          {rooms.map((room: Room) => (
-            <Light
-              key={room.id}
-              // focusKey={`room_${room.id}`}
-              name={room.name}
-              brightness={room.brightPercentage}
-              color={room.color}
-              isOn={room.allOn || room.anyOn}
-              // onBecameFocused={handleScrolling}
-              // onEnterPress={() => {
-              //   navigate("/room", { state: { id: room.id } });
-              // }}
-            />
-          ))}
-        </Box>
-      </Fade>
-    </div>
+    <FocusContext.Provider value={focusKey}>
+      <div ref={ref} style={{ padding: 100 }}>
+        <Fade in timeout={600}>
+          <Box
+            sx={{
+              display: "grid",
+              rowGap: 5,
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
+            {rooms.map((room: Room) => (
+              <Light
+                key={room.id}
+                focusKey={`room_${room.id}`}
+                name={room.name}
+                brightness={room.brightPercentage}
+                color={room.color}
+                isOn={room.allOn || room.anyOn}
+                onFocus={handleScrolling}
+                onClick={() => {
+                  navigate("/room", { state: { id: room.id } });
+                }}
+              />
+            ))}
+          </Box>
+        </Fade>
+      </div>
+    </FocusContext.Provider>
   );
 };

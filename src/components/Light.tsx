@@ -1,13 +1,20 @@
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusDetails, FocusableComponentLayout, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 type LightProps = {
-  name?: string;
+  focusKey: string;
+  name: string;
   brightness: number;
   color?: string;
   isOn: boolean;
-  // focused: boolean;
+  onClick?: () => void;
+  onArrow?: (direction: string) => true;
+  onFocus?: (
+    layout: FocusableComponentLayout,
+    props: object,
+    details: FocusDetails
+  ) => void;
 };
 
 const switchBackground = "#22242b";
@@ -17,13 +24,21 @@ const STR_BRIGHTNESS = "Brightness";
 const STR_TURNED_OFF = "Turned off";
 
 export const Light = ({
+  focusKey,
   name,
   brightness,
   color,
   isOn,
-  // focused,
+  onClick,
+  onArrow,
+  onFocus
 }: LightProps): JSX.Element => {
-  const { ref, focused } = useFocusable();
+  const { ref, focused } = useFocusable({
+    onEnterPress: onClick,
+    focusKey,
+    onArrowPress: onArrow ? onArrow : () => true,
+    onFocus
+  });
   const brightnessHeight = switchSize * brightness * 0.01;
   const displayBrightness = isOn
     ? `${brightness}% ${STR_BRIGHTNESS}`

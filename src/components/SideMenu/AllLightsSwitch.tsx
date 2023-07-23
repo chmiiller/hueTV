@@ -27,17 +27,18 @@ const AllLightsSwitch = ({
     <FocusableMenuItemSwitch
       path={""}
       focusKey={"all_lights"} // withFocusable prop
-      current={false}
+      // current={false}
       menuOpened={menuOpened}
       title={allLightsOff ? all_lights_on : all_lights_off}
-      onEnterPress={() => {
-        // withFocusable prop
-        const newAllLights = !allLightsOff;
-        setAllLightsOff(newAllLights);
-        onTurnLightsOff();
-      }}
-      onBecameFocused={onBecameFocused}
-      onBecameBlurred={onBecameBlurred} // withFocusable prop
+      // onEnterPress={() => {
+      //   // withFocusable prop
+      //   const newAllLights = !allLightsOff;
+      //   setAllLightsOff(newAllLights);
+      //   onTurnLightsOff();
+      // }}
+      // onBecameFocused={onBecameFocused}
+      // onBecameBlurred={onBecameBlurred} // withFocusable prop
+      setFocus={() => {}}
       checked={!allLightsOff}
     />
   );

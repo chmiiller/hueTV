@@ -86,22 +86,22 @@ const RoomDetailsScreen = (): JSX.Element => {
 
     let newBrightness = room.brightPercentage;
     switch (direction) {
-      case "up":
-        newBrightness += 10;
-        newBrightness < 100
-          ? setRoomBrightness(newBrightness)
-          : setRoomBrightness(100);
-        break;
+    case "up":
+      newBrightness += 10;
+      newBrightness < 100
+        ? setRoomBrightness(newBrightness)
+        : setRoomBrightness(100);
+      break;
 
-      case "down":
-        newBrightness -= 10;
-        if (newBrightness > 0) {
-          setRoomBrightness(newBrightness);
-        } else {
-          switchOnOff(false);
-          setRoomBrightness(0);
-        }
-        break;
+    case "down":
+      newBrightness -= 10;
+      if (newBrightness > 0) {
+        setRoomBrightness(newBrightness);
+      } else {
+        switchOnOff(false);
+        setRoomBrightness(0);
+      }
+      break;
     }
   };
 

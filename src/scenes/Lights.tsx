@@ -86,7 +86,7 @@ export const Lights = (): JSX.Element => {
           {lights.map((light: LightType) => (
             <Light
               key={light.id}
-              // focusKey={`light_${light.id}`}
+              focusKey={`light_${light.id}`}
               name={light.name}
               brightness={light.brightPercentage}
               color={light.color}

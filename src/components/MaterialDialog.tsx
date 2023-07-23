@@ -1,13 +1,8 @@
 import React from "react";
-import { withStyles } from "@mui/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import MuiDialogActions from "@mui/material/DialogActions";
 
-const DialogActions = withStyles(() => ({
-  root: { padding: 24 },
-}))(MuiDialogActions);
 
 type MaterialDialogProps = {
   children: React.ReactNode;

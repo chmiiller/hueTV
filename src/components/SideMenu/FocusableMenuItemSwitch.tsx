@@ -1,5 +1,5 @@
 import React from "react";
-import { withFocusable } from "@noriginmedia/react-spatial-navigation";
+
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Link as RouterLink } from "react-router-dom";
@@ -12,8 +12,9 @@ type MenuItemProps = {
   checked: boolean;
   menuOpened: boolean;
   title: string;
-  focused: boolean;
+  focused?: boolean;
   setFocus: () => void;
+  focusKey: string
 };
 
 const MenuItem = ({
@@ -65,5 +66,4 @@ const MenuItem = ({
   );
 };
 
-const FocusableMenuItem = withFocusable()(MenuItem);
-export default FocusableMenuItem;
+export default MenuItem;

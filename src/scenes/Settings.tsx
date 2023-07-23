@@ -63,7 +63,7 @@ export const Settings = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      // setFocus("menu_settings_screen");
+      setFocus("menu_settings_screen");
     }
   };
 
