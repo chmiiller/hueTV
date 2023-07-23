@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable, FocusContext, FocusableComponentLayout } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { Light } from "../components/Light";
@@ -9,22 +9,18 @@ import useInterval from "../api/useInterval";
 import { getLights } from "../api/hueapi";
 import { Light as LightType } from "../api/types";
 
-type FocusedProps = {
-  node: HTMLElement;
-};
-
-type LightsProps = {
-  setFocus: (item?: any) => void;
-};
-
 const API_DELAY = 2000;
 
 export const Lights = (): JSX.Element => {
-  const { ref } = useFocusable();
+  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
+    focusKey: 'lights_screen'
+  });
   const navigate = useNavigate();
   const location = useLocation();
-  const handleScrolling = ({ node }: FocusedProps) => {
-    node.scrollIntoView({ behavior: "smooth", block: "center" });
+  const handleScrolling = (
+    layout: FocusableComponentLayout,
+  ) => {
+    layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const [lights, setLights] = React.useState<Array<LightType>>([]);
@@ -44,12 +40,10 @@ export const Lights = (): JSX.Element => {
   }, []);
 
   React.useEffect(() => {
-    if (location.state === "focus") {
-      setTimeout(() => {
-        // setFocus();
-      }, 100);
-    }
-  }, [location.state]);
+    setTimeout(() => {
+      focusSelf();
+    }, 100);
+  }, [location]);
 
   useInterval(() => {
     homeGetLights();
@@ -62,7 +56,7 @@ export const Lights = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      // setFocus("menu_lights_screen");
+      setFocus("menu_lights_screen");
     }
   };
 
@@ -74,31 +68,33 @@ export const Lights = (): JSX.Element => {
   };
 
   return (
-    <div ref={ref} style={{ padding: 100 }}>
-      <Fade in timeout={600}>
-        <Box
-          sx={{
-            display: "grid",
-            rowGap: 5,
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
-        >
-          {lights.map((light: LightType) => (
-            <Light
-              key={light.id}
-              focusKey={`light_${light.id}`}
-              name={light.name}
-              brightness={light.brightPercentage}
-              color={light.color}
-              isOn={light.isOn}
-              // onBecameFocused={handleScrolling}
-              // onEnterPress={() => {
-              //   navigate("/light", { state: { id: light.id } });
-              // }}
-            />
-          ))}
-        </Box>
-      </Fade>
-    </div>
+    <FocusContext.Provider value={focusKey}>
+      <div ref={ref} style={{ padding: 100 }}>
+        <Fade in timeout={600}>
+          <Box
+            sx={{
+              display: "grid",
+              rowGap: 5,
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
+            {lights.map((light: LightType) => (
+              <Light
+                key={light.id}
+                focusKey={`light_${light.id}`}
+                name={light.name}
+                brightness={light.brightPercentage}
+                color={light.color}
+                isOn={light.isOn}
+                onFocus={handleScrolling}
+                onClick={() => {
+                  navigate("/light", { state: { id: light.id } });
+                }}
+              />
+            ))}
+          </Box>
+        </Fade>
+      </div>
+    </FocusContext.Provider>
   );
 };

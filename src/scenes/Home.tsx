@@ -13,7 +13,7 @@ const API_DELAY = 2000;
 
 export const Home = (): JSX.Element => {
   const { ref, focusKey, focusSelf, setFocus } = useFocusable({
-    focusKey: 'settings_screen'
+    focusKey: 'home_screen'
   });
   const navigate = useNavigate();
   const location = useLocation();

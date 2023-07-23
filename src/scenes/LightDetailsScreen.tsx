@@ -86,20 +86,20 @@ const LightDetailsScreen = (): JSX.Element => {
 
     let newBrightness = light.brightPercentage;
     switch (direction) {
-      case "up":
-        newBrightness += 10;
-        newBrightness < 100 ? setBrightness(newBrightness) : setBrightness(100);
-        break;
+    case "up":
+      newBrightness += 10;
+      newBrightness < 100 ? setBrightness(newBrightness) : setBrightness(100);
+      break;
 
-      case "down":
-        newBrightness -= 10;
-        if (newBrightness > 0) {
-          setBrightness(newBrightness);
-        } else {
-          switchOnOff(false);
-          setBrightness(0);
-        }
-        break;
+    case "down":
+      newBrightness -= 10;
+      if (newBrightness > 0) {
+        setBrightness(newBrightness);
+      } else {
+        switchOnOff(false);
+        setBrightness(0);
+      }
+      break;
     }
   };
 
@@ -128,9 +128,9 @@ const LightDetailsScreen = (): JSX.Element => {
             // setBrightnessApi={setBrightness}
             // switchOnOffApi={switchOnOff}
             // onArrowPress={onArrow}
-            // onEnterPress={() => {
-            //   switchOnOff(!light.isOn);
-            // }}
+            onEnterPress={() => {
+              switchOnOff(!light.isOn);
+            }}
           />
           <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
             {STR_TUTORIAL1}
