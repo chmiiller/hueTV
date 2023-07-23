@@ -2,7 +2,6 @@ import React from "react";
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 
@@ -11,10 +10,9 @@ type LightDetailsProps = {
   isOn: boolean;
   brightnessPercentage: number;
   color: string;
-  onEnterPress?: () => void;
-  // setFocus: (item?: any) => void;
-  // focused: boolean;
-  opacity?: number;
+  onEnterPress: () => void;
+  onArrowPress: (direction: string) => boolean;
+  opacity: number;
 };
 
 const switchHeight = 500;
@@ -31,12 +29,12 @@ export const LightDetails = ({
   brightnessPercentage,
   color,
   onEnterPress,
-  // setFocus,
-  // focused,
+  onArrowPress,
   opacity,
 }: LightDetailsProps): JSX.Element => {
-  const { ref, focused, focusSelf, setFocus } = useFocusable({
+  const { ref, focused, focusSelf } = useFocusable({
     onEnterPress,
+    onArrowPress,
     focusKey: `switch_${id}`
   });
   React.useEffect(() => {

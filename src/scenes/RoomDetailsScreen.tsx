@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFocusable, FocusContext } from '@noriginmedia/norigin-spatial-navigation';
 
 import { Room } from "../api/types";
 import { LightDetails } from "../components/LightDetails";
@@ -27,9 +26,6 @@ const RoomDetailsScreen = (): JSX.Element => {
   const location = useLocation();
   const state = location.state as RoomDetailsLocation;
   const navigate = useNavigate();
-  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
-    focusKey: `room_details_screen_${state.id}`
-  });
 
   React.useEffect(() => {
     fetchRoom();
@@ -122,18 +118,19 @@ const RoomDetailsScreen = (): JSX.Element => {
       {!room ? (
         <LightDetailsSkeleton />
       ) : (
-        <FocusContext.Provider value={focusKey}>
+        <>
           <Typography variant={"h3"}>{`${room.name}`}</Typography>
           <LightDetails
-            // focusKey={`switch_${room.id}`}
             id={room.id}
             isOn={room.allOn || room.anyOn}
             opacity={opacity}
             brightnessPercentage={room.brightPercentage}
             color={room.color}
-            // setBrightnessApi={setRoomBrightness}
-            // switchOnOffApi={switchOnOff}
-            // onArrowPress={onArrow}
+            onArrowPress={(direction: string) => {
+              onArrow(direction);
+              // return false to block navigation in the vertical directions.
+              return !(direction === 'up' || direction === 'down');
+            }}
             onEnterPress={() => {
               switchOnOff(!room.allOn || !room.anyOn);
             }}
@@ -144,7 +141,7 @@ const RoomDetailsScreen = (): JSX.Element => {
           <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
             {STR_TUTORIAL2}
           </Typography>
-        </FocusContext.Provider>
+        </>
       )}
     </Box>
   );

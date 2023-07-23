@@ -119,15 +119,16 @@ const LightDetailsScreen = (): JSX.Element => {
         <>
           <Typography variant={"h3"}>{`${light.name}`}</Typography>
           <LightDetails
-            // focusKey={`switch_${light.id}`}
             id={light.id}
             isOn={light.isOn}
             opacity={opacity}
             brightnessPercentage={light.brightPercentage}
             color={light.color}
-            // setBrightnessApi={setBrightness}
-            // switchOnOffApi={switchOnOff}
-            // onArrowPress={onArrow}
+            onArrowPress={(direction: string) => {
+              onArrow(direction);
+              // return false to block navigation in the vertical directions.
+              return !(direction === 'up' || direction === 'down');
+            }}
             onEnterPress={() => {
               switchOnOff(!light.isOn);
             }}
