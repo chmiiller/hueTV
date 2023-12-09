@@ -14,8 +14,8 @@ type LightDetailsProps = {
   opacity: number;
 };
 
-const switchHeight = 700;
-const switchHeightFocused = 710;
+const switchHeight = 600;
+const switchHeightFocused = 610;
 const iconStyle = { fontSize: 80, marginBottom: 2 };
 
 export const LightDetails = ({
@@ -46,7 +46,7 @@ export const LightDetails = ({
   const dynamicStyle = {
     bgcolor: color,
     borderRadius: 4,
-    width: 350,
+    width: 300,
     height: brightnessHeight,
     opacity: opacity,
     transition: "250ms",
@@ -58,11 +58,10 @@ export const LightDetails = ({
           display: "flex",
           flexDirection: "column-reverse",
           bgcolor: "rgba(56, 56, 56, 0.3)",
-          border: focused ? 0 : 0,
-          boxShadow: focused ? 1 : 5,
+          boxShadow: focused ? 6 : 0,
           borderColor: "#3f444a",
           borderRadius: 4,
-          width: 350,
+          width: 300,
           height: switchBaseHeight,
           margin: 4,
         }}
@@ -73,7 +72,7 @@ export const LightDetails = ({
         <Box
           sx={{
             display: "flex",
-            width: 350,
+            width: 300,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "transparent",

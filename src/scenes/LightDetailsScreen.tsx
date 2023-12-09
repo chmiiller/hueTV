@@ -143,10 +143,10 @@ const LightDetailsScreen = (): JSX.Element => {
             }}
           />
           <Box>
-            <Typography gutterBottom variant={"h6"}>
+            <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
               {STR_TUTORIAL1}
             </Typography>
-            <Typography gutterBottom variant={"h6"}>
+            <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
               {STR_TUTORIAL2}
             </Typography>
           </Box>
