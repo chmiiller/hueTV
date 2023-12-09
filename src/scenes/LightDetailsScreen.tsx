@@ -22,7 +22,6 @@ interface LightDetailsLocation {
   id: string;
 }
 
-const STR_BRIGHTNESS = "brightness";
 const STR_TURNED_OFF = "Turned off";
 
 const LightDetailsScreen = (): JSX.Element => {
@@ -107,7 +106,7 @@ const LightDetailsScreen = (): JSX.Element => {
   };
 
   const displayBrightness = light?.isOn
-    ? `${light?.brightPercentage}% ${STR_BRIGHTNESS}`
+    ? `${light?.brightPercentage}%`
     : STR_TURNED_OFF;
 
   return (

@@ -22,7 +22,6 @@ interface RoomDetailsLocation {
   id: string;
 }
 
-const STR_BRIGHTNESS = "brightness";
 const STR_TURNED_OFF = "Turned off";
 
 const RoomDetailsScreen = (): JSX.Element => {
@@ -109,7 +108,7 @@ const RoomDetailsScreen = (): JSX.Element => {
   };
 
   const displayBrightness = room?.allOn || room?.anyOn
-    ? `${room?.brightPercentage}% ${STR_BRIGHTNESS}`
+    ? `${room?.brightPercentage}%`
     : STR_TURNED_OFF;
 
   return (

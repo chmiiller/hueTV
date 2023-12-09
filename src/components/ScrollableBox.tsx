@@ -46,14 +46,14 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
       <div ref={ref}>
         <Paper
           ref={paperRef}
-          elevation={20}
+          elevation={focused ? 5 : 0}
           sx={{
-            background: "#22242b",
+            background: "transparent",
             marginLeft: 8,
             marginRight: 8,
             height: "85vh",
             padding: 5,
-            border: focused ? 1 : 0,
+            border: focused ? 0 : 0,
             borderColor: "#3f444a",
             overflowY: "auto",
           }}

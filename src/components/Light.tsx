@@ -17,7 +17,6 @@ type LightProps = {
   ) => void;
 };
 
-const STR_BRIGHTNESS = "brightness";
 const STR_TURNED_OFF = "Off";
 
 export const Light = ({
@@ -38,7 +37,7 @@ export const Light = ({
   });
   const brightnessHeight = 250 * brightness * 0.01;
   const displayBrightness = isOn
-    ? `${brightness}% ${STR_BRIGHTNESS}`
+    ? `${brightness}%`
     : STR_TURNED_OFF;
 
   const dynamicStyle = {
