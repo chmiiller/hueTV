@@ -22,6 +22,9 @@ interface RoomDetailsLocation {
   id: string;
 }
 
+const STR_BRIGHTNESS = "brightness";
+const STR_TURNED_OFF = "Turned off";
+
 const RoomDetailsScreen = (): JSX.Element => {
   const location = useLocation();
   const state = location.state as RoomDetailsLocation;
@@ -105,6 +108,10 @@ const RoomDetailsScreen = (): JSX.Element => {
     }
   };
 
+  const displayBrightness = room?.allOn || room?.anyOn
+    ? `${room?.brightPercentage}% ${STR_BRIGHTNESS}`
+    : STR_TURNED_OFF;
+
   return (
     <Box
       sx={{
@@ -120,6 +127,9 @@ const RoomDetailsScreen = (): JSX.Element => {
       ) : (
         <>
           <Typography variant={"h3"}>{`${room.name}`}</Typography>
+          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h4"}>
+            {displayBrightness}
+          </Typography>
           <LightDetails
             id={room.id}
             isOn={room.allOn || room.anyOn}
@@ -135,12 +145,14 @@ const RoomDetailsScreen = (): JSX.Element => {
               switchOnOff(!room.allOn || !room.anyOn);
             }}
           />
-          <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
-            {STR_TUTORIAL1}
-          </Typography>
-          <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
-            {STR_TUTORIAL2}
-          </Typography>
+          <Box>
+            <Typography gutterBottom variant={"h6"}>
+              {STR_TUTORIAL1}
+            </Typography>
+            <Typography gutterBottom variant={"h6"}>
+              {STR_TUTORIAL2}
+            </Typography>
+          </Box>
         </>
       )}
     </Box>

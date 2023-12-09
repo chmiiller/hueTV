@@ -17,11 +17,8 @@ type LightProps = {
   ) => void;
 };
 
-const switchBackground = "#22242b";
-const switchSize = 250;
-
-const STR_BRIGHTNESS = "Brightness";
-const STR_TURNED_OFF = "Turned off";
+const STR_BRIGHTNESS = "brightness";
+const STR_TURNED_OFF = "Off";
 
 export const Light = ({
   focusKey,
@@ -39,7 +36,7 @@ export const Light = ({
     onArrowPress: onArrow ? onArrow : () => true,
     onFocus
   });
-  const brightnessHeight = switchSize * brightness * 0.01;
+  const brightnessHeight = 250 * brightness * 0.01;
   const displayBrightness = isOn
     ? `${brightness}% ${STR_BRIGHTNESS}`
     : STR_TURNED_OFF;
@@ -48,7 +45,7 @@ export const Light = ({
     display: "flex",
     bgcolor: isOn ? color : "transparent",
     borderRadius: 4,
-    width: switchSize,
+    width: 250,
     height: brightnessHeight,
     transition: "250ms",
   };
@@ -58,27 +55,27 @@ export const Light = ({
       <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
         {name}
       </Typography>
-      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"subtitle1"}>
+      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
         {displayBrightness}
       </Typography>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column-reverse",
-          bgcolor: switchBackground,
+          bgcolor: "rgba(56, 56, 56, 0.3)",
           border: focused ? 1 : 0,
-          boxShadow: focused ? 12 : 0,
-          borderColor: "#3f444a",
-          borderRadius: 4,
-          width: switchSize,
-          height: switchSize,
+          boxShadow: focused ? 1 : 5,
+          borderColor: "#8F33C6",
+          borderRadius: 3,
+          width: 250,
+          height: 250,
           marginTop: 4,
         }}
       >
         <Box sx={dynamicStyle} />
         <Box
           sx={{
-            width: switchSize,
+            width: 250,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "transparent",

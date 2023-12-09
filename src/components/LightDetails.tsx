@@ -1,7 +1,6 @@
 import React from "react";
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 
@@ -15,13 +14,9 @@ type LightDetailsProps = {
   opacity: number;
 };
 
-const switchHeight = 500;
-const switchHeightFocused = 510;
-const switchBackground = "#22242b";
-const iconStyle = { fontSize: 60, marginBottom: 2 };
-
-const STR_BRIGHTNESS = "Brightness";
-const STR_TURNED_OFF = "Turned off";
+const switchHeight = 700;
+const switchHeightFocused = 710;
+const iconStyle = { fontSize: 80, marginBottom: 2 };
 
 export const LightDetails = ({
   id,
@@ -47,33 +42,27 @@ export const LightDetails = ({
   const brightnessHeight = isOn
     ? switchBaseHeight * brightnessPercentage * 0.01
     : 0;
-  const displayBrightness = isOn
-    ? `${brightnessPercentage}% ${STR_BRIGHTNESS}`
-    : STR_TURNED_OFF;
 
   const dynamicStyle = {
     bgcolor: color,
     borderRadius: 4,
-    width: 250,
+    width: 350,
     height: brightnessHeight,
     opacity: opacity,
     transition: "250ms",
   };
   return (
     <div ref={ref}>
-      <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h6"}>
-        {displayBrightness}
-      </Typography>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column-reverse",
-          bgcolor: switchBackground,
-          border: focused ? 1 : 0,
-          boxShadow: focused ? 12 : 0,
+          bgcolor: "rgba(56, 56, 56, 0.3)",
+          border: focused ? 0 : 0,
+          boxShadow: focused ? 1 : 5,
           borderColor: "#3f444a",
           borderRadius: 4,
-          width: 250,
+          width: 350,
           height: switchBaseHeight,
           margin: 4,
         }}
@@ -84,7 +73,7 @@ export const LightDetails = ({
         <Box
           sx={{
             display: "flex",
-            width: 250,
+            width: 350,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "transparent",

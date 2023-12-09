@@ -22,6 +22,9 @@ interface LightDetailsLocation {
   id: string;
 }
 
+const STR_BRIGHTNESS = "brightness";
+const STR_TURNED_OFF = "Turned off";
+
 const LightDetailsScreen = (): JSX.Element => {
   const location = useLocation();
   const state = location.state as LightDetailsLocation;
@@ -103,6 +106,10 @@ const LightDetailsScreen = (): JSX.Element => {
     }
   };
 
+  const displayBrightness = light?.isOn
+    ? `${light?.brightPercentage}% ${STR_BRIGHTNESS}`
+    : STR_TURNED_OFF;
+
   return (
     <Box
       sx={{
@@ -118,6 +125,9 @@ const LightDetailsScreen = (): JSX.Element => {
       ) : (
         <>
           <Typography variant={"h3"}>{`${light.name}`}</Typography>
+          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h4"}>
+            {displayBrightness}
+          </Typography>
           <LightDetails
             id={light.id}
             isOn={light.isOn}
@@ -133,12 +143,14 @@ const LightDetailsScreen = (): JSX.Element => {
               switchOnOff(!light.isOn);
             }}
           />
-          <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
-            {STR_TUTORIAL1}
-          </Typography>
-          <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"subtitle2"}>
-            {STR_TUTORIAL2}
-          </Typography>
+          <Box>
+            <Typography gutterBottom variant={"h6"}>
+              {STR_TUTORIAL1}
+            </Typography>
+            <Typography gutterBottom variant={"h6"}>
+              {STR_TUTORIAL2}
+            </Typography>
+          </Box>
         </>
       )}
     </Box>
