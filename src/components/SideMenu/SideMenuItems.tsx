@@ -2,6 +2,7 @@ import React from "react";
 
 import List from "@mui/material/List";
 import { useNavigate, useLocation } from "react-router-dom";
+import { setFocus } from '@noriginmedia/norigin-spatial-navigation';
 
 import { MenuItem } from "./MenuItem";
 import { sideMenuConfig, SideMenuObject } from "./SideMenuConfig";
@@ -9,7 +10,6 @@ import { sideMenuConfig, SideMenuObject } from "./SideMenuConfig";
 type SideMenuItemsProps = {
   toggleMenu: (menuOpen: boolean) => void;
   ref: any;
-  hasFocusedChild: boolean;
 };
 
 const ListStyle = {
@@ -24,7 +24,6 @@ const ListStyle = {
 export const SideMenuItems = ({
   toggleMenu,
   ref,
-  hasFocusedChild
 } :SideMenuItemsProps): JSX.Element => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,9 +31,6 @@ export const SideMenuItems = ({
   const [menuOpened, setMenuOpened] = React.useState<boolean>(true);
 
   const focusedItem = React.useRef("");
-
-  console.log(`Menu has focusedChild: ${hasFocusedChild}`);
-  
 
   const exitApp = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -95,19 +91,30 @@ export const SideMenuItems = ({
                 navigate(sideMenuObject.path, { state: "focus" });
                 deselectItem();
               }}
-              // onBecameFocused={() => {
-              //   // withFocusable prop
-              //   if (location.state !== "details") {
-              //     selectItem(sideMenuObject.id);
-              //   }
-              //   // if on details, don't automatically render screen
-              //   if (sideMenuObject.id !== "menu_item_settings" && !onDetails) {
-              //     navigate(sideMenuObject.path, {
-              //       state: fromDetails ? "focus" : null,
-              //     });
-              //   }
-              // }}
-              // onBecameBlurred={() => deselectItem()} // withFocusable prop
+              onArrow={(direction: string) => {
+                if (direction === 'right') {
+                  setTimeout(() => {
+                    navigate(sideMenuObject.path, { state: "focus" });
+                    setFocus(sideMenuObject.screenName);
+                    deselectItem();
+                  }, 100);
+                }
+                return true;
+              }}
+              onFocus={() => {
+                if (location.state !== "details") {
+                  selectItem(sideMenuObject.id);
+                }
+                // if on details, don't automatically render screen
+                if (sideMenuObject.id !== "menu_item_settings" && !onDetails) {
+                  navigate(sideMenuObject.path, {
+                    state: fromDetails ? "focus" : null,
+                  });
+                }
+              }}
+              onBlur={() => {
+                deselectItem();
+              }}
             />
           );
         })}
@@ -133,8 +140,18 @@ export const SideMenuItems = ({
                 // deselectItem();
                 navigate(sideMenuObject.path, { state: "focus" });
               }}
-              // onBecameFocused={() => selectItem(sideMenuObject.id)} // withFocusable prop
-              // onBecameBlurred={() => deselectItem()} // withFocusable prop
+              onArrow={(direction: string) => {
+                if (direction === 'right' && sideMenuObject.id !== "menu_item_exit") {
+                  setTimeout(() => {
+                    navigate(sideMenuObject.path, { state: "focus" });
+                    setFocus(sideMenuObject.screenName);
+                    deselectItem();
+                  }, 100);
+                }
+                return true;
+              }}
+              onFocus={() => selectItem(sideMenuObject.id)}
+              onBlur={() => deselectItem()}
             />
           );
         })}

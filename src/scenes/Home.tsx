@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { useFocusable, FocusContext, FocusableComponentLayout } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable, FocusContext, FocusableComponentLayout, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { Light } from "../components/Light";
@@ -12,7 +12,7 @@ import { Room } from "../api/types";
 const API_DELAY = 2000;
 
 export const Home = (): JSX.Element => {
-  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
+  const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: 'home_screen'
   });
   const navigate = useNavigate();
@@ -41,7 +41,9 @@ export const Home = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      focusSelf();
+      if(location.state){
+        focusSelf();
+      }
     }, 100);
   }, [location]);
 

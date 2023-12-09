@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   useFocusable,
   FocusContext,
+  setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
 
 import { FocusableButton } from "../components/FocusableButton";
@@ -28,7 +29,7 @@ const styles: Styles = {
 const TOTAL_AUTH_TRIES = 20;
 
 export const Settings = (): JSX.Element => {
-  const { ref, focusKey, focusSelf, setFocus } = useFocusable({
+  const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: 'settings_screen'
   });
   const navigate = useNavigate();
@@ -52,7 +53,9 @@ export const Settings = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      focusSelf();
+      if(location.state){
+        focusSelf();
+      }
     }, 100);
   }, [location]);
 
@@ -137,12 +140,6 @@ export const Settings = (): JSX.Element => {
           onClick={() => {
             settingsGetBridgeAddress();
           }}
-          onArrow={(direction) => {
-            if (direction === 'left') {
-              setFocus("menu_lights_screen");
-            }
-            return true;
-          }}
         />
         <FocusableButton
           title={"Setup Bridge"}
@@ -155,7 +152,7 @@ export const Settings = (): JSX.Element => {
           title={"Go Home"}
           focusKey="home"
           onClick={() => {
-            navigate('/home');
+            navigate('/home', { state: "focus" });
           }}
         />
         <p>{debug}</p>

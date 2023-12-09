@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import {
   useFocusable,
   FocusContext,
+  setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
 import { SideMenuItems } from "./SideMenuItems";
 
@@ -58,26 +59,56 @@ const SideMenu = ({ focusKey: focusKeyParam }: MenuProps): JSX.Element => {
     focusKey
   } = useFocusable({
     focusable: true,
-    saveLastFocusedChild: false,
+    saveLastFocusedChild: true,
     trackChildren: true,
     autoRestoreFocus: true,
     isFocusBoundary: false,
     focusKey: focusKeyParam,
     onArrowPress: () => true,
-    extraProps: { foo: 'bar' }
   });
 
   React.useEffect(() => {
     focusSelf();
   }, [focusSelf]);
 
+  React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.addEventListener("tizenhwkey", onKey); // No event type for Tizen events =/
+    window.addEventListener("keydown", onKey);
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      window.removeEventListener("tizenhwkey", onKey); // No event type for Tizen events =/
+      window.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  const onKey = (event: KeyboardEvent) => {
+    if (
+      event.keyCode === 10009 ||
+      event.keyCode === 8 ||
+      event.keyCode === 27
+    ) {
+      // back button
+      if (sideMenuIsSelected.current === true) {
+        setTimeout(() => {
+          setFocus('menu_exit_app');
+        }, 100);
+      }
+
+    }
+  };
+
   const [open, setOpen] = React.useState<boolean>(true);
   const toggleMenu = (menuOpen: boolean) => setOpen(menuOpen);
+  const sideMenuIsSelected = useRef(false);
+  sideMenuIsSelected.current = hasFocusedChild;
 
   return (
     <FocusContext.Provider value={focusKey}>
       <Drawer open={open} variant="permanent">
-        <SideMenuItems ref={ref} hasFocusedChild={hasFocusedChild} toggleMenu={toggleMenu} />
+        <SideMenuItems ref={ref} toggleMenu={toggleMenu} />
       </Drawer>
     </FocusContext.Provider>
   );

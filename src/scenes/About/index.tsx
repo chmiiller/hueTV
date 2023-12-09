@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { useLocation } from "react-router-dom";
 
 import ScrollableBox from "../../components/ScrollableBox";
@@ -23,12 +23,11 @@ import {
 const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 
-type AboutProps = {
-  setFocus: (item?: any) => void;
-};
-
 export const About = (): JSX.Element => {
-  const { ref } = useFocusable();
+  const { ref, focusKey, focusSelf } = useFocusable({
+    focusKey: 'about_screen',
+    isFocusBoundary: true,
+  });
   const location = useLocation();
   React.useEffect(() => {
     // settingsGetBridgeAddress();
@@ -51,99 +50,104 @@ export const About = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      // setFocus("menu_about_screen");
+      setFocus("menu_about_screen");
     }
   };
 
   React.useEffect(() => {
     setTimeout(() => {
-      // setFocus();
+      if(location.state){
+        // focusSelf();
+        setFocus('about_scrollable');
+      }
     }, 100);
   }, [location]);
 
   return (
-    <Box
-      ref={ref}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: 0,
-        marginRight: 0,
-        marginTop: 8,
-      }}
-    >
-      <ScrollableBox>
-        <Typography align={"left"} variant={"h4"}>
-          {WELCOME_TITLE}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {WELCOME_MESSAGE}
-        </Typography>
-        <br />
-        <br />
-        <Typography align={"left"} variant={"h4"}>
-          {ABOUT_TITLE}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {ABOUT_ME}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          <strong>Buy me a coffee</strong>
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          <img src={QR_COFFEE_URL} alt="Buy me a coffee" />
-        </Typography>
-        <br />
-        <br />
-        <Typography align={"left"} variant={"h4"}>
-          {MOTIVATION_TITLE}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {MOTIVATION1}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {MOTIVATION2}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {MOTIVATION3}
-        </Typography>
-        <br />
-        <br />
-        <Typography align={"left"} variant={"h4"}>
-          {OPEN_SOURCE_TITLE}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {OPEN_SOURCE}
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          {" "}
-          <strong>GitHub Repository</strong>
-        </Typography>
-        <p />
-        <Typography align={"left"} variant={"h6"}>
-          <img src={QR_REPO_URL} alt="GitHub Repository" />
-        </Typography>
-        <br />
-        <Typography align={"left"} variant={"h6"}>
-          <strong>{`important note: `}</strong>
-          {NOTE}
-        </Typography>
-        <br />
-        <Typography align={"left"} variant={"body1"}>
-          {VERSION_DATE}
-        </Typography>
-      </ScrollableBox>
-    </Box>
+    <FocusContext.Provider value={focusKey}>
+      <Box
+        ref={ref}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          marginLeft: 0,
+          marginRight: 0,
+          marginTop: 8,
+        }}
+      >
+        <ScrollableBox>
+          <Typography align={"left"} variant={"h4"}>
+            {WELCOME_TITLE}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {WELCOME_MESSAGE}
+          </Typography>
+          <br />
+          <br />
+          <Typography align={"left"} variant={"h4"}>
+            {ABOUT_TITLE}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {ABOUT_ME}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            <strong>Buy me a coffee</strong>
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            <img src={QR_COFFEE_URL} alt="Buy me a coffee" />
+          </Typography>
+          <br />
+          <br />
+          <Typography align={"left"} variant={"h4"}>
+            {MOTIVATION_TITLE}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {MOTIVATION1}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {MOTIVATION2}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {MOTIVATION3}
+          </Typography>
+          <br />
+          <br />
+          <Typography align={"left"} variant={"h4"}>
+            {OPEN_SOURCE_TITLE}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {OPEN_SOURCE}
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            {" "}
+            <strong>GitHub Repository</strong>
+          </Typography>
+          <p />
+          <Typography align={"left"} variant={"h6"}>
+            <img src={QR_REPO_URL} alt="GitHub Repository" />
+          </Typography>
+          <br />
+          <Typography align={"left"} variant={"h6"}>
+            <strong>{`important note: `}</strong>
+            {NOTE}
+          </Typography>
+          <br />
+          <Typography align={"left"} variant={"body1"}>
+            {VERSION_DATE}
+          </Typography>
+        </ScrollableBox>
+      </Box>
+    </FocusContext.Provider>
   );
 };

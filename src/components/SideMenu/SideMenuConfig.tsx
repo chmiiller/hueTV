@@ -10,6 +10,7 @@ export type SideMenuObject = {
   path: string;
   focusName: string;
   title: string;
+  screenName: string;
   icon?: JSX.Element;
   selectedIcon?: JSX.Element;
 };
@@ -27,6 +28,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       path: "/home",
       focusName: "menu_home_screen",
       title: "Home",
+      screenName: "home_screen",
       icon: <HomeOutlinedIcon style={iconStyle} />,
       selectedIcon: <HomeIcon style={iconStyle} />,
     },
@@ -35,6 +37,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       path: "/lights",
       focusName: "menu_lights_screen",
       title: "Lights",
+      screenName: "lights_screen",
       icon: <LightbulbOutlinedIcon style={iconStyle} />,
       selectedIcon: <LightbulbIcon style={iconStyle} />,
     },
@@ -43,6 +46,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       path: "/settings",
       focusName: "menu_settings_screen",
       title: "Settings",
+      screenName: "settings_screen",
       icon: <SettingsOutlinedIcon style={iconStyle} />,
       selectedIcon: <SettingsIcon style={iconStyle} />,
     },
@@ -53,12 +57,14 @@ export const sideMenuConfig: SideMenuConfigObject = {
       path: "/about",
       focusName: "menu_about_screen",
       title: "About",
+      screenName: "about_screen",
     },
     {
       id: "menu_item_exit",
       path: "/exit",
       focusName: "menu_exit_app",
       title: "Exit",
+      screenName: "exit_screen",
     },
   ],
 };

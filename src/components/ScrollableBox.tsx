@@ -1,13 +1,9 @@
 import React, { useRef } from "react";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import Paper from "@mui/material/Paper";
 
 type ScrollableBoxProps = {
   children: React.ReactNode;
-};
-
-type FocusableScrollableBoxProps = {
-  // focused: boolean;
 };
 
 const SCROLL_OFFSET = 80;
@@ -32,11 +28,20 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
         behavior: "smooth",
       });
       break;
+      
+    case "left":
+      setFocus("menu_about_screen");
+      break;
     }
+    
+    return true;
   };
 
   const ScrollableComponent = () => {
-    const { ref, focused } = useFocusable();
+    const { ref, focused } = useFocusable({
+      onArrowPress: onArrow,
+      focusKey: 'about_scrollable'
+    });
     return (
       <div ref={ref}>
         <Paper
@@ -58,11 +63,7 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
       </div>
     );
   };
-  return (
-    <ScrollableComponent
-      // onArrowPress={onArrow}
-    />
-  );
+  return <ScrollableComponent/>;
 };
 
 export default ScrollableBox;

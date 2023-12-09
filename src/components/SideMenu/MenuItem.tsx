@@ -15,6 +15,9 @@ type MenuItemProps = {
   title: string;
   focusKey: string;
   onClick: () => void;
+  onFocus: () => void;
+  onBlur: () => void;
+  onArrow: (direction: string) => boolean;
 };
 
 export const MenuItem = ({
@@ -27,9 +30,15 @@ export const MenuItem = ({
   title,
   focusKey,
   onClick,
+  onFocus,
+  onBlur,
+  onArrow,
 }: MenuItemProps): JSX.Element => {
   const { ref, focused } = useFocusable({
     onEnterPress: onClick,
+    onFocus: onFocus,
+    onBlur: onBlur,
+    onArrowPress: onArrow,
     focusKey
   });
   
