@@ -25,6 +25,9 @@ const theme = createTheme({
       paper: "#222830",
     },
   },
+  typography: {
+    fontFamily: `"Inter", sans-serif`
+  }
 });
 
 function App() {
