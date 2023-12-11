@@ -1,8 +1,8 @@
 import React from "react";
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import Box from "@mui/material/Box";
-import LightbulbIcon from "@mui/icons-material/Lightbulb";
-import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+import { LightIcon } from './SvgIcons/LightIcon';
+import { LightFillIcon } from './SvgIcons/LightFillIcon';
 
 type LightDetailsProps = {
   id: string;
@@ -82,9 +82,9 @@ export const LightDetails = ({
         >
           {/* Light Bulb icon */}
           {isOn ? (
-            <LightbulbIcon sx={iconStyle} />
+            <LightFillIcon />
           ) : (
-            <LightbulbOutlinedIcon sx={iconStyle} />
+            <LightIcon />
           )}
         </Box>
       </Box>

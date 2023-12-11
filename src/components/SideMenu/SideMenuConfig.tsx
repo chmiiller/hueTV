@@ -1,9 +1,6 @@
-import HomeIcon from "@mui/icons-material/Home";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import LightbulbIcon from "@mui/icons-material/Lightbulb";
-import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
-import SettingsIcon from "@mui/icons-material/Settings";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { HomeIcon } from '../SvgIcons/HomeIcon';
+import { LightIcon } from '../SvgIcons/LightIcon';
+import { SettingsIcon } from '../SvgIcons/SettingsIcon';
 
 export type SideMenuObject = {
   id: string;
@@ -12,7 +9,6 @@ export type SideMenuObject = {
   title: string;
   screenName: string;
   icon?: JSX.Element;
-  selectedIcon?: JSX.Element;
 };
 
 type SideMenuConfigObject = {
@@ -20,7 +16,6 @@ type SideMenuConfigObject = {
   extra: Array<SideMenuObject>;
 };
 
-const iconStyle = { fontSize: 32 };
 export const sideMenuConfig: SideMenuConfigObject = {
   items: [
     {
@@ -29,8 +24,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       focusName: "menu_home_screen",
       title: "Home",
       screenName: "home_screen",
-      icon: <HomeOutlinedIcon style={iconStyle} />,
-      selectedIcon: <HomeIcon style={iconStyle} />,
+      icon: <HomeIcon />,
     },
     {
       id: "menu_item_lights",
@@ -38,8 +32,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       focusName: "menu_lights_screen",
       title: "Lights",
       screenName: "lights_screen",
-      icon: <LightbulbOutlinedIcon style={iconStyle} />,
-      selectedIcon: <LightbulbIcon style={iconStyle} />,
+      icon: <LightIcon />,
     },
     {
       id: "menu_item_settings",
@@ -47,8 +40,7 @@ export const sideMenuConfig: SideMenuConfigObject = {
       focusName: "menu_settings_screen",
       title: "Settings",
       screenName: "settings_screen",
-      icon: <SettingsOutlinedIcon style={iconStyle} />,
-      selectedIcon: <SettingsIcon style={iconStyle} />,
+      icon: <SettingsIcon />,
     },
   ],
   extra: [

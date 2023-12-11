@@ -5,7 +5,6 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@noriginmedia/norigin-spatial-navigation": "^2.1.0",
     "@types/node": "^20.10.4",

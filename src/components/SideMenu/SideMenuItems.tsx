@@ -14,9 +14,9 @@ type SideMenuItemsProps = {
 
 const ListStyle = {
   "&& .Mui-selected, && .Mui-selected:hover": {
-    backgroundColor: "white",
+    backgroundColor: "rgba(248, 248, 248, 0.45)",
     "&, & .MuiListItemIcon-root": {
-      color: "black",
+      color: "white",
     },
   },
 };
@@ -85,7 +85,6 @@ export const SideMenuItems = ({
               } // if it's the current selected menu item
               menuOpened={menuOpened}
               icon={sideMenuObject.icon}
-              selectedIcon={sideMenuObject.selectedIcon}
               title={sideMenuObject.title}
               onClick={() => {
                 navigate(sideMenuObject.path, { state: "focus" });

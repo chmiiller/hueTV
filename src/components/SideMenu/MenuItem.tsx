@@ -11,7 +11,6 @@ type MenuItemProps = {
   current?: boolean;
   menuOpened: boolean;
   icon?: React.ReactNode;
-  selectedIcon?: React.ReactNode;
   title: string;
   focusKey: string;
   onClick: () => void;
@@ -26,7 +25,6 @@ export const MenuItem = ({
   current,
   menuOpened,
   icon,
-  selectedIcon,
   title,
   focusKey,
   onClick,
@@ -45,7 +43,7 @@ export const MenuItem = ({
   return (
     <div ref={ref} style={{ paddingLeft: 32, paddingRight: 32, marginBottom: 12 }}>
       <ListItemButton
-        selected={focused || selected}
+        selected={focused || selected || current}
         component={RouterLink}
         to={path}
         sx={{
@@ -55,7 +53,7 @@ export const MenuItem = ({
       >
         {icon && (
           <ListItemIcon sx={{ marginLeft: 0 }}>
-            {focused || current ? selectedIcon : icon}
+            {icon}
           </ListItemIcon>
         )}
         <ListItemText
