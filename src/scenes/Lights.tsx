@@ -90,7 +90,7 @@ export const Lights = (): JSX.Element => {
                 isOn={light.isOn}
                 onFocus={handleScrolling}
                 onClick={() => {
-                  navigate("/light", { state: { id: light.id } });
+                  navigate("/light", { state: { id: light.id, screen: 'details' } });
                 }}
               />
             ))}

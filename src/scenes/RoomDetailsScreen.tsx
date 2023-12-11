@@ -54,7 +54,7 @@ const RoomDetailsScreen = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      navigate("/home", { state: "details" });
+      navigate("/home", { state: { screen: null, focus: true }});
     }
   };
 

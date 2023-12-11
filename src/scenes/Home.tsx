@@ -41,7 +41,7 @@ export const Home = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if(location.state){
+      if(location.state?.focus){
         focusSelf();
       }
     }, 100);
@@ -90,7 +90,7 @@ export const Home = (): JSX.Element => {
                 isOn={room.allOn || room.anyOn}
                 onFocus={handleScrolling}
                 onClick={() => {
-                  navigate("/room", { state: { id: room.id } });
+                  navigate("/room", { state: { id: room.id, screen: 'details' }});
                 }}
               />
             ))}

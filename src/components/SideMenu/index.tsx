@@ -104,7 +104,6 @@ const SideMenu = ({ focusKey: focusKeyParam }: MenuProps): JSX.Element => {
   const toggleMenu = (menuOpen: boolean) => setOpen(menuOpen);
   const sideMenuIsSelected = useRef(false);
   sideMenuIsSelected.current = hasFocusedChild;
-  console.log(`---------------------> sideMenuIsSelected.current: ${sideMenuIsSelected.current}`);
 
   return (
     <FocusContext.Provider value={focusKey}>

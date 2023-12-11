@@ -58,7 +58,8 @@ export const SideMenuItems = ({
   const onDetails: boolean =
     location.pathname === "/light" || location.pathname === "/room";
   // If item is selected from the Light/Room Details Screen back button, this screen should be focused and menu closed
-  const fromDetails: boolean = location.state === "details";
+  const fromDetails: boolean = location.state?.screen === "details";
+  const selectedLightId = location.state?.id;
 
   return (
     <div
@@ -87,28 +88,32 @@ export const SideMenuItems = ({
               icon={sideMenuObject.icon}
               title={sideMenuObject.title}
               onClick={() => {
-                navigate(sideMenuObject.path, { state: "focus" });
+                navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
                 deselectItem();
               }}
               onArrow={(direction: string) => {
                 if (direction === 'right') {
-                  setTimeout(() => {
-                    navigate(sideMenuObject.path, { state: "focus" });
-                    setFocus(sideMenuObject.screenName);
-                    deselectItem();
-                  }, 100);
+                  if (!fromDetails) {
+                    setTimeout(() => {
+                      navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                      setFocus(sideMenuObject.screenName);
+                      deselectItem();
+                    }, 100);
+                  } else {
+                    if (selectedLightId) {
+                      setFocus(`switch_${selectedLightId}`);
+                    }
+                  }
                 }
                 return true;
               }}
               onFocus={() => {
-                if (location.state !== "details") {
+                if (!fromDetails) {
                   selectItem(sideMenuObject.id);
                 }
                 // if on details, don't automatically render screen
                 if (sideMenuObject.id !== "menu_item_settings" && !onDetails) {
-                  navigate(sideMenuObject.path, {
-                    state: fromDetails ? "focus" : null,
-                  });
+                  navigate(sideMenuObject.path);
                 }
               }}
               onBlur={() => {
@@ -127,7 +132,7 @@ export const SideMenuItems = ({
               path={sideMenuObject.path}
               focusKey={sideMenuObject.focusName}
               current={
-                location.pathname == sideMenuObject.path && menuOpened === false
+                false
               } // if it's the current selected menu item
               menuOpened={menuOpened}
               title={sideMenuObject.title}
@@ -136,16 +141,22 @@ export const SideMenuItems = ({
                   exitApp();
                   return;
                 }
-                // deselectItem();
-                navigate(sideMenuObject.path, { state: "focus" });
+                navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                
               }}
               onArrow={(direction: string) => {
                 if (direction === 'right' && sideMenuObject.id !== "menu_item_exit") {
-                  setTimeout(() => {
-                    navigate(sideMenuObject.path, { state: "focus" });
-                    setFocus(sideMenuObject.screenName);
-                    deselectItem();
-                  }, 100);
+                  if (!fromDetails) {
+                    setTimeout(() => {
+                      navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                      setFocus(sideMenuObject.screenName);
+                      deselectItem();
+                    }, 100);
+                  } else {
+                    if (selectedLightId) {
+                      setFocus(`switch_${selectedLightId}`);
+                    }
+                  }
                 }
                 return true;
               }}

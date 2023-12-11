@@ -54,7 +54,7 @@ const LightDetailsScreen = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      navigate("/lights", { state: "details" });
+      navigate("/lights", { state: { screen: null, focus: true }});
     }
   };
 

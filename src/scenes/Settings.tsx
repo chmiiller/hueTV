@@ -152,7 +152,7 @@ export const Settings = (): JSX.Element => {
           title={"Go Home"}
           focusKey="home"
           onClick={() => {
-            navigate('/home', { state: "focus" });
+            navigate("/home", { state: { screen: 'settings', focus: true }});
           }}
         />
         <p>{debug}</p>
