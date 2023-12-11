@@ -16,7 +16,6 @@ type LightDetailsProps = {
 
 const switchHeight = 600;
 const switchHeightFocused = 610;
-const iconStyle = { fontSize: 80, marginBottom: 2 };
 
 export const LightDetails = ({
   id,

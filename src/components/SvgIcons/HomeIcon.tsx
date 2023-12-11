@@ -8,4 +8,4 @@ export const HomeIcon = () => {
       </svg>
     </SvgIcon>
   );
-}
+};

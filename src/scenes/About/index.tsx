@@ -24,7 +24,7 @@ const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/
 const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 
 export const About = (): JSX.Element => {
-  const { ref, focusKey, focusSelf } = useFocusable({
+  const { ref, focusKey } = useFocusable({
     focusKey: 'about_screen',
     isFocusBoundary: true,
   });

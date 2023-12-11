@@ -10,10 +10,6 @@ import {
 import { FocusableButton } from "../components/FocusableButton";
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
 
-type SettingsProps = {
-  setFocus: (item?: any) => void;
-};
-
 type Styles = {
   contact: CSS.Properties;
 };

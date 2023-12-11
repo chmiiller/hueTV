@@ -39,4 +39,4 @@ export const NOTE = `this is an unofficial and independent app not endorsed by, 
  All product and company names are the registered trademarks of their original owners.
 The use of any trade name or trademark is for identification and reference purposes only and does not imply any association with the trademark holder of their product brand.`;
 
-export const VERSION_DATE = `2023-12-09`;
+export const VERSION_DATE = `2023-12-12`;
