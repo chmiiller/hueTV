@@ -57,7 +57,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 build react app:   
 
-`yarn build`
+`yarn build` or   
+`npm run build`
 
 build react as tizen app:
 
@@ -83,5 +84,5 @@ uninstall app from TV:
 
 All at once:
 
-`yarn build && tizen build-web -- ./build && cd build/.buildResult && tizen package -t wgt -s huetv -- ./ && tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
+`npm run build && tizen build-web -- ./build && cd build/.buildResult && tizen package -t wgt -s huetv -- ./ && tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
 

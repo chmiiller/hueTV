@@ -1,5 +1,4 @@
 import { FocusDetails, FocusableComponentLayout, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 type LightProps = {
@@ -40,14 +39,15 @@ export const Light = ({
     ? `${brightness}%`
     : STR_TURNED_OFF;
 
-  const dynamicStyle = {
-    display: "flex",
-    bgcolor: isOn ? color : "transparent",
-    borderRadius: 4,
-    width: 250,
-    height: brightnessHeight,
-    transition: "250ms",
-  };
+  const BrightnessLevelView = () => (
+    <div style={{
+      backgroundColor: isOn ? color : "transparent",
+      borderRadius: 12,
+      width: 250,
+      height: brightnessHeight,
+      transition: "250ms",
+    }} />
+  );
 
   return (
     <div ref={ref}>
@@ -57,31 +57,23 @@ export const Light = ({
       <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
         {displayBrightness}
       </Typography>
-      <Box
-        sx={{
+      <div
+        style={{
           display: "flex",
           flexDirection: "column-reverse",
-          bgcolor: "rgba(56, 56, 56, 0.3)",
-          border: focused ? 1 : 0,
-          boxShadow: focused ? 1 : 5,
+          backgroundColor: "rgba(56, 56, 56, 0.3)",
+          border: 'solid',
+          borderWidth: focused ? 2 : 0,
+          boxShadow: "0px 4px 4px 0px #1B1919",
           borderColor: "#8F33C6",
-          borderRadius: 3,
+          borderRadius: 12,
           width: 250,
           height: 250,
           marginTop: 4,
         }}
       >
-        <Box sx={dynamicStyle} />
-        <Box
-          sx={{
-            width: 250,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "transparent",
-            height: 100,
-          }}
-        />
-      </Box>
+        <BrightnessLevelView />
+      </div>
     </div>
   );
 };
