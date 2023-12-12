@@ -125,8 +125,8 @@ const RoomDetailsScreen = (): JSX.Element => {
         <LightDetailsSkeleton />
       ) : (
         <>
-          <Typography variant={"h3"}>{`${room.name}`}</Typography>
-          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h4"}>
+          <Typography variant={"h4"}>{`${room.name}`}</Typography>
+          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h5"}>
             {displayBrightness}
           </Typography>
           <LightDetails

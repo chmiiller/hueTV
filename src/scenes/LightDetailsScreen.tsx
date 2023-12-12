@@ -123,8 +123,8 @@ const LightDetailsScreen = (): JSX.Element => {
         <LightDetailsSkeleton />
       ) : (
         <>
-          <Typography variant={"h3"}>{`${light.name}`}</Typography>
-          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h4"}>
+          <Typography variant={"h4"}>{`${light.name}`}</Typography>
+          <Typography sx={{ marginTop: 1 }} gutterBottom variant={"h5"}>
             {displayBrightness}
           </Typography>
           <LightDetails
