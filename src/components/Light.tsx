@@ -50,7 +50,7 @@ export const Light = ({
   );
 
   return (
-    <div ref={ref}>
+    <div ref={ref} onClick={onClick}>
       <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
         {name}
       </Typography>
