@@ -51,10 +51,10 @@ export const Light = ({
 
   return (
     <div ref={ref} onClick={onClick}>
-      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
+      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h6"}>
         {name}
       </Typography>
-      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h5"}>
+      <Typography sx={{ marginLeft: 1 }} gutterBottom variant={"h6"}>
         {displayBrightness}
       </Typography>
       <div
