@@ -9,6 +9,7 @@ import {
 
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
 import { SettingsItem } from "../components/SettingsItem";
+import Typography from "@mui/material/Typography";
 
 type Message = {
   primary: string,
@@ -153,6 +154,9 @@ export const Settings = (): JSX.Element => {
 
   return (
     <FocusContext.Provider value={focusKey}>
+      <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
+        {'Settings'}
+      </Typography>
       <div ref={ref} style={styles.settingsContainer}>
         <SettingsItem
           button={{

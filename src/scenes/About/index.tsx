@@ -64,6 +64,9 @@ export const About = (): JSX.Element => {
 
   return (
     <FocusContext.Provider value={focusKey}>
+      <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
+        {'About'}
+      </Typography>
       <Box
         ref={ref}
         sx={{
@@ -72,11 +75,11 @@ export const About = (): JSX.Element => {
           justifyContent: "center",
           alignItems: "center",
           marginRight: 16,
-          marginTop: 8,
+          marginTop: 4,
         }}
       >
         <ScrollableBox>
-          <Typography align={"left"} variant={"h4"} fontFamily={`'Inter', sans-serif`}>
+          <Typography align={"left"} variant={"h4"}>
             {WELCOME_TITLE}
           </Typography>
           <p />

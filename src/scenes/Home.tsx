@@ -71,7 +71,7 @@ export const Home = (): JSX.Element => {
 
   return (
     <FocusContext.Provider value={focusKey}>
-      <div ref={ref} style={{ padding: 100 }}>
+      <div ref={ref} style={{ padding: 48 }}>
         <Fade in timeout={600}>
           <Box
             sx={{
