@@ -63,6 +63,7 @@ export const LightDetails = ({
           width: 300,
           height: switchBaseHeight,
           margin: 4,
+          position: 'relative',
         }}
       >
         {/* Light Brightness view */}
@@ -81,9 +82,9 @@ export const LightDetails = ({
         >
           {/* Light Bulb icon */}
           {isOn ? (
-            <LightFillIcon />
+            <LightFillIcon size={45}/>
           ) : (
-            <LightIcon />
+            <LightIcon size={45}/>
           )}
         </Box>
       </Box>

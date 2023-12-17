@@ -43,7 +43,7 @@ export const Light = ({
     <div style={{
       backgroundColor: isOn ? color : "transparent",
       borderRadius: 12,
-      width: 250,
+      width: 246,
       height: brightnessHeight,
       transition: "250ms",
     }} />
@@ -61,6 +61,7 @@ export const Light = ({
         style={{
           display: "flex",
           flexDirection: "column-reverse",
+          alignItems: 'center',
           backgroundColor: "rgba(56, 56, 56, 0.3)",
           border: 'solid',
           borderWidth: focused ? 2 : 0,
