@@ -59,3 +59,21 @@ export const getSetupDone = (): StorageResult => {
     };
   }
 };
+
+export const clearBridgeIp = (): StorageResult => {
+  try {
+    localStorage.removeItem(keyBridgeIp);
+    return { data: true };
+  } catch (err) {
+    return { error: `Error clearing bridge address: ${err}` };
+  }
+};
+
+export const clearBridgeUsername = (): StorageResult => {
+  try {
+    localStorage.removeItem(keyBridgeU);
+    return { data: true };
+  } catch (err) {
+    return { error: `Error clearing bridge username: ${err}` };
+  }
+};

@@ -6,15 +6,18 @@ type SettingsButton = {
   title: string,
   focusKey: string,
   onClick: () => void,
+  focusable?: boolean,
+  success?: boolean;
+  fail?: boolean;
 };
-type SettingsItem = {
+type SettingsItemProps = {
   button: SettingsButton,
   messagePrimary?: string,
   messageSecondary?: string,
   checkEnabled?: boolean,
 }
 
-export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEnabled }: SettingsItem) => {
+export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEnabled }: SettingsItemProps) => {
   return (
     <div style={{        
       marginBottom: 100,
@@ -31,6 +34,9 @@ export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEn
           title={button.title}
           focusKey={button.focusKey}
           onClick={button.onClick}
+          focusable={button.focusable}
+          success={button.success}
+          fail={button.fail}
         />
       </div>
       <div style={{
@@ -44,6 +50,7 @@ export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEn
         {checkEnabled ? <CheckIcon /> : (
           <p style={{
             textAlign: 'left',
+            fontSize: 26
           }}>{messagePrimary} <br/> {messageSecondary}</p>
         )}
       </div>

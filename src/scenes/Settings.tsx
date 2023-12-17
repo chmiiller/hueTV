@@ -10,6 +10,7 @@ import {
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
 import { SettingsItem } from "../components/SettingsItem";
 import Typography from "@mui/material/Typography";
+import { clearBridgeIp, clearBridgeUsername, getSetupDone } from "../api/storage";
 
 type Message = {
   primary: string,
@@ -31,11 +32,19 @@ const styles: Styles = {
 };
 
 const TOTAL_AUTH_TRIES = 20;
-const FIRST_MESSAGE_PRIMARY = 'Press enter to setup your bridge';
-const FIRST_MESSAGE_SECONDARY = 'You’ll need physical access to the bridge';
-const SECOND_MESSAGE = 'Press the button on your bridge';
-const THIRD_MESSAGE_PRIMARY = 'Your bridge is connected';
-const THIRD_MESSAGE_SECONDARY = `Press "select" to go home`;
+const FIRST_MESSAGE_PRIMARY = `Select Start to setup the app`;
+const FIRST_MESSAGE_SECONDARY = 'You’ll need physical access to the Hue Bridge';
+const SECOND_MESSAGE = `Press Select to search for your Hue Bridge`;
+const THIRD_MESSAGE_PRIMARY = 'Press the button on the Hue Bridge to connect';
+const FOURTH_MESSAGE_PRIMARY = `You're all set`;
+const FOURTH_MESSAGE_SECONDARY = `Go home and find your rooms and lights`;
+const RESET_MESSAGE_PRIMARY = `Select reset to disconnect from the Hue Bridge`;
+const RESET_MESSAGE_SECONDARY = `You’ll lose connection with your Hue devices`;
+const SEARCH_BUTTON_TITLE = 'Search';
+const BRIDGE_FOUND_BUTTON_TITLE = 'Bridge found';
+const FIRST_BUTTON_KEY = 'settings_start_button';
+const SECOND_BUTTON_KEY = 'settings_second_button';
+const THIRD_BUTTON_KEY = 'settings_go_home_button';
 
 export const Settings = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
@@ -43,9 +52,12 @@ export const Settings = (): JSX.Element => {
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const [firstCheck, setFirstCheck] = React.useState<boolean>(false);
+  const [secondButtonTitle, setSecondButtonTitle] = React.useState<string>(SEARCH_BUTTON_TITLE);
+  const [firstStep, setFirstStep] = React.useState<boolean>(false);
+  const [secondStep, setSecondStep] = React.useState<boolean>(false);
+  const [thirdStep, setThirdStep] = React.useState<boolean>(false);
+  const [setupDone, setSetupDone] = React.useState<boolean>(false);
   const [secondMessage, setSecondMessage] = React.useState<Message>({ primary: ''});
-  const [secondCheck, setSecondCheck] = React.useState<boolean>(false);
   const [thirdMessage, setThirdMessage] = React.useState<Message>({ primary: '', secondary: ''});
   const [message, setMessage] = React.useState<string>("Welcome");
   const [debug, setDebug] = React.useState<string>("");
@@ -69,6 +81,8 @@ export const Settings = (): JSX.Element => {
       if(location.state){
         focusSelf();
       }
+      const setupState = getSetupDone();
+      setSetupDone(setupState.data);
     }, 100);
   }, [location]);
 
@@ -95,9 +109,10 @@ export const Settings = (): JSX.Element => {
     setDebug(
       `\n bridge address: ${JSON.stringify(bridgeAddress, null, "    ")}`
     );
-    setFirstCheck(true);
-    setFocus('setup_bridge');
-    setSecondMessage({ primary: SECOND_MESSAGE});
+    setSecondButtonTitle(BRIDGE_FOUND_BUTTON_TITLE);
+    setSecondMessage({ primary: THIRD_MESSAGE_PRIMARY, secondary: `${TOTAL_AUTH_TRIES}` });
+    setSecondStep(true);
+    stepGetUsername();
   };
 
   const stepGetUsername = async () => {
@@ -126,21 +141,23 @@ export const Settings = (): JSX.Element => {
           intervalRes.data.success &&
           intervalRes.data.success.username
         ) {
+          // success, set second step to true
           clearInterval(countInterval);
           setSecondMessage({
-            primary: `${SECOND_MESSAGE}`,
-            secondary: ''
+            primary: `${FOURTH_MESSAGE_PRIMARY}`,
+            secondary: `${FOURTH_MESSAGE_SECONDARY}`
           });
-          setSecondCheck(true);
+          setThirdStep(true);
+          setFocus(THIRD_BUTTON_KEY);
           return;
         } else {
-          setSecondMessage({
-            primary: `${count}`,
-            secondary: ''
-          });
           // on error, keep trying for 20 seconds
+          setSecondMessage({ primary: THIRD_MESSAGE_PRIMARY, secondary: `${count}` });
           if (count === 0) {
+            // when the count is over, reset
             clearInterval(countInterval);
+            setThirdStep(false);
+            setSecondButtonTitle(SEARCH_BUTTON_TITLE);
             setSecondMessage({
               primary: `${SECOND_MESSAGE}`,
               secondary: ''
@@ -157,39 +174,85 @@ export const Settings = (): JSX.Element => {
       <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
         {'Settings'}
       </Typography>
+      {/* FIRST TIME SETTING UP THE LIGHTS */}
+      {!setupDone &&
       <div ref={ref} style={styles.settingsContainer}>
         <SettingsItem
           button={{
             title: "Start",
-            focusKey: "find_bridge",
-            onClick: settingsGetBridgeAddress
+            focusKey: FIRST_BUTTON_KEY,
+            onClick: () => {
+              setFirstStep(true);
+              setFocus(SECOND_BUTTON_KEY);
+              setSecondMessage({ primary: SECOND_MESSAGE, secondary: ''});
+            },
+            focusable: !firstStep,
+            success: firstStep
           }}
           messagePrimary={FIRST_MESSAGE_PRIMARY}
           messageSecondary={FIRST_MESSAGE_SECONDARY}
-          checkEnabled={firstCheck}
         />
-        <SettingsItem 
+        <SettingsItem
           button={{
-            title: "Setup bridge",
-            focusKey: "setup_bridge",
-            onClick: stepGetUsername
+            title: secondButtonTitle,
+            focusKey: SECOND_BUTTON_KEY,
+            onClick: () => {
+              if (!secondStep) {
+                settingsGetBridgeAddress();
+              }
+            },
+            focusable: firstStep,
+            success: thirdStep,
           }}
           messagePrimary={secondMessage.primary}
-          checkEnabled={secondCheck}
+          messageSecondary={secondMessage.secondary}
         />
         <SettingsItem 
           button={{
             title: "Go home",
-            focusKey: "home",
+            focusKey: THIRD_BUTTON_KEY,
             onClick: () => {
               navigate("/home", { state: { screen: 'settings', focus: true }});
-            }
+            },
+            focusable: thirdStep
           }}
           messagePrimary={thirdMessage.primary}
           messageSecondary={thirdMessage.secondary}
         />
         <p>{debug}</p>
-      </div>
+      </div>}
+      {/* WHEN THE SETUP IS ALREADY DONE! */}
+      {setupDone &&
+      <div ref={ref} style={styles.settingsContainer}>
+        <SettingsItem
+          button={{
+            title: secondButtonTitle,
+            focusKey: SECOND_BUTTON_KEY,
+            onClick: () => {
+              if (!secondStep) {
+                settingsGetBridgeAddress();
+              }
+            },
+            focusable: false,
+            success: true,
+          }}
+          messagePrimary={FOURTH_MESSAGE_PRIMARY}
+          messageSecondary={FOURTH_MESSAGE_SECONDARY}
+        />
+        <SettingsItem 
+          button={{
+            title: "Reset",
+            focusKey: THIRD_BUTTON_KEY,
+            onClick: () => {
+              clearBridgeIp();
+              clearBridgeUsername();
+              setSetupDone(false);
+            },
+          }}
+          messagePrimary={RESET_MESSAGE_PRIMARY}
+          messageSecondary={RESET_MESSAGE_SECONDARY}
+        />
+      </div>}
     </FocusContext.Provider>
   );
 };
