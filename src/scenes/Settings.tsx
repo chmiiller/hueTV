@@ -7,22 +7,34 @@ import {
   setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
 
-import { FocusableButton } from "../components/FocusableButton";
 import { getBridgeIpAddress, askUsername } from "../api/hueapi";
+import { SettingsItem } from "../components/SettingsItem";
 
+type Message = {
+  primary: string,
+  secondary?: string,
+}
 type Styles = {
-  contact: CSS.Properties;
+  settingsContainer: CSS.Properties;
 };
 const styles: Styles = {
-  contact: {
+  settingsContainer: {
     padding: "50px",
     textAlign: "center",
-    backgroundColor: "#46282d",
+    backgroundColor: "transparent",
+    display: 'flex',
+    flexDirection: 'column',
     color: "white",
+    alignItems: 'start',
   },
 };
 
 const TOTAL_AUTH_TRIES = 20;
+const FIRST_MESSAGE_PRIMARY = 'Press enter to setup your bridge';
+const FIRST_MESSAGE_SECONDARY = 'You’ll need physical access to the bridge';
+const SECOND_MESSAGE = 'Press the button on your bridge';
+const THIRD_MESSAGE_PRIMARY = 'Your bridge is connected';
+const THIRD_MESSAGE_SECONDARY = `Press "select" to go home`;
 
 export const Settings = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
@@ -30,6 +42,10 @@ export const Settings = (): JSX.Element => {
   });
   const navigate = useNavigate();
   const location = useLocation();
+  const [firstCheck, setFirstCheck] = React.useState<boolean>(false);
+  const [secondMessage, setSecondMessage] = React.useState<Message>({ primary: ''});
+  const [secondCheck, setSecondCheck] = React.useState<boolean>(false);
+  const [thirdMessage, setThirdMessage] = React.useState<Message>({ primary: '', secondary: ''});
   const [message, setMessage] = React.useState<string>("Welcome");
   const [debug, setDebug] = React.useState<string>("");
 
@@ -78,6 +94,9 @@ export const Settings = (): JSX.Element => {
     setDebug(
       `\n bridge address: ${JSON.stringify(bridgeAddress, null, "    ")}`
     );
+    setFirstCheck(true);
+    setFocus('setup_bridge');
+    setSecondMessage({ primary: SECOND_MESSAGE});
   };
 
   const stepGetUsername = async () => {
@@ -107,17 +126,24 @@ export const Settings = (): JSX.Element => {
           intervalRes.data.success.username
         ) {
           clearInterval(countInterval);
-          setMessage("GOT LAMPS");
-          setTimeout(() => {
-            navigate("/home");
-          }, 1000);
+          setSecondMessage({
+            primary: `${SECOND_MESSAGE}`,
+            secondary: ''
+          });
+          setSecondCheck(true);
           return;
         } else {
-          setMessage(`Please press Hue Bridge button in: ${count} second(s)`);
+          setSecondMessage({
+            primary: `${count}`,
+            secondary: ''
+          });
           // on error, keep trying for 20 seconds
           if (count === 0) {
             clearInterval(countInterval);
-            setMessage("Welcome");
+            setSecondMessage({
+              primary: `${SECOND_MESSAGE}`,
+              secondary: ''
+            });
           }
           count--;
         }
@@ -127,29 +153,36 @@ export const Settings = (): JSX.Element => {
 
   return (
     <FocusContext.Provider value={focusKey}>
-      <div ref={ref} style={styles.contact}>
-        <h1>Settings</h1>
-        <p>{`${message}`}</p>
-        <FocusableButton
-          title={"Find Bridge"}
-          focusKey="find_bridge"
-          onClick={() => {
-            settingsGetBridgeAddress();
+      <div ref={ref} style={styles.settingsContainer}>
+        <SettingsItem
+          button={{
+            title: "Start",
+            focusKey: "find_bridge",
+            onClick: settingsGetBridgeAddress
           }}
+          messagePrimary={FIRST_MESSAGE_PRIMARY}
+          messageSecondary={FIRST_MESSAGE_SECONDARY}
+          checkEnabled={firstCheck}
         />
-        <FocusableButton
-          title={"Setup Bridge"}
-          focusKey="setup_bridge"
-          onClick={() => {
-            stepGetUsername();
+        <SettingsItem 
+          button={{
+            title: "Setup bridge",
+            focusKey: "setup_bridge",
+            onClick: stepGetUsername
           }}
+          messagePrimary={secondMessage.primary}
+          checkEnabled={secondCheck}
         />
-        <FocusableButton
-          title={"Go Home"}
-          focusKey="home"
-          onClick={() => {
-            navigate("/home", { state: { screen: 'settings', focus: true }});
+        <SettingsItem 
+          button={{
+            title: "Go home",
+            focusKey: "home",
+            onClick: () => {
+              navigate("/home", { state: { screen: 'settings', focus: true }});
+            }
           }}
+          messagePrimary={thirdMessage.primary}
+          messageSecondary={thirdMessage.secondary}
         />
         <p>{debug}</p>
       </div>
