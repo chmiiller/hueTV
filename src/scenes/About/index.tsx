@@ -19,8 +19,8 @@ import {
   NOTE,
   VERSION_DATE,
 } from "./content";
+import { QRCode } from "./QRCode";
 
-const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 
 export const About = (): JSX.Element => {
@@ -57,7 +57,6 @@ export const About = (): JSX.Element => {
   React.useEffect(() => {
     setTimeout(() => {
       if(location.state){
-        // focusSelf();
         setFocus('about_scrollable');
       }
     }, 100);
@@ -72,13 +71,12 @@ export const About = (): JSX.Element => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          marginLeft: 0,
-          marginRight: 0,
+          marginRight: 16,
           marginTop: 8,
         }}
       >
         <ScrollableBox>
-          <Typography align={"left"} variant={"h4"}>
+          <Typography align={"left"} variant={"h4"} fontFamily={`'Inter', sans-serif`}>
             {WELCOME_TITLE}
           </Typography>
           <p />
@@ -86,22 +84,25 @@ export const About = (): JSX.Element => {
             {WELCOME_MESSAGE}
           </Typography>
           <br />
-          <br />
-          <Typography align={"left"} variant={"h4"}>
-            {ABOUT_TITLE}
-          </Typography>
           <p />
-          <Typography align={"left"} variant={"h6"}>
-            {ABOUT_ME}
-          </Typography>
-          <p />
-          <Typography align={"left"} variant={"h6"}>
-            <strong>Buy me a coffee</strong>
-          </Typography>
-          <p />
-          <Typography align={"left"} variant={"h6"}>
-            <img src={QR_COFFEE_URL} alt="Buy me a coffee" />
-          </Typography>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            paddingRight: 64,
+          }}>
+            <Typography align={"left"} variant={"h4"} sx={{
+              marginRight: 8,
+            }}>
+              {ABOUT_TITLE}
+              <Typography align={"left"} variant={"h6"} sx={{
+                marginTop: 2,
+              }}>
+                {ABOUT_ME}
+              </Typography>
+            </Typography>
+            <p />
+            <QRCode />
+          </div>
           <br />
           <br />
           <Typography align={"left"} variant={"h4"}>

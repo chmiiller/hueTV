@@ -49,8 +49,6 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
           elevation={focused ? 5 : 0}
           sx={{
             background: "transparent",
-            marginLeft: 8,
-            marginRight: 8,
             height: "85vh",
             padding: 5,
             border: focused ? 0 : 0,
