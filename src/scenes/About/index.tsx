@@ -14,14 +14,10 @@ import {
   MOTIVATION1,
   MOTIVATION2,
   MOTIVATION3,
-  OPEN_SOURCE_TITLE,
-  OPEN_SOURCE,
   NOTE,
   VERSION_DATE,
 } from "./content";
 import { QRCode } from "./QRCode";
-
-const QR_REPO_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
 
 export const About = (): JSX.Element => {
   const { ref, focusKey } = useFocusable({
@@ -125,7 +121,7 @@ export const About = (): JSX.Element => {
           </Typography>
           <br />
           <br />
-          <Typography align={"left"} variant={"h4"}>
+          {/* <Typography align={"left"} variant={"h4"}>
             {OPEN_SOURCE_TITLE}
           </Typography>
           <p />
@@ -141,9 +137,12 @@ export const About = (): JSX.Element => {
           <Typography align={"left"} variant={"h6"}>
             <img src={QR_REPO_URL} alt="GitHub Repository" />
           </Typography>
-          <br />
+          <br /> */}
+          <Typography align={"left"} variant={"h4"}>
+            {`Important note`}
+          </Typography>
+          <p />
           <Typography align={"left"} variant={"h6"}>
-            <strong>{`important note: `}</strong>
             {NOTE}
           </Typography>
           <br />

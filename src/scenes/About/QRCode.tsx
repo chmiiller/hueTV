@@ -1,4 +1,5 @@
-const QR_COFFEE_URL = `https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg`;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const QR_COFFEE_URL = require(`./qrbmc.png`);
 
 export const QRCode = (): JSX.Element => {
   return (
