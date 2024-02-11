@@ -102,8 +102,6 @@ export const About = (): JSX.Element => {
             <p />
             <QRCode />
           </div>
-          <br />
-          <br />
           <Typography align={"left"} variant={"h4"}>
             {MOTIVATION_TITLE}
           </Typography>
