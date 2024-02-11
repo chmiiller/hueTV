@@ -1,6 +1,6 @@
-export const WELCOME_TITLE = `Welcome to HueTV!`;
+export const WELCOME_TITLE = `Welcome to hueTV!`;
 export const WELCOME_MESSAGE = `Hi there, first of all, thank you so much for downloading my app!
-The HueTV app was made for those who want to dim the living room lights just before start watching 
+The hueTV app was made for those who want to dim the living room lights just before start watching 
 their favorite TV show and are too lazy to unlock their phone and open the (sometimes slow) 
 lights app, or for those who just want to show off that they can control all the 
 lights in their house using the TV remote.`;

@@ -1,7 +1,7 @@
-# Welcome to HueTV!
+# Welcome to hueTV!
 
 Hi there, first of all, **thank you so much** for downloading my app!
-The HueTV app was made for those who want to dim the living room lights just before start watching their favorite TV show and are too lazy to unlock their phone and open the (sometimes slow) lights app, or for those who just want to show off that they can control all the lights in their house using the TV remote.
+The hueTV app was made for those who want to dim the living room lights just before start watching their favorite TV show and are too lazy to unlock their phone and open the (sometimes slow) lights app, or for those who just want to show off that they can control all the lights in their house using the TV remote.
 
 ## Motivation
 
@@ -37,14 +37,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Install WGT on TV:
 
-`tizen install -t TV_ID --name HueTV.wgt -- ./`
+`tizen install -t TV_ID --name hueTV.wgt -- ./`
 
 ### Run app on TV:
 
-`tizen run -t TV_ID -p ID.HueTV`
+`tizen run -t TV_ID -p ID.hueTV`
 
 ### Uninstall app from TV:
 
-`tizen uninstall -t TV_ID -p ID.HueTV`
+`tizen uninstall -t TV_ID -p ID.hueTV`
 
 
