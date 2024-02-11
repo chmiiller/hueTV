@@ -65,13 +65,7 @@ export const SideMenuItems = ({
     <div
       ref={ref}
       style={{
-        paddingTop: 100,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100%",
-        marginBottom: 12,
-        overflowX: "hidden",
+        marginTop: 100,
       }}
     >
       <List sx={ListStyle}>
@@ -94,6 +88,7 @@ export const SideMenuItems = ({
               onArrow={(direction: string) => {
                 if (direction === 'right') {
                   if (!fromDetails) {
+                    toggleMenu(false);
                     setTimeout(() => {
                       navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
                       setFocus(sideMenuObject.screenName);
@@ -123,6 +118,7 @@ export const SideMenuItems = ({
           );
         })}
       </List>
+      <div style={{height: 12}}/>
       {/* Second list of buttons */}
       <List sx={ListStyle}>
         {sideMenuConfig.extra.map((sideMenuObject: SideMenuObject) => {

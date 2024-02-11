@@ -12,10 +12,7 @@ const drawerWidth = 500;
 const closedDrawerWidth = drawerWidth / 4;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
+  transition: theme.transitions.create("width", { duration: 50 }),
   overflowX: "hidden",
   width: drawerWidth,
   backgroundColor: "transparent",
@@ -23,10 +20,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
+  transition: theme.transitions.create("width", { duration: 50 }),
   overflowX: "hidden",
   width: closedDrawerWidth,
   backgroundColor: "transparent",

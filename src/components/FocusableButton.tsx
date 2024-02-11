@@ -1,6 +1,5 @@
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
-import { styled } from "@mui/material/styles";
-import Button, { ButtonProps } from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import { CheckIcon } from "./SvgIcons/CheckIcon";
 
 type FocusableButtonProps = {
