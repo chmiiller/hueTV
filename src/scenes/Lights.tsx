@@ -4,12 +4,11 @@ import Fade from "@mui/material/Fade";
 import { useFocusable, FocusContext, FocusableComponentLayout, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Light } from "../components/Light";
 import useInterval from "../api/useInterval";
-import { getLights } from "../api/hueapi";
+import { getLights, API_INTERVAL } from "../api/hueapi";
 import { Light as LightType } from "../api/types";
 
-const API_DELAY = 2000;
+import { Light } from "../components/Light";
 
 export const Lights = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
@@ -17,13 +16,13 @@ export const Lights = (): JSX.Element => {
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const handleScrolling = (
-    layout: FocusableComponentLayout,
-  ) => {
+  
+  const handleScrolling = (layout: FocusableComponentLayout) => {
     layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const [lights, setLights] = React.useState<Array<LightType>>([]);
+  
   React.useEffect(() => {
     homeGetLights();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -49,7 +48,7 @@ export const Lights = (): JSX.Element => {
 
   useInterval(() => {
     homeGetLights();
-  }, API_DELAY);
+  }, API_INTERVAL);
 
   const onKey = (event: KeyboardEvent) => {
     if (

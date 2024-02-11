@@ -4,12 +4,11 @@ import Fade from "@mui/material/Fade";
 import { useFocusable, FocusContext, FocusableComponentLayout, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Light } from "../components/Light";
 import useInterval from "../api/useInterval";
-import { getGroups } from "../api/hueapi";
+import { getGroups, API_INTERVAL } from "../api/hueapi";
 import { Room } from "../api/types";
 
-const API_DELAY = 2000;
+import { Light } from "../components/Light";
 
 export const Home = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
@@ -17,9 +16,8 @@ export const Home = (): JSX.Element => {
   });
   const navigate = useNavigate();
   const location = useLocation();
-  const handleScrolling = (
-    layout: FocusableComponentLayout,
-  ) => {
+  
+  const handleScrolling = (layout: FocusableComponentLayout) => {
     layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
@@ -49,7 +47,7 @@ export const Home = (): JSX.Element => {
 
   useInterval(() => {
     homeGetGroups();
-  }, API_DELAY);
+  }, API_INTERVAL);
 
   const onKey = (event: KeyboardEvent) => {
     if (

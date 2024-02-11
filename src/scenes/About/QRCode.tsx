@@ -9,8 +9,7 @@ export const QRCode = (): JSX.Element => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(248, 248, 248, 0.1)',
-        width: 200,
-        // marginRight: 16
+        width: 200
       }}>
       <img src={QR_COFFEE_URL} alt="Buy me a coffee" style={{
         width: 200,

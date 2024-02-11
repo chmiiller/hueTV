@@ -1,6 +1,6 @@
 import Skeleton from "@mui/material/Skeleton";
 
-const LightDetailsSkeleton = (): JSX.Element => {
+export const LightDetailsSkeleton = (): JSX.Element => {
   return (
     <div
       style={{
@@ -30,5 +30,3 @@ const LightDetailsSkeleton = (): JSX.Element => {
     </div>
   );
 };
-
-export default LightDetailsSkeleton;

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { useLocation } from "react-router-dom";
 
-import ScrollableBox from "../../components/ScrollableBox";
+import { ScrollableBox } from "../../components/ScrollableBox";
 import {
   WELCOME_TITLE,
   WELCOME_MESSAGE,

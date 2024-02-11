@@ -1,4 +1,3 @@
-// import { allGroups } from '../config';
 import { ctToHex, isDark, xyToHex } from "./colorsApi";
 import {
   setBridgeIp,
@@ -17,20 +16,8 @@ import {
   SuccessObject,
 } from "./types";
 
-// const appName = 'huetv';
+export const API_INTERVAL = 2000;
 const hueDiscoveryUrl = "https://discovery.meethue.com/";
-
-export const testInternetConnection = async (): Promise<StorageResult> => {
-  // Google Maps on iOS App Store
-  try {
-    const url = `http://itunes.apple.com/us/lookup?id=585027354`;
-    const response = await fetch(url);
-    const json = await response.json();
-    return { data: json };
-  } catch (err) {
-    return { error: `Connection error: ${err}` };
-  }
-};
 
 export const getBridgeIpAddress = async (): Promise<StorageResult> => {
   try {

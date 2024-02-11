@@ -3,28 +3,26 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Light } from "../api/types";
-import { LightDetails } from "../components/LightDetails";
-import LightDetailsSkeleton from "../components/LightDetailsSkeleton";
 import {
   getLightById,
   setLightBrightness,
   turnLightOn,
   turnLightOff,
+  API_INTERVAL
 } from "../api/hueapi";
 import useInterval from "../api/useInterval";
+import { Light } from "../api/types";
+
+import { LightDetails } from "../components/LightDetails";
+import { LightDetailsSkeleton } from "../components/LightDetailsSkeleton";
 
 const STR_TUTORIAL1 = "Arrows Up / Down: Brightness";
 const STR_TUTORIAL2 = "Select Button: On / Off";
-const API_DELAY = 2000;
-
-interface LightDetailsLocation {
-  id: string;
-}
-
 const STR_TURNED_OFF = "Turned off";
 
-const LightDetailsScreen = (): JSX.Element => {
+type LightDetailsLocation = { id: string };
+
+export const LightDetailsScreen = (): JSX.Element => {
   const location = useLocation();
   const state = location.state as LightDetailsLocation;
   const navigate = useNavigate();
@@ -33,7 +31,6 @@ const LightDetailsScreen = (): JSX.Element => {
     fetchLight();
   }, [state.id]);
 
-  // Window keys listener => back button
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -63,7 +60,7 @@ const LightDetailsScreen = (): JSX.Element => {
 
   useInterval(() => {
     fetchLight();
-  }, API_DELAY);
+  }, API_INTERVAL);
 
   const setBrightness = async (brightness: number) => {
     await setLightBrightness({ id: state.id, percentage: brightness });
@@ -135,7 +132,7 @@ const LightDetailsScreen = (): JSX.Element => {
             color={light.color}
             onArrowPress={(direction: string) => {
               onArrow(direction);
-              // return false to block navigation in the vertical directions.
+              // return false to block navigation on vertical directions.
               return !(direction === 'up' || direction === 'down');
             }}
             onEnterPress={() => {
@@ -155,5 +152,3 @@ const LightDetailsScreen = (): JSX.Element => {
     </Box>
   );
 };
-
-export default LightDetailsScreen;

@@ -1,8 +1,8 @@
 import React from "react";
 
 import List from "@mui/material/List";
-import { useNavigate, useLocation } from "react-router-dom";
 import { setFocus } from '@noriginmedia/norigin-spatial-navigation';
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { MenuItem } from "./MenuItem";
 import { sideMenuConfig, SideMenuObject } from "./SideMenuConfig";

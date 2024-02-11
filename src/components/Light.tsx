@@ -35,19 +35,7 @@ export const Light = ({
     onFocus
   });
   const brightnessHeight = 250 * brightness * 0.01;
-  const displayBrightness = isOn
-    ? `${brightness}%`
-    : STR_TURNED_OFF;
-
-  const BrightnessLevelView = () => (
-    <div style={{
-      backgroundColor: isOn ? color : "transparent",
-      borderRadius: 12,
-      width: 246,
-      height: brightnessHeight,
-      transition: "250ms",
-    }} />
-  );
+  const displayBrightness = isOn ? `${brightness}%` : STR_TURNED_OFF;
 
   return (
     <div ref={ref} onClick={onClick}>
@@ -74,7 +62,14 @@ export const Light = ({
           marginTop: 4,
         }}
       >
-        <BrightnessLevelView />
+        {/* Brightness Level Indicator div */}
+        <div style={{
+          backgroundColor: isOn ? color : "transparent",
+          borderRadius: 12,
+          width: 246,
+          height: brightnessHeight,
+          transition: "250ms",
+        }} />
       </div>
     </div>
   );

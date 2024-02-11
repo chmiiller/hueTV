@@ -41,7 +41,11 @@ export const MenuItem = ({
   });
   
   return (
-    <div ref={ref} style={{ paddingLeft: 32, paddingRight: 32, marginBottom: 12 }}>
+    <div ref={ref} style={{
+      paddingLeft: 32,
+      paddingRight: 32,
+      marginBottom: 12
+    }}>
       <ListItemButton
         selected={focused || selected || current}
         component={RouterLink}

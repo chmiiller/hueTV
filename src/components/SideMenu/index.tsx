@@ -6,6 +6,7 @@ import {
   FocusContext,
   setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
+
 import { SideMenuItems } from "./SideMenuItems";
 
 const drawerWidth = 500;

@@ -2,13 +2,11 @@ import React, { useRef } from "react";
 import { useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import Paper from "@mui/material/Paper";
 
-type ScrollableBoxProps = {
-  children: React.ReactNode;
-};
+type ScrollableBoxProps = { children: React.ReactNode };
 
 const SCROLL_OFFSET = 80;
 
-const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
+export const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
   const paperRef = useRef<HTMLHeadingElement>(null);
 
   const onArrow = (direction: string) => {
@@ -36,32 +34,25 @@ const ScrollableBox = ({ children }: ScrollableBoxProps): JSX.Element => {
     
     return true;
   };
-
-  const ScrollableComponent = () => {
-    const { ref, focused } = useFocusable({
-      onArrowPress: onArrow,
-      focusKey: 'about_scrollable'
-    });
-    return (
-      <div ref={ref}>
-        <Paper
-          ref={paperRef}
-          elevation={focused ? 5 : 0}
-          sx={{
-            background: "transparent",
-            height: "85vh",
-            padding: 5,
-            border: focused ? 0 : 0,
-            borderColor: "#3f444a",
-            overflowY: "auto",
-          }}
-        >
-          {children}
-        </Paper>
-      </div>
-    );
-  };
-  return <ScrollableComponent/>;
+  const { ref, focused } = useFocusable({
+    onArrowPress: onArrow,
+    focusKey: 'about_scrollable'
+  });
+  
+  return (
+    <div ref={ref}>
+      <Paper
+        ref={paperRef}
+        elevation={focused ? 5 : 0}
+        sx={{
+          background: "transparent",
+          height: "85vh",
+          padding: 5,
+          overflowY: "auto",
+        }}
+      >
+        {children}
+      </Paper>
+    </div>
+  );
 };
-
-export default ScrollableBox;

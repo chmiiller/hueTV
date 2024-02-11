@@ -45,6 +45,10 @@ const BRIDGE_FOUND_BUTTON_TITLE = 'Bridge found';
 const FIRST_BUTTON_KEY = 'settings_start_button';
 const SECOND_BUTTON_KEY = 'settings_second_button';
 const THIRD_BUTTON_KEY = 'settings_go_home_button';
+const START_BUTTON_TITLE = 'Start';
+const RESET_BUTTON_TITLE = 'Reset';
+const GO_HOME_BUTTON_TITLE = 'Go home';
+const SCREEN_TITLE = "Settings";
 
 export const Settings = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
@@ -59,8 +63,6 @@ export const Settings = (): JSX.Element => {
   const [setupDone, setSetupDone] = React.useState<boolean>(false);
   const [secondMessage, setSecondMessage] = React.useState<Message>({ primary: ''});
   const [thirdMessage, setThirdMessage] = React.useState<Message>({ primary: '', secondary: ''});
-  const [message, setMessage] = React.useState<string>("Welcome");
-  const [debug, setDebug] = React.useState<string>("");
 
   React.useEffect(() => {
     // settingsGetBridgeAddress();
@@ -99,20 +101,12 @@ export const Settings = (): JSX.Element => {
 
   const settingsGetBridgeAddress = async () => {
     const bridgeAddress = await getBridgeIpAddress();
-    console.log(
-      `>>>>>>>>>>>>> bridgeAddress: ${JSON.stringify(
-        bridgeAddress,
-        null,
-        "    "
-      )}`
-    );
-    setDebug(
-      `\n bridge address: ${JSON.stringify(bridgeAddress, null, "    ")}`
-    );
-    setSecondButtonTitle(BRIDGE_FOUND_BUTTON_TITLE);
-    setSecondMessage({ primary: THIRD_MESSAGE_PRIMARY, secondary: `${TOTAL_AUTH_TRIES}` });
-    setSecondStep(true);
-    stepGetUsername();
+    if (bridgeAddress) {
+      setSecondButtonTitle(BRIDGE_FOUND_BUTTON_TITLE);
+      setSecondMessage({ primary: THIRD_MESSAGE_PRIMARY, secondary: `${TOTAL_AUTH_TRIES}` });
+      setSecondStep(true);
+      stepGetUsername();
+    }
   };
 
   const stepGetUsername = async () => {
@@ -125,7 +119,6 @@ export const Settings = (): JSX.Element => {
         "http://tizen.org/system/tizenid"
       );
     }
-    setMessage(`TizenId ${tizenId}`);
     const userRes = await askUsername(tizenId);
     if (
       userRes.data.error &&
@@ -172,14 +165,14 @@ export const Settings = (): JSX.Element => {
   return (
     <FocusContext.Provider value={focusKey}>
       <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
-        {'Settings'}
+        {SCREEN_TITLE}
       </Typography>
       {/* FIRST TIME SETTING UP THE LIGHTS */}
       {!setupDone &&
       <div ref={ref} style={styles.settingsContainer}>
         <SettingsItem
           button={{
-            title: "Start",
+            title: START_BUTTON_TITLE,
             focusKey: FIRST_BUTTON_KEY,
             onClick: () => {
               setFirstStep(true);
@@ -209,7 +202,7 @@ export const Settings = (): JSX.Element => {
         />
         <SettingsItem 
           button={{
-            title: "Go home",
+            title: GO_HOME_BUTTON_TITLE,
             focusKey: THIRD_BUTTON_KEY,
             onClick: () => {
               navigate("/home", { state: { screen: 'settings', focus: true }});
@@ -219,7 +212,6 @@ export const Settings = (): JSX.Element => {
           messagePrimary={thirdMessage.primary}
           messageSecondary={thirdMessage.secondary}
         />
-        <p>{debug}</p>
       </div>}
       {/* WHEN THE SETUP IS ALREADY DONE! */}
       {setupDone &&
@@ -241,7 +233,7 @@ export const Settings = (): JSX.Element => {
         />
         <SettingsItem 
           button={{
-            title: "Reset",
+            title: RESET_BUTTON_TITLE,
             focusKey: THIRD_BUTTON_KEY,
             onClick: () => {
               clearBridgeIp();

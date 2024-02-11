@@ -3,28 +3,26 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Room } from "../api/types";
-import { LightDetails } from "../components/LightDetails";
-import LightDetailsSkeleton from "../components/LightDetailsSkeleton";
 import {
   getGroupById,
   setGroupBrightness,
   turnGroupOn,
   turnGroupOff,
+  API_INTERVAL
 } from "../api/hueapi";
 import useInterval from "../api/useInterval";
+import { Room } from "../api/types";
+
+import { LightDetails } from "../components/LightDetails";
+import { LightDetailsSkeleton } from "../components/LightDetailsSkeleton";
 
 const STR_TUTORIAL1 = "Arrows Up / Down: Brightness";
 const STR_TUTORIAL2 = "Select Button: On / Off";
-const API_DELAY = 2000;
-
-interface RoomDetailsLocation {
-  id: string;
-}
-
 const STR_TURNED_OFF = "Turned off";
 
-const RoomDetailsScreen = (): JSX.Element => {
+type RoomDetailsLocation = { id: string };
+
+export const RoomDetailsScreen = (): JSX.Element => {
   const location = useLocation();
   const state = location.state as RoomDetailsLocation;
   const navigate = useNavigate();
@@ -33,7 +31,6 @@ const RoomDetailsScreen = (): JSX.Element => {
     fetchRoom();
   }, [state.id]);
 
-  // Window keys listener => back button
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -63,7 +60,7 @@ const RoomDetailsScreen = (): JSX.Element => {
 
   useInterval(() => {
     fetchRoom();
-  }, API_DELAY);
+  }, API_INTERVAL);
 
   const setRoomBrightness = async (brightness: number) => {
     await setGroupBrightness({ id: state.id, percentage: brightness });
@@ -137,7 +134,7 @@ const RoomDetailsScreen = (): JSX.Element => {
             color={room.color}
             onArrowPress={(direction: string) => {
               onArrow(direction);
-              // return false to block navigation in the vertical directions.
+              // return false to block navigation on vertical directions.
               return !(direction === 'up' || direction === 'down');
             }}
             onEnterPress={() => {
@@ -157,5 +154,3 @@ const RoomDetailsScreen = (): JSX.Element => {
     </Box>
   );
 };
-
-export default RoomDetailsScreen;
