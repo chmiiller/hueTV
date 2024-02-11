@@ -11,78 +11,40 @@ This means that it'll be forever free and there's no reason for it to collect an
 
 I hope it becomes useful and fun to use for you as it became to me.
 
-## The name is Carlos
-
-I'm Carlos Zinato, software engineer living in The Netherlands and like every developer I have started 196 side projects on the last four months and this is the one that finally sees the light of day. I've been working as a software engineer for 12 years now, making mobile apps for iOS and Android and a little of web with ReactJS for the past three years.
-If you like this app and it makes you happy please consider buying me a coffee. It will definitely motivate me to keep it up-to-date and adding more features!
-
-**Buy me a coffee**
-
-![Buy me a coffee](https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg)
 
 
-## Open source
+## Running the app on your browser
 
-For those interested in how you can build and deploy an app to the Samsung TV and control your Philips Hue lights using JavaScript and ReactJS this project is available on GitHub as open source. There you can clone the project, learn how to run it locally, ask questions, give some feedback, open issues and of course - contribute!
+In the project directory, run:
 
- **GitHub Repository**
- 
-![GitHub Repository](https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/b5/cb/d7b5cbcd-ff98-10d3-5596-5dcc4a8d0eac/source/256x256bb.jpg)
+`npm install`
 
-**important note:** this is an unofficial and independent app, with no affiliations with Philips Hue, Signify or Samsung.
+`npm start`
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### Building for TV
 
-build react app:   
+1. build react app: `npm run build`
 
-`yarn build` or   
-`npm run build`
+2. build react app as a Tizen app: `tizen build-web -- ./build`
 
-build react as tizen app:
-
-`tizen build-web -- ./build`
-
-create WGT file (package) and passing `huetv` as the certificate name:
+3. create a WGT file (package) and passes `huetv` as the certificate name:   
 
 `cd build/.buildResult`
 
 `tizen package -t wgt -s huetv -- ./`
 
-Install WGT on TV:
+### Install WGT on TV:
 
-`tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
+`tizen install -t TV_ID --name HueTV.wgt -- ./`
 
-run app on TV:
+### Run app on TV:
 
-`tizen run -t QE50LS03TASXXN -p a2cD2RV76B.HueTV`
+`tizen run -t TV_ID -p ID.HueTV`
 
-uninstall app from TV:
+### Uninstall app from TV:
 
-`tizen uninstall -t QE50LS03TASXXN -p a2cD2RV76B.HueTV`
+`tizen uninstall -t TV_ID -p ID.HueTV`
 
-All at once:
-
-`npm run build && tizen build-web -- ./build && cd build/.buildResult && tizen package -t wgt -s huetv -- ./ && tizen install -t QE50LS03TASXXN --name HueTV.wgt -- ./`
 
