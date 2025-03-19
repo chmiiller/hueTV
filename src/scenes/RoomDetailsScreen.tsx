@@ -19,6 +19,7 @@ import { LightDetailsSkeleton } from "../components/LightDetailsSkeleton";
 const STR_TUTORIAL1 = "Arrows Up / Down: Brightness";
 const STR_TUTORIAL2 = "Select Button: On / Off";
 const STR_TURNED_OFF = "Turned off";
+const STR_TURNED_ON = "Turned On";
 
 type RoomDetailsLocation = { id: string };
 
@@ -81,7 +82,7 @@ export const RoomDetailsScreen = (): React.ReactElement => {
   };
 
   const onArrow = (direction: string) => {
-    if (!room) return;
+    if (!room || room.notALight) return;
 
     let newBrightness = room.brightPercentage;
     switch (direction) {
@@ -104,8 +105,16 @@ export const RoomDetailsScreen = (): React.ReactElement => {
     }
   };
 
-  const displayBrightness =
-    room?.allOn || room?.anyOn ? `${room?.brightPercentage}%` : STR_TURNED_OFF;
+  let displayBrightness = STR_TURNED_OFF;
+  if (room?.notALight) {
+    displayBrightness =
+      room?.allOn || room?.anyOn ? STR_TURNED_ON : STR_TURNED_OFF;
+  } else {
+    displayBrightness =
+      room?.allOn || room?.anyOn
+        ? `${room?.brightPercentage}%`
+        : STR_TURNED_OFF;
+  }
 
   return (
     <Box
@@ -131,6 +140,7 @@ export const RoomDetailsScreen = (): React.ReactElement => {
             opacity={opacity}
             brightnessPercentage={room.brightPercentage}
             color={room.color}
+            notALight={room.notALight}
             onArrowPress={(direction: string) => {
               onArrow(direction);
               // return false to block navigation on vertical directions.
@@ -141,9 +151,11 @@ export const RoomDetailsScreen = (): React.ReactElement => {
             }}
           />
           <Box>
-            <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
-              {STR_TUTORIAL1}
-            </Typography>
+            {!room.notALight && (
+              <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
+                {STR_TUTORIAL1}
+              </Typography>
+            )}
             <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
               {STR_TUTORIAL2}
             </Typography>
