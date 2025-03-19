@@ -31,7 +31,7 @@ export const MenuItem = ({
   onFocus,
   onBlur,
   onArrow,
-}: MenuItemProps): JSX.Element => {
+}: MenuItemProps): React.ReactElement => {
   const { ref, focused } = useFocusable({
     onEnterPress: onClick,
     onFocus: onFocus,

@@ -1,4 +1,8 @@
-import { FocusDetails, FocusableComponentLayout, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import {
+  FocusDetails,
+  FocusableComponentLayout,
+  useFocusable,
+} from "@noriginmedia/norigin-spatial-navigation";
 import Typography from "@mui/material/Typography";
 
 type LightProps = {
@@ -26,13 +30,13 @@ export const Light = ({
   isOn,
   onClick,
   onArrow,
-  onFocus
-}: LightProps): JSX.Element => {
+  onFocus,
+}: LightProps): React.ReactElement => {
   const { ref, focused } = useFocusable({
     onEnterPress: onClick,
     focusKey,
     onArrowPress: onArrow ? onArrow : () => true,
-    onFocus
+    onFocus,
   });
   const brightnessHeight = 250 * brightness * 0.01;
   const displayBrightness = isOn ? `${brightness}%` : STR_TURNED_OFF;
@@ -49,13 +53,13 @@ export const Light = ({
         style={{
           display: "flex",
           flexDirection: "column-reverse",
-          alignItems: 'center',
+          alignItems: "center",
           backgroundColor: "rgba(56, 56, 56, 0.3)",
-          border: 'solid',
+          border: "solid",
           borderWidth: focused ? 2 : 1,
           // borderWidth: 2,
           // boxShadow: "0px 4px 4px 0px #1B1919",
-          borderColor: focused ?  "#8F33C6" : "rgba(36, 36, 36, 0.6)",
+          borderColor: focused ? "#8F33C6" : "rgba(36, 36, 36, 0.6)",
           borderRadius: 12,
           width: 250,
           height: 250,
@@ -63,13 +67,15 @@ export const Light = ({
         }}
       >
         {/* Brightness Level Indicator div */}
-        <div style={{
-          backgroundColor: isOn ? color : "transparent",
-          borderRadius: 12,
-          width: 246,
-          height: brightnessHeight,
-          transition: "250ms",
-        }} />
+        <div
+          style={{
+            backgroundColor: isOn ? color : "transparent",
+            borderRadius: 12,
+            width: 246,
+            height: brightnessHeight,
+            transition: "250ms",
+          }}
+        />
       </div>
     </div>
   );

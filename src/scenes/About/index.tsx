@@ -23,7 +23,7 @@ import {
 } from "./content";
 import { QRCode } from "./QRCode";
 
-export const About = (): JSX.Element => {
+export const About = (): React.ReactElement => {
   const { ref, focusKey } = useFocusable({
     focusKey: "about_screen",
     isFocusBoundary: true,

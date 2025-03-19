@@ -22,7 +22,7 @@ const STR_TURNED_OFF = "Turned off";
 
 type RoomDetailsLocation = { id: string };
 
-export const RoomDetailsScreen = (): JSX.Element => {
+export const RoomDetailsScreen = (): React.ReactElement => {
   const location = useLocation();
   const state = location.state as RoomDetailsLocation;
   const navigate = useNavigate();

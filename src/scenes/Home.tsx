@@ -15,7 +15,7 @@ import { Room } from "../api/types";
 
 import { Light } from "../components/Light";
 
-export const Home = (): JSX.Element => {
+export const Home = (): React.ReactElement => {
   const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: "home_screen",
   });

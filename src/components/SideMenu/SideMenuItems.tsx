@@ -24,7 +24,7 @@ const ListStyle = {
 export const SideMenuItems = ({
   toggleMenu,
   ref,
-}: SideMenuItemsProps): JSX.Element => {
+}: SideMenuItemsProps): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
 

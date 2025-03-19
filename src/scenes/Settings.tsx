@@ -54,7 +54,7 @@ const RESET_BUTTON_TITLE = "Reset";
 const GO_HOME_BUTTON_TITLE = "Go home";
 const SCREEN_TITLE = "Settings";
 
-export const Settings = (): JSX.Element => {
+export const Settings = (): React.ReactElement => {
   const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: "settings_screen",
   });

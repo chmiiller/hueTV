@@ -15,7 +15,7 @@ import { Light as LightType } from "../api/types";
 
 import { Light } from "../components/Light";
 
-export const Lights = (): JSX.Element => {
+export const Lights = (): React.ReactElement => {
   const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: "lights_screen",
   });

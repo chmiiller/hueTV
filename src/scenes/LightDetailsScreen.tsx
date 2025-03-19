@@ -22,7 +22,7 @@ const STR_TURNED_OFF = "Turned off";
 
 type LightDetailsLocation = { id: string };
 
-export const LightDetailsScreen = (): JSX.Element => {
+export const LightDetailsScreen = (): React.ReactElement => {
   const location = useLocation();
   const state = location.state as LightDetailsLocation;
   const navigate = useNavigate();
