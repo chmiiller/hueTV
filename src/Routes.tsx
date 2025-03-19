@@ -1,5 +1,5 @@
 import React from "react";
-import { createMemoryRouter, Outlet, useNavigate } from "react-router-dom";
+import { createMemoryRouter, Outlet, useNavigate } from "react-router";
 
 import { getSetupDone } from "./api/storage";
 
@@ -26,7 +26,7 @@ const Root = () => {
 
   return (
     <>
-      <SideMenu focusKey="MENU"/>
+      <SideMenu focusKey="MENU" />
       <div id="detail">
         <Outlet />
       </div>
@@ -41,8 +41,8 @@ export const router = createMemoryRouter([
     children: [
       { path: "home", element: <Home /> },
       { path: "lights", element: <Lights /> },
-      { path: "room", element: <RoomDetailsScreen/> },
-      { path: "light", element: <LightDetailsScreen/> },
+      { path: "room", element: <RoomDetailsScreen /> },
+      { path: "light", element: <LightDetailsScreen /> },
       { path: "settings", element: <Settings /> },
       { path: "about", element: <About /> },
     ],

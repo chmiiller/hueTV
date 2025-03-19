@@ -1,8 +1,8 @@
 import React from "react";
 
 import List from "@mui/material/List";
-import { setFocus } from '@noriginmedia/norigin-spatial-navigation';
-import { useNavigate, useLocation } from "react-router-dom";
+import { setFocus } from "@noriginmedia/norigin-spatial-navigation";
+import { useNavigate, useLocation } from "react-router";
 
 import { MenuItem } from "./MenuItem";
 import { sideMenuConfig, SideMenuObject } from "./SideMenuConfig";
@@ -24,7 +24,7 @@ const ListStyle = {
 export const SideMenuItems = ({
   toggleMenu,
   ref,
-} :SideMenuItemsProps): JSX.Element => {
+}: SideMenuItemsProps): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -82,15 +82,22 @@ export const SideMenuItems = ({
               icon={sideMenuObject.icon}
               title={sideMenuObject.title}
               onClick={() => {
-                navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                navigate(sideMenuObject.path, {
+                  state: { focus: true, screen: sideMenuObject.screenName },
+                });
                 deselectItem();
               }}
               onArrow={(direction: string) => {
-                if (direction === 'right') {
+                if (direction === "right") {
                   if (!fromDetails) {
                     toggleMenu(false);
                     setTimeout(() => {
-                      navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                      navigate(sideMenuObject.path, {
+                        state: {
+                          focus: true,
+                          screen: sideMenuObject.screenName,
+                        },
+                      });
                       setFocus(sideMenuObject.screenName);
                       deselectItem();
                     }, 100);
@@ -118,7 +125,7 @@ export const SideMenuItems = ({
           );
         })}
       </List>
-      <div style={{height: 12}}/>
+      <div style={{ height: 12 }} />
       {/* Second list of buttons */}
       <List sx={ListStyle}>
         {sideMenuConfig.extra.map((sideMenuObject: SideMenuObject) => {
@@ -127,9 +134,7 @@ export const SideMenuItems = ({
               key={sideMenuObject.id}
               path={sideMenuObject.path}
               focusKey={sideMenuObject.focusName}
-              current={
-                false
-              } // if it's the current selected menu item
+              current={false} // if it's the current selected menu item
               menuOpened={menuOpened}
               title={sideMenuObject.title}
               onClick={() => {
@@ -137,14 +142,23 @@ export const SideMenuItems = ({
                   exitApp();
                   return;
                 }
-                navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
-                
+                navigate(sideMenuObject.path, {
+                  state: { focus: true, screen: sideMenuObject.screenName },
+                });
               }}
               onArrow={(direction: string) => {
-                if (direction === 'right' && sideMenuObject.id !== "menu_item_exit") {
+                if (
+                  direction === "right" &&
+                  sideMenuObject.id !== "menu_item_exit"
+                ) {
                   if (!fromDetails) {
                     setTimeout(() => {
-                      navigate(sideMenuObject.path, { state: {focus: true, screen: sideMenuObject.screenName} });
+                      navigate(sideMenuObject.path, {
+                        state: {
+                          focus: true,
+                          screen: sideMenuObject.screenName,
+                        },
+                      });
                       setFocus(sideMenuObject.screenName);
                       deselectItem();
                     }, 100);

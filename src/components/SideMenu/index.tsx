@@ -44,15 +44,12 @@ const Drawer = styled(MuiDrawer, {
 
 type MenuProps = {
   focusKey: string;
-}
+};
 
-const SideMenu = ({ focusKey: focusKeyParam }: MenuProps): JSX.Element => {
-  const {
-    ref,
-    focusSelf,
-    hasFocusedChild,
-    focusKey
-  } = useFocusable({
+const SideMenu = ({
+  focusKey: focusKeyParam,
+}: MenuProps): React.ReactElement => {
+  const { ref, focusSelf, hasFocusedChild, focusKey } = useFocusable({
     focusable: true,
     saveLastFocusedChild: true,
     trackChildren: true,
@@ -88,10 +85,9 @@ const SideMenu = ({ focusKey: focusKeyParam }: MenuProps): JSX.Element => {
       // back button
       if (sideMenuIsSelected.current === true) {
         setTimeout(() => {
-          setFocus('menu_exit_app');
+          setFocus("menu_exit_app");
         }, 100);
       }
-
     }
   };
 

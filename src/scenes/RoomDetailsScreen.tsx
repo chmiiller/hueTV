@@ -1,14 +1,14 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 import {
   getGroupById,
   setGroupBrightness,
   turnGroupOn,
   turnGroupOff,
-  API_INTERVAL
+  API_INTERVAL,
 } from "../api/hueapi";
 import useInterval from "../api/useInterval";
 import { Room } from "../api/types";
@@ -22,7 +22,7 @@ const STR_TURNED_OFF = "Turned off";
 
 type RoomDetailsLocation = { id: string };
 
-export const RoomDetailsScreen = (): JSX.Element => {
+export const RoomDetailsScreen = (): React.ReactElement => {
   const location = useLocation();
   const state = location.state as RoomDetailsLocation;
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export const RoomDetailsScreen = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      navigate("/home", { state: { screen: null, focus: true }});
+      navigate("/home", { state: { screen: null, focus: true } });
     }
   };
 
@@ -85,28 +85,27 @@ export const RoomDetailsScreen = (): JSX.Element => {
 
     let newBrightness = room.brightPercentage;
     switch (direction) {
-    case "up":
-      newBrightness += 10;
-      newBrightness < 100
-        ? setRoomBrightness(newBrightness)
-        : setRoomBrightness(100);
-      break;
+      case "up":
+        newBrightness += 10;
+        newBrightness < 100
+          ? setRoomBrightness(newBrightness)
+          : setRoomBrightness(100);
+        break;
 
-    case "down":
-      newBrightness -= 10;
-      if (newBrightness > 0) {
-        setRoomBrightness(newBrightness);
-      } else {
-        switchOnOff(false);
-        setRoomBrightness(0);
-      }
-      break;
+      case "down":
+        newBrightness -= 10;
+        if (newBrightness > 0) {
+          setRoomBrightness(newBrightness);
+        } else {
+          switchOnOff(false);
+          setRoomBrightness(0);
+        }
+        break;
     }
   };
 
-  const displayBrightness = room?.allOn || room?.anyOn
-    ? `${room?.brightPercentage}%`
-    : STR_TURNED_OFF;
+  const displayBrightness =
+    room?.allOn || room?.anyOn ? `${room?.brightPercentage}%` : STR_TURNED_OFF;
 
   return (
     <Box
@@ -135,7 +134,7 @@ export const RoomDetailsScreen = (): JSX.Element => {
             onArrowPress={(direction: string) => {
               onArrow(direction);
               // return false to block navigation on vertical directions.
-              return !(direction === 'up' || direction === 'down');
+              return !(direction === "up" || direction === "down");
             }}
             onEnterPress={() => {
               switchOnOff(!room.allOn || !room.anyOn);

@@ -1,6 +1,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 
 import { router } from "./Routes";
 
@@ -13,8 +13,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: `"Inter", sans-serif`
-  }
+    fontFamily: `"Inter", sans-serif`,
+  },
 });
 
 function App() {

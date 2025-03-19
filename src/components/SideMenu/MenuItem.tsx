@@ -1,9 +1,9 @@
 import React from "react";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable } from "@noriginmedia/norigin-spatial-navigation";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router";
 
 type MenuItemProps = {
   path: string;
@@ -31,21 +31,24 @@ export const MenuItem = ({
   onFocus,
   onBlur,
   onArrow,
-}: MenuItemProps): JSX.Element => {
+}: MenuItemProps): React.ReactElement => {
   const { ref, focused } = useFocusable({
     onEnterPress: onClick,
     onFocus: onFocus,
     onBlur: onBlur,
     onArrowPress: onArrow,
-    focusKey
+    focusKey,
   });
-  
+
   return (
-    <div ref={ref} style={{
-      paddingLeft: 32,
-      paddingRight: 32,
-      marginBottom: 12
-    }}>
+    <div
+      ref={ref}
+      style={{
+        paddingLeft: 32,
+        paddingRight: 32,
+        marginBottom: 12,
+      }}
+    >
       <ListItemButton
         selected={focused || selected || current}
         component={RouterLink}
@@ -55,11 +58,7 @@ export const MenuItem = ({
           borderRadius: 2,
         }}
       >
-        {icon && (
-          <ListItemIcon sx={{ marginLeft: 0 }}>
-            {icon}
-          </ListItemIcon>
-        )}
+        {icon && <ListItemIcon sx={{ marginLeft: 0 }}>{icon}</ListItemIcon>}
         <ListItemText
           primary={title}
           primaryTypographyProps={{
