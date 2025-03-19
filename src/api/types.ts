@@ -80,6 +80,7 @@ export type Light = {
   sat?: number;
   name: string;
   type: string;
+  notALight: boolean;
 };
 
 type RawGroupState = {
@@ -125,6 +126,7 @@ export type Room = {
   saturation: number;
   bright: number;
   brightPercentage: number;
+  notALight: boolean;
 };
 
 export type StorageResult = {

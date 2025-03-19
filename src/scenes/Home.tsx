@@ -90,6 +90,7 @@ export const Home = () => {
                 name={room.name}
                 brightness={room.brightPercentage}
                 color={room.color}
+                notALight={room.notALight}
                 isOn={room.allOn || room.anyOn}
                 onFocus={handleScrolling}
                 onClick={() => {

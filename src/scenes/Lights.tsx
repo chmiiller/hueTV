@@ -91,6 +91,7 @@ export const Lights = () => {
                 name={light.name}
                 brightness={light.brightPercentage}
                 color={light.color}
+                notALight={light.notALight}
                 isOn={light.isOn}
                 onFocus={handleScrolling}
                 onClick={() => {

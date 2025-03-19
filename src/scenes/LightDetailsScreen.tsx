@@ -19,6 +19,7 @@ import { LightDetailsSkeleton } from "../components/LightDetailsSkeleton";
 const STR_TUTORIAL1 = "Arrows Up / Down: Brightness";
 const STR_TUTORIAL2 = "Select Button: On / Off";
 const STR_TURNED_OFF = "Turned off";
+const STR_TURNED_ON = "Turned on";
 
 type LightDetailsLocation = { id: string };
 
@@ -81,7 +82,7 @@ export const LightDetailsScreen = () => {
   };
 
   const onArrow = (direction: string) => {
-    if (!light) return;
+    if (!light || light.notALight) return;
 
     let newBrightness = light.brightPercentage;
     switch (direction) {
@@ -102,9 +103,14 @@ export const LightDetailsScreen = () => {
     }
   };
 
-  const displayBrightness = light?.isOn
-    ? `${light?.brightPercentage}%`
-    : STR_TURNED_OFF;
+  let displayBrightness = STR_TURNED_OFF;
+  if (light?.notALight) {
+    displayBrightness = light?.isOn ? STR_TURNED_ON : STR_TURNED_OFF;
+  } else {
+    displayBrightness = light?.isOn
+      ? `${light?.brightPercentage}%`
+      : STR_TURNED_OFF;
+  }
 
   return (
     <Box
@@ -130,6 +136,7 @@ export const LightDetailsScreen = () => {
             opacity={opacity}
             brightnessPercentage={light.brightPercentage}
             color={light.color}
+            notALight={light.notALight}
             onArrowPress={(direction: string) => {
               onArrow(direction);
               // return false to block navigation on vertical directions.
@@ -140,9 +147,11 @@ export const LightDetailsScreen = () => {
             }}
           />
           <Box>
-            <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
-              {STR_TUTORIAL1}
-            </Typography>
+            {!light.notALight && (
+              <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
+                {STR_TUTORIAL1}
+              </Typography>
+            )}
             <Typography sx={{ opacity: 0.75 }} gutterBottom variant={"h6"}>
               {STR_TUTORIAL2}
             </Typography>

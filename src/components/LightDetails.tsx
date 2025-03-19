@@ -10,6 +10,7 @@ type LightDetailsProps = {
   isOn: boolean;
   brightnessPercentage: number;
   color: string;
+  notALight: boolean;
   onEnterPress: () => void;
   onArrowPress: (direction: string) => boolean;
   opacity: number;
@@ -23,6 +24,7 @@ export const LightDetails = ({
   isOn,
   brightnessPercentage,
   color,
+  notALight,
   onEnterPress,
   onArrowPress,
   opacity,
@@ -39,12 +41,17 @@ export const LightDetails = ({
   }, [location]);
 
   const switchBaseHeight = focused ? switchHeightFocused : switchHeight;
-  const brightnessHeight = isOn
-    ? switchBaseHeight * brightnessPercentage * 0.01
-    : 0;
+  let brightnessHeight = 0;
+  if (notALight) {
+    brightnessHeight = isOn ? switchBaseHeight * 99 * 0.01 : 0;
+  } else {
+    brightnessHeight = isOn
+      ? switchBaseHeight * brightnessPercentage * 0.01
+      : 0;
+  }
 
   const dynamicStyle = {
-    bgcolor: color,
+    bgcolor: notALight ? "#ffe496" : color,
     borderRadius: 4,
     width: 300,
     height: brightnessHeight,

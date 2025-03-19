@@ -10,6 +10,7 @@ type LightProps = {
   name: string;
   brightness: number;
   color?: string;
+  notALight: boolean;
   isOn: boolean;
   onClick?: () => void;
   onArrow?: (direction: string) => true;
@@ -21,12 +22,14 @@ type LightProps = {
 };
 
 const STR_TURNED_OFF = "Off";
+const STR_TURNED_ON = "On";
 
 export const Light = ({
   focusKey,
   name,
   brightness,
   color,
+  notALight,
   isOn,
   onClick,
   onArrow,
@@ -38,8 +41,14 @@ export const Light = ({
     onArrowPress: onArrow ? onArrow : () => true,
     onFocus,
   });
-  const brightnessHeight = 250 * brightness * 0.01;
-  const displayBrightness = isOn ? `${brightness}%` : STR_TURNED_OFF;
+  const brightnessHeight = !notALight
+    ? 250 * brightness * 0.01
+    : 250 * 100 * 0.01;
+  let displayBrightness = isOn ? `${brightness}%` : STR_TURNED_OFF;
+  if (notALight) {
+    displayBrightness = isOn ? STR_TURNED_ON : STR_TURNED_OFF;
+  }
+  const displayColor = notALight ? "#ffe496" : color;
 
   return (
     <div ref={ref} onClick={onClick}>
@@ -69,7 +78,7 @@ export const Light = ({
         {/* Brightness Level Indicator div */}
         <div
           style={{
-            backgroundColor: isOn ? color : "transparent",
+            backgroundColor: isOn ? displayColor : "transparent",
             borderRadius: 12,
             width: 246,
             height: brightnessHeight,

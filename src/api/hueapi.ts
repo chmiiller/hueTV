@@ -98,7 +98,7 @@ export const getGroups = async (): Promise<Array<Room> | null> => {
     const response = await fetch(url);
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -129,7 +129,7 @@ export const getLights = async (): Promise<Array<Light> | null> => {
     const response = await fetch(url);
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -164,7 +164,7 @@ export const getLightById = async (id: string): Promise<Light | null> => {
     const response = await fetch(url);
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -193,7 +193,7 @@ export const getGroupById = async (id: string): Promise<Room | null> => {
     const response = await fetch(url);
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -248,7 +248,7 @@ export const turnLightOff = async (
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -276,7 +276,7 @@ export const turnLightOn = async (
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -301,7 +301,7 @@ export const turnGroupOff = async (
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -326,7 +326,7 @@ export const turnGroupOn = async (
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -368,7 +368,7 @@ export const setLightBrightness = async ({
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -401,7 +401,7 @@ export const setGroupBrightness = async ({
     });
 
     if (!response.ok) {
-      const message = `An error has ocurred: ${response.status}`;
+      const message = `An error has occurred: ${response.status}`;
       throw new Error(message);
     }
 
@@ -438,6 +438,7 @@ const makeLight = (light: RawLight, id: string): Light => {
     sat: light.state.sat,
     name: light.name,
     type: light.type,
+    notALight: !bright
   };
 };
 
@@ -475,6 +476,7 @@ const makeGroup = (group: RawGroup, id: string): Room => {
     saturation: sat,
     bright: bri,
     brightPercentage,
+    notALight: !bri
   };
 };
 
@@ -495,6 +497,7 @@ export const generateMockLights = (amount = 40): Array<Light> => {
       colorIsDark: false,
       name: `Random light ${Math.floor(randomId)}`,
       type: "Color temperature light",
+      notALight: false,
     });
   }
   return mockLights;
@@ -521,6 +524,7 @@ export const generateMockGroups = (amount = 40): Array<any> => {
       saturation: 140,
       bright: 254,
       brightPercentage: randomBright,
+      notALight: false,
     });
   }
   return mockGroups;
