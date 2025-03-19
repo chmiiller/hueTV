@@ -91,30 +91,33 @@ export const About = (): React.ReactElement => {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              paddingRight: 64,
+              flexDirection: "column",
             }}
           >
-            <Typography
-              align={"left"}
-              variant={"h4"}
-              sx={{
-                marginRight: 8,
+            <Typography align={"left"} variant={"h4"}>
+              {ABOUT_TITLE}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingRight: 64,
               }}
             >
-              {ABOUT_TITLE}
               <Typography
                 align={"left"}
                 variant={"h6"}
                 sx={{
                   marginTop: 2,
+                  marginRight: 8,
+                  maxWidth: "80%",
                 }}
               >
                 {ABOUT_ME}
               </Typography>
-            </Typography>
-            <p />
-            <QRCode />
+              <p />
+              <QRCode />
+            </div>
           </div>
           <Typography align={"left"} variant={"h4"}>
             {MOTIVATION_TITLE}
