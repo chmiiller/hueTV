@@ -1,8 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { useFocusable, FocusContext, FocusableComponentLayout, setFocus } from '@noriginmedia/norigin-spatial-navigation';
-import { useNavigate, useLocation } from "react-router-dom";
+import {
+  useFocusable,
+  FocusContext,
+  FocusableComponentLayout,
+  setFocus,
+} from "@noriginmedia/norigin-spatial-navigation";
+import { useNavigate, useLocation } from "react-router";
 
 import useInterval from "../api/useInterval";
 import { getLights, API_INTERVAL } from "../api/hueapi";
@@ -12,17 +17,17 @@ import { Light } from "../components/Light";
 
 export const Lights = (): JSX.Element => {
   const { ref, focusKey, focusSelf } = useFocusable({
-    focusKey: 'lights_screen'
+    focusKey: "lights_screen",
   });
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const handleScrolling = (layout: FocusableComponentLayout) => {
     layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const [lights, setLights] = React.useState<Array<LightType>>([]);
-  
+
   React.useEffect(() => {
     homeGetLights();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -40,7 +45,7 @@ export const Lights = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if(location.state){
+      if (location.state) {
         focusSelf();
       }
     }, 100);
@@ -89,7 +94,9 @@ export const Lights = (): JSX.Element => {
                 isOn={light.isOn}
                 onFocus={handleScrolling}
                 onClick={() => {
-                  navigate("/light", { state: { id: light.id, screen: 'details' } });
+                  navigate("/light", {
+                    state: { id: light.id, screen: "details" },
+                  });
                 }}
               />
             ))}

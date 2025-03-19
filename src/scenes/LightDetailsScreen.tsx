@@ -1,14 +1,14 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 import {
   getLightById,
   setLightBrightness,
   turnLightOn,
   turnLightOff,
-  API_INTERVAL
+  API_INTERVAL,
 } from "../api/hueapi";
 import useInterval from "../api/useInterval";
 import { Light } from "../api/types";
@@ -51,7 +51,7 @@ export const LightDetailsScreen = (): JSX.Element => {
       event.keyCode === 27
     ) {
       // back button
-      navigate("/lights", { state: { screen: null, focus: true }});
+      navigate("/lights", { state: { screen: null, focus: true } });
     }
   };
 
@@ -85,20 +85,20 @@ export const LightDetailsScreen = (): JSX.Element => {
 
     let newBrightness = light.brightPercentage;
     switch (direction) {
-    case "up":
-      newBrightness += 10;
-      newBrightness < 100 ? setBrightness(newBrightness) : setBrightness(100);
-      break;
+      case "up":
+        newBrightness += 10;
+        newBrightness < 100 ? setBrightness(newBrightness) : setBrightness(100);
+        break;
 
-    case "down":
-      newBrightness -= 10;
-      if (newBrightness > 0) {
-        setBrightness(newBrightness);
-      } else {
-        switchOnOff(false);
-        setBrightness(0);
-      }
-      break;
+      case "down":
+        newBrightness -= 10;
+        if (newBrightness > 0) {
+          setBrightness(newBrightness);
+        } else {
+          switchOnOff(false);
+          setBrightness(0);
+        }
+        break;
     }
   };
 
@@ -133,7 +133,7 @@ export const LightDetailsScreen = (): JSX.Element => {
             onArrowPress={(direction: string) => {
               onArrow(direction);
               // return false to block navigation on vertical directions.
-              return !(direction === 'up' || direction === 'down');
+              return !(direction === "up" || direction === "down");
             }}
             onEnterPress={() => {
               switchOnOff(!light.isOn);
