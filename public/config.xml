@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://www.buymeacoffee.com/carloszinato" version="1.0.0" viewmodes="maximized">
-    <tizen:application id="a2cD2RV76B.hueTV" package="a2cD2RV76B" required_version="2.1"/>
+    <tizen:application id="pM87AcZ2dl.hueTV" package="pM87AcZ2dl" required_version="2.3"/>
     <name>hueTV</name>
     <icon src="icon.png"/>
     <author email="cmzinato@gmail.com">Carlos Zinato</author>
