@@ -1,7 +1,12 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { useFocusable, FocusContext, FocusableComponentLayout, setFocus } from '@noriginmedia/norigin-spatial-navigation';
+import {
+  useFocusable,
+  FocusContext,
+  FocusableComponentLayout,
+  setFocus,
+} from "@noriginmedia/norigin-spatial-navigation";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import useInterval from "../api/useInterval";
@@ -10,13 +15,13 @@ import { Room } from "../api/types";
 
 import { Light } from "../components/Light";
 
-export const Home = (): JSX.Element => {
+export const Home = () => {
   const { ref, focusKey, focusSelf } = useFocusable({
-    focusKey: 'home_screen'
+    focusKey: "home_screen",
   });
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const handleScrolling = (layout: FocusableComponentLayout) => {
     layout.node.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -39,7 +44,7 @@ export const Home = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if(location.state?.focus){
+      if (location.state?.focus) {
         focusSelf();
       }
     }, 100);
@@ -88,7 +93,9 @@ export const Home = (): JSX.Element => {
                 isOn={room.allOn || room.anyOn}
                 onFocus={handleScrolling}
                 onClick={() => {
-                  navigate("/room", { state: { id: room.id, screen: 'details' }});
+                  navigate("/room", {
+                    state: { id: room.id, screen: "details" },
+                  });
                 }}
               />
             ))}

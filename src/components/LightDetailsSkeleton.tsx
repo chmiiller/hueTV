@@ -1,6 +1,6 @@
 import Skeleton from "@mui/material/Skeleton";
 
-export const LightDetailsSkeleton = (): JSX.Element => {
+export const LightDetailsSkeleton = () => {
   return (
     <div
       style={{

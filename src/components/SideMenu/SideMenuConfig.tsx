@@ -1,6 +1,6 @@
-import { HomeIcon } from '../SvgIcons/HomeIcon';
-import { LightIcon } from '../SvgIcons/LightIcon';
-import { SettingsIcon } from '../SvgIcons/SettingsIcon';
+import { HomeIcon } from "../SvgIcons/HomeIcon";
+import { LightIcon } from "../SvgIcons/LightIcon";
+import { SettingsIcon } from "../SvgIcons/SettingsIcon";
 
 export type SideMenuObject = {
   id: string;
@@ -8,7 +8,7 @@ export type SideMenuObject = {
   focusName: string;
   title: string;
   screenName: string;
-  icon?: JSX.Element;
+  icon?: React.ReactElement;
 };
 
 type SideMenuConfigObject = {

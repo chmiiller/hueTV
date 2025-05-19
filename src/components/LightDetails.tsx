@@ -1,9 +1,9 @@
 import React from "react";
-import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { useFocusable } from "@noriginmedia/norigin-spatial-navigation";
 import Box from "@mui/material/Box";
 
-import { LightIcon } from './SvgIcons/LightIcon';
-import { LightFillIcon } from './SvgIcons/LightFillIcon';
+import { LightIcon } from "./SvgIcons/LightIcon";
+import { LightFillIcon } from "./SvgIcons/LightFillIcon";
 
 type LightDetailsProps = {
   id: string;
@@ -26,11 +26,11 @@ export const LightDetails = ({
   onEnterPress,
   onArrowPress,
   opacity,
-}: LightDetailsProps): JSX.Element => {
+}: LightDetailsProps) => {
   const { ref, focused, focusSelf } = useFocusable({
     onEnterPress,
     onArrowPress,
-    focusKey: `switch_${id}`
+    focusKey: `switch_${id}`,
   });
   React.useEffect(() => {
     setTimeout(() => {
@@ -64,7 +64,7 @@ export const LightDetails = ({
           width: 300,
           height: switchBaseHeight,
           margin: 4,
-          position: 'relative',
+          position: "relative",
         }}
       >
         {/* Light Brightness view */}
@@ -82,11 +82,7 @@ export const LightDetails = ({
           }}
         >
           {/* Light Bulb icon */}
-          {isOn ? (
-            <LightFillIcon size={45}/>
-          ) : (
-            <LightIcon size={45}/>
-          )}
+          {isOn ? <LightFillIcon size={45} /> : <LightIcon size={45} />}
         </Box>
       </Box>
     </div>

@@ -1,7 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
+import {
+  FocusContext,
+  useFocusable,
+  setFocus,
+} from "@noriginmedia/norigin-spatial-navigation";
 import { useLocation } from "react-router-dom";
 
 import { ScrollableBox } from "../../components/ScrollableBox";
@@ -19,9 +23,9 @@ import {
 } from "./content";
 import { QRCode } from "./QRCode";
 
-export const About = (): JSX.Element => {
+export const About = () => {
   const { ref, focusKey } = useFocusable({
-    focusKey: 'about_screen',
+    focusKey: "about_screen",
     isFocusBoundary: true,
   });
   const location = useLocation();
@@ -52,8 +56,8 @@ export const About = (): JSX.Element => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if(location.state){
-        setFocus('about_scrollable');
+      if (location.state) {
+        setFocus("about_scrollable");
       }
     }, 100);
   }, [location]);
@@ -61,7 +65,7 @@ export const About = (): JSX.Element => {
   return (
     <FocusContext.Provider value={focusKey}>
       <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
-        {'About'}
+        {"About"}
       </Typography>
       <Box
         ref={ref}
@@ -84,18 +88,28 @@ export const About = (): JSX.Element => {
           </Typography>
           <br />
           <p />
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            paddingRight: 64,
-          }}>
-            <Typography align={"left"} variant={"h4"} sx={{
-              marginRight: 8,
-            }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingRight: 64,
+            }}
+          >
+            <Typography
+              align={"left"}
+              variant={"h4"}
+              sx={{
+                marginRight: 8,
+              }}
+            >
               {ABOUT_TITLE}
-              <Typography align={"left"} variant={"h6"} sx={{
-                marginTop: 2,
-              }}>
+              <Typography
+                align={"left"}
+                variant={"h6"}
+                sx={{
+                  marginTop: 2,
+                }}
+              >
                 {ABOUT_ME}
               </Typography>
             </Typography>
