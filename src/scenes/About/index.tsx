@@ -6,7 +6,7 @@ import {
   useFocusable,
   setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { ScrollableBox } from "../../components/ScrollableBox";
 import {
@@ -23,7 +23,7 @@ import {
 } from "./content";
 import { QRCode } from "./QRCode";
 
-export const About = () => {
+export const About = (): React.ReactElement => {
   const { ref, focusKey } = useFocusable({
     focusKey: "about_screen",
     isFocusBoundary: true,
@@ -91,30 +91,33 @@ export const About = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              paddingRight: 64,
+              flexDirection: "column",
             }}
           >
-            <Typography
-              align={"left"}
-              variant={"h4"}
-              sx={{
-                marginRight: 8,
+            <Typography align={"left"} variant={"h4"}>
+              {ABOUT_TITLE}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingRight: 64,
               }}
             >
-              {ABOUT_TITLE}
               <Typography
                 align={"left"}
                 variant={"h6"}
                 sx={{
                   marginTop: 2,
+                  marginRight: 8,
+                  maxWidth: "80%",
                 }}
               >
                 {ABOUT_ME}
               </Typography>
-            </Typography>
-            <p />
-            <QRCode />
+              <p />
+              <QRCode />
+            </div>
           </div>
           <Typography align={"left"} variant={"h4"}>
             {MOTIVATION_TITLE}

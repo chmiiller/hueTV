@@ -6,7 +6,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "6.4.8",
-    "@noriginmedia/norigin-spatial-navigation": "^2.1.0",
+    "@noriginmedia/norigin-spatial-navigation": "^2.3.0",
     "@types/node": "^22.13.10",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
