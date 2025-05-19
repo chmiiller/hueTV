@@ -11,8 +11,6 @@ This means that it'll be forever free and there's no reason for it to collect an
 
 I hope it becomes useful and fun to use for you as it became to me.
 
-
-
 ## Running the app on your browser
 
 In the project directory, run:
@@ -29,7 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 2. build react app as a Tizen app: `tizen build-web -- ./build`
 
-3. create a WGT file (package) and passes `huetv` as the certificate name:   
+3. create a WGT file (package) and passes `huetv` as the certificate name:
 
 `cd build/.buildResult`
 
@@ -47,4 +45,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 `tizen uninstall -t TV_ID -p ID.hueTV`
 
+# To Do:
 
+### Onboarding:
+
+1. Should be Settings screen but full screen without Menu
+2. Instead of the button becoming "Bridge found" it should be called
+3. When the timer runs out, the button doesn't work again
+4. Update text to "Go to home and find..."
+5. Update button title to "Home"
