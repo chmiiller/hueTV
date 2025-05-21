@@ -49,8 +49,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Onboarding:
 
-1. Should be Settings screen but full screen without Menu
-2. Instead of the button becoming "Bridge found" it should be called
-3. When the timer runs out, the button doesn't work again
-4. Update text to "Go to home and find..."
-5. Update button title to "Home"
+1. Instead of the button becoming "Bridge found" it should be called something else
+2. When the timer runs out, the button doesn't work again
+3. Figure out how to hide the Onboarding screen "flash" when the setup is done
+4. Home has no "focus" event and the remote controller navigation doesn't work

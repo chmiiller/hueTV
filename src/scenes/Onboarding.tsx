@@ -41,7 +41,7 @@ const FIRST_MESSAGE_SECONDARY = "You’ll need physical access to the Hue Bridge
 const SECOND_MESSAGE = `Press Select to search for your Hue Bridge`;
 const THIRD_MESSAGE_PRIMARY = "Press the button on the Hue Bridge to connect";
 const FOURTH_MESSAGE_PRIMARY = `You're all set`;
-const FOURTH_MESSAGE_SECONDARY = `Go home and find your rooms and lights`;
+const FOURTH_MESSAGE_SECONDARY = `Go to "home" and find your rooms and lights`;
 const RESET_MESSAGE_PRIMARY = `Select reset to disconnect from the Hue Bridge`;
 const RESET_MESSAGE_SECONDARY = `You’ll lose connection with your Hue devices`;
 const SEARCH_BUTTON_TITLE = "Search";
@@ -51,7 +51,7 @@ const SECOND_BUTTON_KEY = "settings_second_button";
 const THIRD_BUTTON_KEY = "settings_go_home_button";
 const START_BUTTON_TITLE = "Start";
 const RESET_BUTTON_TITLE = "Reset";
-const GO_HOME_BUTTON_TITLE = "Go home";
+const GO_HOME_BUTTON_TITLE = "Home";
 const SCREEN_TITLE = "Welcome, let's set it up 4";
 
 export const Onboarding = (): React.ReactElement => {
