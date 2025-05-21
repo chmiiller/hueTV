@@ -1,5 +1,10 @@
-import React from "react";
-import { createMemoryRouter, Outlet, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  createMemoryRouter,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import { getSetupDone } from "./api/storage";
 
@@ -11,25 +16,34 @@ import { RoomDetailsScreen } from "./scenes/RoomDetailsScreen";
 import { LightDetailsScreen } from "./scenes/LightDetailsScreen";
 import { Settings } from "./scenes/Settings";
 import { About } from "./scenes/About";
+import { Onboarding } from "./scenes/Onboarding";
 
 const Root = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [setupIsDone, setSetupIsDone] = useState(null);
 
   React.useEffect(() => {
     const setupState = getSetupDone();
-    if (setupState.data) {
+    const ready = setupState.data ?? false;
+    setSetupIsDone(ready);
+    if (ready) {
       navigate("/home", { replace: true });
-    } else {
-      navigate("/settings", { replace: true });
     }
-  }, []);
+  }, [location]);
 
   return (
     <>
-      <SideMenu focusKey="MENU" />
-      <div id="detail">
-        <Outlet />
-      </div>
+      {setupIsDone !== null && setupIsDone === true ? (
+        <>
+          <SideMenu focusKey="MENU" />
+          <div id="detail">
+            <Outlet />
+          </div>
+        </>
+      ) : (
+        <Onboarding />
+      )}
     </>
   );
 };
