@@ -7,7 +7,7 @@ import {
   FocusableComponentLayout,
   setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import useInterval from "../api/useInterval";
 import { getGroups, API_INTERVAL } from "../api/hueapi";
