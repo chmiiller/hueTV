@@ -1,6 +1,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RouterProvider } from "react-router";
+import { RouterProvider } from "react-router-dom";
 
 import { router } from "./Routes";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { createMemoryRouter, Outlet, useNavigate } from "react-router";
+import { createMemoryRouter, Outlet, useNavigate } from "react-router-dom";
 
 import { getSetupDone } from "./api/storage";
 

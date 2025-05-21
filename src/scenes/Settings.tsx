@@ -1,6 +1,6 @@
 import React from "react";
 import CSS from "csstype";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   useFocusable,
   FocusContext,

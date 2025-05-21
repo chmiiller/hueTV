@@ -6,7 +6,7 @@ import {
   useFocusable,
   setFocus,
 } from "@noriginmedia/norigin-spatial-navigation";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import { ScrollableBox } from "../../components/ScrollableBox";
 import {

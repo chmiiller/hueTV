@@ -3,7 +3,7 @@ import { useFocusable } from "@noriginmedia/norigin-spatial-navigation";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink } from "react-router-dom";
 
 type MenuItemProps = {
   path: string;
