@@ -32,9 +32,14 @@ const Root = () => {
     }
   }, [location]);
 
+  if (setupIsDone === null) {
+    // Loading Indicator
+    return <div className="spinner"></div>;
+  }
+
   return (
     <>
-      {setupIsDone !== null && setupIsDone === true ? (
+      {setupIsDone ? (
         <>
           <SideMenu focusKey="MENU" />
           <div id="detail">
