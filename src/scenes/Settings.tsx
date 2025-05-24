@@ -36,23 +36,26 @@ const styles: Styles = {
 };
 
 const TOTAL_AUTH_TRIES = 60;
-const FIRST_MESSAGE_PRIMARY = `Select Start to setup the app`;
+const SCREEN_TITLE = "Settings";
+
+const FIRST_BUTTON_KEY = "settings_start_button";
+const SECOND_BUTTON_KEY = "settings_second_button";
+const THIRD_BUTTON_KEY = "settings_go_home_button";
+
+const START_BUTTON_TITLE = "Start setup";
+const BRIDGE_FOUND_BUTTON_TITLE = "Waiting...";
+const SEARCH_BUTTON_TITLE = "Search Hue";
+const RESET_BUTTON_TITLE = "Reset";
+const GO_HOME_BUTTON_TITLE = "Home";
+
+const FIRST_MESSAGE_PRIMARY = `Select "${START_BUTTON_TITLE}" to set up the app`;
 const FIRST_MESSAGE_SECONDARY = "You’ll need physical access to the Hue Bridge";
-const SECOND_MESSAGE = `Press Select to search for your Hue Bridge`;
+const SECOND_MESSAGE = `Select "${SEARCH_BUTTON_TITLE}" to search for your Hue Bridge`;
 const THIRD_MESSAGE_PRIMARY = "Press the button on the Hue Bridge to connect";
 const FOURTH_MESSAGE_PRIMARY = `You're all set`;
 const FOURTH_MESSAGE_SECONDARY = `Go to "home" and find your rooms and lights`;
 const RESET_MESSAGE_PRIMARY = `Select reset to disconnect from the Hue Bridge`;
-const RESET_MESSAGE_SECONDARY = `You’ll lose connection with your Hue devices`;
-const SEARCH_BUTTON_TITLE = "Search";
-const BRIDGE_FOUND_BUTTON_TITLE = "Bridge found";
-const FIRST_BUTTON_KEY = "settings_start_button";
-const SECOND_BUTTON_KEY = "settings_second_button";
-const THIRD_BUTTON_KEY = "settings_go_home_button";
-const START_BUTTON_TITLE = "Start";
-const RESET_BUTTON_TITLE = "Reset";
-const GO_HOME_BUTTON_TITLE = "Home";
-const SCREEN_TITLE = "Settings";
+const RESET_MESSAGE_SECONDARY = `You’ll lose connection to your Hue devices`;
 
 export const Settings = (): React.ReactElement => {
   const { ref, focusKey, focusSelf } = useFocusable({
