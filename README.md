@@ -1,4 +1,5 @@
 # hueTV - Control your Hue lights from your TV!
+
 https://github.com/user-attachments/assets/0d24711d-4403-4731-85c9-1156c94e2d59
 
 # Welcome
@@ -47,7 +48,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Uninstall app from TV:
 
 `tizen uninstall -t TV_ID -p ID.hueTV`
-
-# To Do:
-
-finish onboarding
