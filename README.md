@@ -1,6 +1,7 @@
+# hueTV - Control your Hue lights from your TV!
 https://github.com/user-attachments/assets/0d24711d-4403-4731-85c9-1156c94e2d59
 
-# Welcome to hueTV!
+# Welcome
 
 Hi there, first of all, **thank you so much** for downloading my app!
 The hueTV app was made for those who want to dim the living room lights just before start watching their favorite TV show and are too lazy to unlock their phone and open the (sometimes slow) lights app, or for those who just want to show off that they can control all the lights in their house using the TV remote.
