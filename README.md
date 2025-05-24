@@ -47,9 +47,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 # To Do:
 
-### Onboarding:
-
-1. Instead of the button becoming "Bridge found" it should be called something else
-2. When the timer runs out, the button doesn't work again
-3. Figure out how to hide the Onboarding screen "flash" when the setup is done
-4. Home has no "focus" event and the remote controller navigation doesn't work
+finish onboarding

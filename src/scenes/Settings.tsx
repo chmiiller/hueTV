@@ -35,7 +35,7 @@ const styles: Styles = {
   },
 };
 
-const TOTAL_AUTH_TRIES = 20;
+const TOTAL_AUTH_TRIES = 60;
 const FIRST_MESSAGE_PRIMARY = `Select Start to setup the app`;
 const FIRST_MESSAGE_SECONDARY = "You’ll need physical access to the Hue Bridge";
 const SECOND_MESSAGE = `Press Select to search for your Hue Bridge`;
@@ -68,10 +68,6 @@ export const Settings = (): React.ReactElement => {
   const [setupDone, setSetupDone] = React.useState<boolean>(false);
   const [secondMessage, setSecondMessage] = React.useState<Message>({
     primary: "",
-  });
-  const [thirdMessage, setThirdMessage] = React.useState<Message>({
-    primary: "",
-    secondary: "",
   });
 
   React.useEffect(() => {
@@ -171,6 +167,7 @@ export const Settings = (): React.ReactElement => {
               primary: `${SECOND_MESSAGE}`,
               secondary: "",
             });
+            setSecondStep(false);
           }
           count--;
         }
@@ -227,8 +224,8 @@ export const Settings = (): React.ReactElement => {
               },
               focusable: thirdStep,
             }}
-            messagePrimary={thirdMessage.primary}
-            messageSecondary={thirdMessage.secondary}
+            messagePrimary={""}
+            messageSecondary={""}
           />
         </div>
       )}

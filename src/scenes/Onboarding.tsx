@@ -1,6 +1,6 @@
 import React from "react";
 import CSS from "csstype";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   useFocusable,
   FocusContext,
@@ -35,7 +35,7 @@ const styles: Styles = {
   },
 };
 
-const TOTAL_AUTH_TRIES = 20;
+const TOTAL_AUTH_TRIES = 60;
 const FIRST_MESSAGE_PRIMARY = `Select Start to setup the app`;
 const FIRST_MESSAGE_SECONDARY = "You’ll need physical access to the Hue Bridge";
 const SECOND_MESSAGE = `Press Select to search for your Hue Bridge`;
@@ -52,14 +52,13 @@ const THIRD_BUTTON_KEY = "settings_go_home_button";
 const START_BUTTON_TITLE = "Start";
 const RESET_BUTTON_TITLE = "Reset";
 const GO_HOME_BUTTON_TITLE = "Home";
-const SCREEN_TITLE = "Welcome, let's set it up 4";
+const SCREEN_TITLE = "Welcome, let's set it up";
 
 export const Onboarding = (): React.ReactElement => {
   const { ref, focusKey, focusSelf } = useFocusable({
     focusKey: "onboarding_screen",
   });
   const navigate = useNavigate();
-  const location = useLocation();
   const [secondButtonTitle, setSecondButtonTitle] =
     React.useState<string>(SEARCH_BUTTON_TITLE);
   const [firstStep, setFirstStep] = React.useState<boolean>(false);
@@ -68,10 +67,6 @@ export const Onboarding = (): React.ReactElement => {
   const [setupDone, setSetupDone] = React.useState<boolean>(false);
   const [secondMessage, setSecondMessage] = React.useState<Message>({
     primary: "",
-  });
-  const [thirdMessage, setThirdMessage] = React.useState<Message>({
-    primary: "",
-    secondary: "",
   });
 
   React.useEffect(() => {
@@ -95,10 +90,6 @@ export const Onboarding = (): React.ReactElement => {
       window.removeEventListener("keydown", onKey);
     };
   }, []);
-
-  // React.useEffect(() => {
-
-  // }, [location]);
 
   const onKey = (event: KeyboardEvent) => {
     if (
@@ -159,7 +150,7 @@ export const Onboarding = (): React.ReactElement => {
           setFocus(THIRD_BUTTON_KEY);
           return;
         } else {
-          // on error, keep trying for 20 seconds
+          // on error, keep trying for TOTAL_AUTH_TRIES seconds
           setSecondMessage({
             primary: THIRD_MESSAGE_PRIMARY,
             secondary: `${count}`,
@@ -173,6 +164,7 @@ export const Onboarding = (): React.ReactElement => {
               primary: `${SECOND_MESSAGE}`,
               secondary: "",
             });
+            setSecondStep(false);
           }
           count--;
         }
@@ -238,8 +230,8 @@ export const Onboarding = (): React.ReactElement => {
                 },
                 focusable: thirdStep,
               }}
-              messagePrimary={thirdMessage.primary}
-              messageSecondary={thirdMessage.secondary}
+              messagePrimary={""}
+              messageSecondary={""}
             />
           </div>
         )}
