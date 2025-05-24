@@ -21,7 +21,7 @@ import { Onboarding } from "./scenes/Onboarding";
 const Root = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [setupIsDone, setSetupIsDone] = useState(null);
+  const [setupIsDone, setSetupIsDone] = useState<boolean | null>(null);
 
   React.useEffect(() => {
     const setupState = getSetupDone();
@@ -29,6 +29,17 @@ const Root = () => {
     setSetupIsDone(ready);
     if (ready) {
       navigate("/home", { replace: true });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (location && location.state?.screen === "onboarding") {
+      const setupState = getSetupDone();
+      const ready = setupState.data ?? false;
+      setSetupIsDone(ready);
+      if (ready) {
+        navigate("/home", { replace: true });
+      }
     }
   }, [location]);
 
