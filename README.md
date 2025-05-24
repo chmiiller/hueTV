@@ -48,3 +48,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Uninstall app from TV:
 
 `tizen uninstall -t TV_ID -p ID.hueTV`
+
+### TO DO:
+
+- Smartplug should show room name (Piano) and use a different icon (plug)
+- if you reset the selected button should automatically focus on "start setup" but it remains the last button (reset -> home)
+- crash after resetting and setting it up again: go through the steps and quickly press left and right on the remote
+
+Onboarding screen:
+
+- centralize text box vertically
+- Change font size of the title (similar to Disney+)
+- show the selected button using a different color, maybe black and white
+- force focus on HOME when done. Sometimes it doesn't work
