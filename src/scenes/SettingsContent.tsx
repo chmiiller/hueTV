@@ -199,6 +199,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={FIRST_MESSAGE_PRIMARY}
             messageSecondary={FIRST_MESSAGE_SECONDARY}
+            contrast={parentTitle === "onboarding"}
           />
           <SettingsItem
             button={{
@@ -214,6 +215,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={secondMessage.primary}
             messageSecondary={secondMessage.secondary}
+            contrast={parentTitle === "onboarding"}
           />
           <SettingsItem
             button={{
@@ -221,14 +223,14 @@ export const SettingsContent = ({
               focusKey: THIRD_BUTTON_KEY,
               onClick: () => {
                 navigate("/home", {
-                  state: { screen: parentTitle, fromSettings: true },
+                  state: { screen: parentTitle, focus: true },
                 });
-                setFocus("menu_home_screen");
               },
               focusable: thirdStep,
             }}
             messagePrimary={""}
             messageSecondary={""}
+            contrast={parentTitle === "onboarding"}
           />
         </div>
       )}
@@ -249,6 +251,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={FOURTH_MESSAGE_PRIMARY}
             messageSecondary={FOURTH_MESSAGE_SECONDARY}
+            contrast={parentTitle === "onboarding"}
           />
           <SettingsItem
             button={{
@@ -263,6 +266,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={RESET_MESSAGE_PRIMARY}
             messageSecondary={RESET_MESSAGE_SECONDARY}
+            contrast={parentTitle === "onboarding"}
           />
         </div>
       )}

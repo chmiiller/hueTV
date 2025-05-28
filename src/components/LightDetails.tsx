@@ -3,7 +3,9 @@ import { useFocusable } from "@noriginmedia/norigin-spatial-navigation";
 import Box from "@mui/material/Box";
 
 import { LightIcon } from "./SvgIcons/LightIcon";
+import { PlugIcon } from "./SvgIcons/PlugIcon";
 import { LightFillIcon } from "./SvgIcons/LightFillIcon";
+import { UnplugIcon } from "./SvgIcons/UnplugIcon";
 
 type LightDetailsProps = {
   id: string;
@@ -89,7 +91,21 @@ export const LightDetails = ({
           }}
         >
           {/* Light Bulb icon */}
-          {isOn ? <LightFillIcon size={45} /> : <LightIcon size={45} />}
+          {!notALight ? (
+            isOn ? (
+              <LightFillIcon size={45} />
+            ) : (
+              <LightIcon size={45} />
+            )
+          ) : null}
+          {/* Plug icon */}
+          {notALight ? (
+            isOn ? (
+              <PlugIcon size={55} />
+            ) : (
+              <UnplugIcon size={55} />
+            )
+          ) : null}
         </Box>
       </Box>
     </div>

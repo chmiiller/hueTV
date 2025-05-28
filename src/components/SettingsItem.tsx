@@ -3,33 +3,44 @@ import { CheckIcon } from "./SvgIcons/CheckIcon";
 import { FocusableButton } from "./FocusableButton";
 
 type SettingsButton = {
-  title: string,
-  focusKey: string,
-  onClick: () => void,
-  focusable?: boolean,
+  title: string;
+  focusKey: string;
+  onClick: () => void;
+  focusable?: boolean;
   success?: boolean;
   fail?: boolean;
 };
 type SettingsItemProps = {
-  button: SettingsButton,
-  messagePrimary?: string,
-  messageSecondary?: string,
-  checkEnabled?: boolean,
-}
+  button: SettingsButton;
+  messagePrimary?: string;
+  messageSecondary?: string;
+  checkEnabled?: boolean;
+  contrast?: boolean;
+};
 
-export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEnabled }: SettingsItemProps) => {
+export const SettingsItem = ({
+  button,
+  messagePrimary,
+  messageSecondary,
+  checkEnabled,
+  contrast = false,
+}: SettingsItemProps) => {
   return (
-    <div style={{        
-      marginBottom: 100,
-      display: 'flex',
-      fontSize: 26,
-      fontWeight: 400,
-    }}>
-      <div style={{
-        display: 'flex',
-        alignItems: "center",
-        justifyContent: "start",
-      }}>
+    <div
+      style={{
+        marginBottom: 100,
+        display: "flex",
+        fontSize: 26,
+        fontWeight: 400,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "start",
+        }}
+      >
         <FocusableButton
           title={button.title}
           focusKey={button.focusKey}
@@ -37,21 +48,30 @@ export const SettingsItem = ({ button, messagePrimary, messageSecondary, checkEn
           focusable={button.focusable}
           success={button.success}
           fail={button.fail}
+          contrast={contrast}
         />
       </div>
-      <div style={{
-        justifyContent: "space-around",
-        display: "flex",
-        flexDirection: "column",
-        fontSize: 18,
-        lineHeight: 2,
-        marginLeft: 60
-      }}>
-        {checkEnabled ? <CheckIcon /> : (
-          <p style={{
-            textAlign: 'left',
-            fontSize: 26
-          }}>{messagePrimary} <br/> {messageSecondary}</p>
+      <div
+        style={{
+          justifyContent: "space-around",
+          display: "flex",
+          flexDirection: "column",
+          fontSize: 18,
+          lineHeight: 2,
+          marginLeft: 60,
+        }}
+      >
+        {checkEnabled ? (
+          <CheckIcon />
+        ) : (
+          <p
+            style={{
+              textAlign: "left",
+              fontSize: 26,
+            }}
+          >
+            {messagePrimary} <br /> {messageSecondary}
+          </p>
         )}
       </div>
     </div>

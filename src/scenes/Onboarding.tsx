@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 
 import { SettingsContent } from "./SettingsContent";
 
-const SCREEN_TITLE = "Welcome to hueTV!";
+const SCREEN_TITLE = "Welcome to hueTV";
 
 export const Onboarding = (): React.ReactElement => {
   const { focusKey, focusSelf } = useFocusable({
@@ -28,12 +28,13 @@ export const Onboarding = (): React.ReactElement => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           width: "100%",
           padding: 24,
           marginTop: 24,
         }}
       >
-        <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
+        <Typography align={"center"} variant={"h2"} sx={{ marginBottom: 4 }}>
           {SCREEN_TITLE}
         </Typography>
         <SettingsContent parentTitle="onboarding" />
