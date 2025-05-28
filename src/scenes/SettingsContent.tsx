@@ -199,7 +199,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={FIRST_MESSAGE_PRIMARY}
             messageSecondary={FIRST_MESSAGE_SECONDARY}
-            contrast={parentTitle === "onboarding"}
+            contrast
           />
           <SettingsItem
             button={{
@@ -215,7 +215,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={secondMessage.primary}
             messageSecondary={secondMessage.secondary}
-            contrast={parentTitle === "onboarding"}
+            contrast
           />
           <SettingsItem
             button={{
@@ -230,7 +230,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={""}
             messageSecondary={""}
-            contrast={parentTitle === "onboarding"}
+            contrast
           />
         </div>
       )}
@@ -251,7 +251,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={FOURTH_MESSAGE_PRIMARY}
             messageSecondary={FOURTH_MESSAGE_SECONDARY}
-            contrast={parentTitle === "onboarding"}
+            contrast
           />
           <SettingsItem
             button={{
@@ -266,7 +266,7 @@ export const SettingsContent = ({
             }}
             messagePrimary={RESET_MESSAGE_PRIMARY}
             messageSecondary={RESET_MESSAGE_SECONDARY}
-            contrast={parentTitle === "onboarding"}
+            contrast
           />
         </div>
       )}

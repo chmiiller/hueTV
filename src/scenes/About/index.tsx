@@ -64,7 +64,11 @@ export const About = (): React.ReactElement => {
 
   return (
     <FocusContext.Provider value={focusKey}>
-      <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
+      <Typography
+        align={"center"}
+        variant={"h3"}
+        sx={{ marginRight: 16, marginTop: 4 }}
+      >
         {"About"}
       </Typography>
       <Box

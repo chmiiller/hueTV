@@ -4,11 +4,11 @@ import {
   FocusContext,
 } from "@noriginmedia/norigin-spatial-navigation";
 
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 
 import { SettingsContent } from "./SettingsContent";
 
-const SCREEN_TITLE = "Settings";
+// const SCREEN_TITLE = "Settings";
 
 export const Settings = (): React.ReactElement => {
   const { focusKey } = useFocusable({
@@ -17,10 +17,22 @@ export const Settings = (): React.ReactElement => {
 
   return (
     <FocusContext.Provider value={focusKey}>
-      <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          padding: 24,
+          marginTop: 24,
+        }}
+      >
+        {/* <Typography align={"center"} variant={"h4"} sx={{ marginRight: 16 }}>
         {SCREEN_TITLE}
-      </Typography>
-      <SettingsContent parentTitle="settings" />
+      </Typography> */}
+        <SettingsContent parentTitle="settings" />
+      </div>
     </FocusContext.Provider>
   );
 };
