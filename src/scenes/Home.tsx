@@ -46,6 +46,8 @@ export const Home = (): React.ReactElement => {
     setTimeout(() => {
       if (location.state?.focus) {
         focusSelf();
+      } else if (location.state?.fromSettings) {
+        setFocus("menu_home_screen");
       }
     }, 100);
   }, [location]);

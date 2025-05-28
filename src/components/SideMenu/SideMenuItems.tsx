@@ -98,7 +98,10 @@ export const SideMenuItems = ({
                           screen: sideMenuObject.screenName,
                         },
                       });
-                      setFocus(sideMenuObject.screenName);
+                      if (sideMenuObject.id !== "menu_item_settings") {
+                        // focusing to settings screen name was crashing
+                        setFocus(sideMenuObject.screenName);
+                      }
                       deselectItem();
                     }, 100);
                   } else {

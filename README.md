@@ -52,7 +52,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### TO DO:
 
 - Smartplug should show room name (Piano) and use a different icon (plug)
-- if you reset the selected button should automatically focus on "start setup" but it remains the last button (reset -> home)
 - crash after resetting and setting it up again: go through the steps and quickly press left and right on the remote
 
 Onboarding screen:

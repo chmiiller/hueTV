@@ -221,8 +221,9 @@ export const SettingsContent = ({
               focusKey: THIRD_BUTTON_KEY,
               onClick: () => {
                 navigate("/home", {
-                  state: { screen: parentTitle, focus: true },
+                  state: { screen: parentTitle, fromSettings: true },
                 });
+                setFocus("menu_home_screen");
               },
               focusable: thirdStep,
             }}
@@ -257,6 +258,7 @@ export const SettingsContent = ({
                 clearBridgeIp();
                 clearBridgeUsername();
                 setSetupDone(false);
+                setFocus(FIRST_BUTTON_KEY);
               },
             }}
             messagePrimary={RESET_MESSAGE_PRIMARY}
