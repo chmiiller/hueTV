@@ -47,6 +47,9 @@ export const Home = (): React.ReactElement => {
       if (location.state?.focus) {
         focusSelf();
       }
+      if (location.state?.screen === "onboarding" && location.state?.focus) {
+        setFocus("menu_home_screen");
+      }
     }, 100);
   }, [location]);
 

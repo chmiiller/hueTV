@@ -38,7 +38,10 @@ const Root = () => {
       const ready = setupState.data ?? false;
       setSetupIsDone(ready);
       if (ready) {
-        navigate("/home", { replace: true });
+        navigate("/home", {
+          state: { screen: "onboarding", focus: true },
+          replace: true,
+        });
       }
     }
   }, [location]);

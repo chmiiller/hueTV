@@ -48,7 +48,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Uninstall app from TV:
 
 `tizen uninstall -t TV_ID -p ID.hueTV`
-
-#### Known Issues
-
-- Sometimes when coming from Onboarding, the app has no focus: neither the menu or home
